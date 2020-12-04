@@ -8,19 +8,19 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './athlete.component.html',
   styleUrls: ['./athlete.component.scss']
 })
-export class AthleteComponent implements OnInit{
-athlete: AthleteModel[] = [];
+export class AthleteComponent implements OnInit {
+  athlete: AthleteModel[] = [];
   readonly code = this.route.snapshot.queryParamMap.get('code') as string;
+
   constructor(private athleteService: AthleteService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute) {
+  }
 
-ngOnInit(): void {
-  this.athleteService.getToken(this.code).subscribe(response => {
-    this.athleteService.setAuthToken(response.access_token);
-  });
-}
-
-  getAthlete(): void {
-    this.athleteService.requestingAccess().subscribe();
+  ngOnInit(): void {
+    if (this.code) {
+      this.athleteService.getToken(this.code).subscribe(response => {
+        this.athleteService.setAuthToken(response.access_token, response.refresh_token);
+      });
+    }
   }
 }
