@@ -1,0 +1,19 @@
+@import "src/assets/styles/variables";
+
+.header-logo {
+  height: auto;
+  width: 60px;
+  margin-left: 20px;
+  padding: 2px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  background-color: $grey;
+  width: 100%;
+}
+
+

@@ -16,7 +16,6 @@ const Modules = [
   declarations: [],
   imports: [
     ...Modules,
-    CommonModule
   ],
   exports: [
     ...Modules,

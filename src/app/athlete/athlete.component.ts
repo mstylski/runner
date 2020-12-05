@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AthleteService} from '../athlete.service';
-import {AthleteModel} from '../athlete.model';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -9,7 +8,6 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./athlete.component.scss']
 })
 export class AthleteComponent implements OnInit {
-  athlete: AthleteModel[] = [];
   readonly code = this.route.snapshot.queryParamMap.get('code') as string;
 
   constructor(private athleteService: AthleteService,

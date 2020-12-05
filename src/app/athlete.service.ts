@@ -6,8 +6,8 @@ import {Observable} from 'rxjs';
 export class AthleteService {
   authToken = '';
   refreshToken = '';
-  constructor(private http: HttpClient) {
 
+  constructor(private http: HttpClient) {
   }
 
   getToken(code: string): Observable<any> {
@@ -21,19 +21,23 @@ export class AthleteService {
   }
 
   refreshAccessToken(token: string): Observable<any> {
-  const params = {
-    client_id: '57403',
-    client_secret: '91e4ea8376741e19631c1ab8c4a1fc3c5a98dee5',
-    grant_type: 'refresh_token',
-    refresh_token: token,
-  };
-  return this.http.post<any>(`https://www.strava.com/api/v3/oauth/token`, null, {params});
+    const params = {
+      client_id: '57403',
+      client_secret: '91e4ea8376741e19631c1ab8c4a1fc3c5a98dee5',
+      grant_type: 'refresh_token',
+      refresh_token: token,
+    };
+    return this.http.post<any>(`https://www.strava.com/api/v3/oauth/token`, null, {params});
   }
 
-  setAuthToken(token: string, refreshToken: string) {
+  setAuthToken(token: string, refreshToken: string): void {
     this.authToken = token;
     this.refreshToken = refreshToken;
     window.localStorage.setItem('token', refreshToken);
+  }
+
+  getActivities(): void {
+
   }
 }
 
