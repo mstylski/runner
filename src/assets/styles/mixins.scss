@@ -1,11 +1,5 @@
 @import 'src/assets/styles/variables';
 
-@mixin sm-up {
-  @media(min-width: #{(map-get($grid-breakpoints, sm))}) {
-    @content;
-  }
-}
-
 @mixin md-up {
   @media(min-width: #{(map-get($grid-breakpoints, md))}) {
     @content;

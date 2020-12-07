@@ -1,7 +1,9 @@
-@import "assets/styles/variables";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/scss/bootstrap';
+@import "src/assets/styles/variables";
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: $light-grey }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: $light-grey;}
 
 :host {
   position: relative;

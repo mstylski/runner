@@ -1,8 +1,9 @@
 @import "src/assets/styles/variables";
+@import url('https://fonts.googleapis.com/css?family=Sen&display=swap');
 
 .header-logo {
   height: auto;
-  width: 60px;
+  width: 72px;
   margin-left: 20px;
   padding: 2px;
 }
@@ -12,9 +13,91 @@
   justify-content: space-between;
   position: fixed;
   top: 0;
-  background-color: $grey;
+  background-color: $white;
   width: 100%;
   z-index: 100;
+  border-bottom: 1px ridge #DCDDDD;
 }
 
+.strava-logo {
+  margin: 19px;
+}
 
+.menu {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-left: 5px;
+}
+
+.dropdown {
+  margin: 1.25px;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  list-style: none;
+  height: 30px;
+  border-radius: 3px;
+}
+
+.dropdown li {
+  position: relative;
+}
+
+.dropdown li a {
+  display: block;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dropdown li ul {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 180px;
+  left: 0;
+  max-height: 0;
+  -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -90deg);
+  transform: perspective(400px) rotate3d(1, 0, 0, -90deg);
+  -webkit-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  transform-origin: 50% 0;
+  -webkit-transition: 350ms;
+  -o-transition: 350ms;
+  transition: 350ms;
+  border-radius: 3px;
+}
+
+.dropdown li ul li a {
+  height: 30px;
+  line-height: 30px;
+  color: black;
+}
+
+.dropdown li ul li a:hover {
+  background-color: #FC5200;
+  color: white;
+  border-radius: 3px;
+}
+
+.dropdown li:hover>ul {
+  max-height: 400px;
+  -webkit-transform: perspective(400px) rotate3d(0, 0, 0, 0);
+  transform: perspective(400px) rotate3d(0, 0, 0, 0);
+}
+
+.dropdown li:hover>a {
+
+}
+
+.training-dropdown {
+  margin-left: 100px;
+}

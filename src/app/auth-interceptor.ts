@@ -21,7 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
     });
     return next.handle(authRequest).pipe(catchError((err) => {
       return this.athleteService.refreshAccessToken(token).pipe(switchMap(refreshResponse => {
-        console.log(refreshResponse);
         this.athleteService.setAuthToken(refreshResponse.refresh_token, refreshResponse.refresh_token);
         const authRefreshRequest = request.clone({
           setHeaders: {
