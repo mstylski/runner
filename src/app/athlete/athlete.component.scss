@@ -1,4 +1,11 @@
+@import "src/assets/styles/variables";
+
 :host {
   display: block;
   margin-top: 120px;
+}
+
+a {
+  text-decoration: none;
+  color: $black;
 }
