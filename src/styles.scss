@@ -4,8 +4,5 @@
 
 html, body { height: 100%}
 body {  font-family: Roboto, "Helvetica Neue", sans-serif; background-color: $light-grey;
-  margin-top: 80px;}
+  margin: 0; }
 
-:host {
-  position: relative;
-}

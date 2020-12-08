@@ -19,17 +19,18 @@ export class AuthInterceptor implements HttpInterceptor {
         Authorization: `Bearer ${token}`,
       }
     });
-    return next.handle(authRequest).pipe(catchError((err) => {
-      return this.athleteService.refreshAccessToken(token).pipe(switchMap(refreshResponse => {
-        this.athleteService.setAuthToken(refreshResponse.refresh_token, refreshResponse.refresh_token);
-        const authRefreshRequest = request.clone({
-          setHeaders: {
-            Authorization: `Bearer ${refreshResponse.refresh_token}`,
-          }
-        });
-        return next.handle(authRefreshRequest);
-      }));
-    }));
+    return next.handle(authRequest);
+    // return next.handle(authRequest).pipe(catchError((err) => {
+    //   return this.athleteService.refreshAccessToken(token).pipe(switchMap(refreshResponse => {
+    //     this.athleteService.setAuthToken(refreshResponse.refresh_token, refreshResponse.refresh_token);
+    //     const authRefreshRequest = request.clone({
+    //       setHeaders: {
+    //         Authorization: `Bearer ${refreshResponse.refresh_token}`,
+    //       }
+    //     });
+    //     return next.handle(authRefreshRequest);
+    //   }));
+    // }));
   }
 }
 

@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../environments/environment';
+import {Athlete, WorkoutData} from './shared/models/activity.model';
+
 
 @Injectable({providedIn: 'root'})
 export class AthleteService {
@@ -17,7 +20,7 @@ export class AthleteService {
       code,
       grant_type: 'authorization_code',
     };
-    return this.http.post<any>(`https://www.strava.com/api/v3/oauth/token`, null, {params});
+    return this.http.post<any>(`${environment.apiUrl}oauth/token`, null, {params});
   }
 
   refreshAccessToken(token: string): Observable<any> {
@@ -27,7 +30,7 @@ export class AthleteService {
       grant_type: 'refresh_token',
       refresh_token: token,
     };
-    return this.http.post<any>(`https://www.strava.com/api/v3/oauth/token`, null, {params});
+    return this.http.post<any>(`${environment.apiUrl}oauth/token`, null, {params});
   }
 
   setAuthToken(token: string, refreshToken: string): void {
@@ -36,8 +39,8 @@ export class AthleteService {
     window.localStorage.setItem('token', refreshToken);
   }
 
-  getActivities(): void {
-
+  getActivities(): Observable<WorkoutData> {
+    return this.http.get<WorkoutData>(`${environment.apiUrl}athlete/activities`);
   }
 }
 
