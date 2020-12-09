@@ -21,4 +21,5 @@ const Modules = [
     ...Modules,
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+}

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://www.strava.com/api/v3/'
+  apiUrl: 'https://www.strava.com/api/v3/',
+  // stravaRedirectUrl: 'http:/localhost:4200'
 };
 
 /*

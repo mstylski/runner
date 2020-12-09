@@ -1,3 +1,5 @@
+@import "src/assets/styles/variables";
+
 .my-activities {
   margin: 5px;
   padding-top: 30px;
@@ -6,4 +8,17 @@
 .type-of-sport{
   width: 700px;
   border: 1px solid rgba(28,110,164,0.14);
+}
+
+.mat-elevation-z8 {
+  width: 1000px;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  padding: 21px;
+  background-color: $antiquewhite ;;
+}
+
+.paginator {
+  width: 1000px;
 }

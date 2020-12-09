@@ -1,3 +1,4 @@
+
 export interface Athlete {
   id: number;
   resource_state: number;
@@ -36,7 +37,7 @@ export interface WorkoutData {
   comment_count?: number;
   athlete_count?: number;
   photo_count?: number;
-  map?: Map;
+  map?: Map[];
   trainer?: boolean;
   commute?: boolean;
   manual?: boolean;

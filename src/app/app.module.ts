@@ -25,7 +25,7 @@ import {AthleteModule} from './athlete/athlete.module';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    AthleteModule,
+    AthleteModule
   ],
   providers: [
     AthleteService,
