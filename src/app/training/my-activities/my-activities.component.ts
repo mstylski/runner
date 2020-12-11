@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {AthleteService} from '../../athlete.service';
+import {ActivityService} from '../../activity.service';
 import {WorkoutData} from '../../shared/models/list-activities.model';
 import {BehaviorSubject} from 'rxjs';
-import {PageEvent} from '@angular/material/paginator';
 import {debounceTime, switchMap} from 'rxjs/operators';
 
 @Component({
@@ -13,28 +11,36 @@ import {debounceTime, switchMap} from 'rxjs/operators';
 })
 
 export class MyActivitiesComponent implements OnInit {
-  private readonly pagination$ = new BehaviorSubject<PageEvent>({length: 0, pageIndex: 1, pageSize: 20});
+  private readonly pagination$ = new BehaviorSubject<number>(0);
+  pageIndex = 1;
+  count = 1;
   isLoading = false;
   readonly displayedColumns: string[] = ['name', 'distance', 'moving_time', 'elapsed_time', 'max_speed',
     'total_elevation_gain', 'start_date_local', 'start_latlng', 'timezone', 'location_country'];
   workoutData: WorkoutData[];
 
-  constructor(private athleteService: AthleteService) {
+  constructor(private activityService: ActivityService) {
   }
 
   ngOnInit(): void {
     this.getActivities();
   }
 
-  changePage(event: PageEvent) {
-    this.pagination$.next(event);
+  pageNext() {
+    this.count = this.count + 1;
+    this.pagination$.next(this.count);
+  }
+
+  pageBefore() {
+    this.count = this.count - 1;
+    this.pagination$.next(this.count);
   }
 
   private getActivities() {
     this.pagination$.pipe(
       debounceTime(400),
-      switchMap((pageEvent) => {
-        return this.athleteService.getActivities(pageEvent.pageIndex.toString());
+      switchMap(() => {
+        return this.activityService.getActivities(this.pageIndex.toString());
       })
     )
       .subscribe(activities => {

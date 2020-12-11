@@ -1,17 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AthleteService} from './athlete.service';
+import {AuthService} from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-
-  constructor(private athleteService: AthleteService) {
+  constructor(private authService: AuthService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = this.athleteService.authToken ||
+    const token: string = this.authService.authToken ||
       window.localStorage.getItem('token') as string;
     const authRequest = request.clone({
       setHeaders: {
@@ -19,17 +18,6 @@ export class AuthInterceptor implements HttpInterceptor {
       }
     });
     return next.handle(authRequest);
-    // return next.handle(authRequest).pipe(catchError((err) => {
-    //   return this.athleteService.refreshAccessToken(token).pipe(switchMap(refreshResponse => {
-    //     this.athleteService.setAuthToken(refreshResponse.refresh_token, refreshResponse.refresh_token);
-    //     const authRefreshRequest = request.clone({
-    //       setHeaders: {
-    //         Authorization: `Bearer ${refreshResponse.refresh_token}`,
-    //       }
-    //     });
-    //     return next.handle(authRefreshRequest);
-    //   }));
-    // }));
   }
 }
 

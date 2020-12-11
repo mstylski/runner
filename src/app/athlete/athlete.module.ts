@@ -11,6 +11,7 @@ import {WingsForLifeComponent} from '../calculators/wings-for-life/wings-for-lif
 import {DistanceCalculatorComponent} from '../calculators/distance-calculator/distance-calculator.component';
 import {PaceCalculatorComponent} from '../calculators/pace-calculator/pace-calculator.component';
 import {MyActivitiesComponent} from '../training/my-activities/my-activities.component';
+import {CalendarModule} from 'angular-calendar';
 
 @NgModule({
   declarations: [
@@ -26,10 +27,11 @@ import {MyActivitiesComponent} from '../training/my-activities/my-activities.com
     PaceCalculatorComponent,
   ],
   exports: [],
-  imports: [
-    CommonModule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        CalendarModule
+    ]
 })
 export class AthleteModule {
 }
