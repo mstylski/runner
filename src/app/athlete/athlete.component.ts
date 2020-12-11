@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AthleteService } from '../athlete.service';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {AthleteService} from '../athlete.service';
+import {ActivatedRoute} from '@angular/router';
+import {AthleteModel} from '../shared/models/athlete.model';
 
 
 @Component({
@@ -10,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AthleteComponent implements OnInit {
   readonly code = this.route.snapshot.queryParamMap.get('code') as string;
+  athleteModel: AthleteModel;
 
   constructor(private athleteService: AthleteService,
               private route: ActivatedRoute) {
@@ -21,5 +23,13 @@ export class AthleteComponent implements OnInit {
         this.athleteService.setAuthToken(response.access_token, response.refresh_token);
       });
     }
+    this.getAthlete();
+  }
+
+  getAthlete() {
+    const athleteId = this.athleteModel.athlete;
+    this.athleteService.getAthlete().subscribe(athlete => {
+      this.athleteModel = athlete;
+    });
   }
 }

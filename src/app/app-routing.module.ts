@@ -11,6 +11,7 @@ import {TrainingCalendarComponent} from './training/training-calendar/training-c
 import {DistanceCalculatorComponent} from './calculators/distance-calculator/distance-calculator.component';
 import {PaceCalculatorComponent} from './calculators/pace-calculator/pace-calculator.component';
 import {WingsForLifeComponent} from './calculators/wings-for-life/wings-for-life.component';
+import {AthleteResolveService} from './athlete/athlete.resolve.service';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
   {
     path: 'dashboard', component: DashboardComponent,
     children: [{path: 'athlete', component: AthleteComponent},
+      {path: 'athlete/:id', component: AthleteComponent, resolve: {athlete: AthleteResolveService}},
       {path: 'my-activities', component: MyActivitiesComponent},
       {path: 'training-calendar', component: TrainingCalendarComponent},
       {path: 'my-segments', component: MySegmentsComponent},

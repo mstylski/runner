@@ -47,10 +47,12 @@
       <mat-paginator
         [pageSizeOptions]="[20]"
         (page)="changePage($event)"
-        [length]="1">
+        [length]="">
       </mat-paginator>
     </div>
-
+<div class="spinner-container">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+</div>
 
 
 

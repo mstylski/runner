@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
-import {WorkoutData} from './shared/models/activity.model';
+import {WorkoutData} from './shared/models/list-activities.model';
+import {AthleteModel} from './shared/models/athlete.model';
 
 @Injectable({providedIn: 'root'})
 export class AthleteService {
   authToken = '';
   refreshToken = '';
-  configUrl = 'https://www.strava.com/api/v3/athlete/activities?page=20';
 
   constructor(private http: HttpClient) {
   }
@@ -45,6 +45,10 @@ export class AthleteService {
       page,
     };
     return this.http.get<WorkoutData[]>(`${environment.apiUrl}athlete/activities`, { params });
+  }
+
+  getAthlete(id: number): Observable<AthleteModel> {
+    return this.http.get<AthleteModel>(`${ environment.apiUrl }activities/${ id }`);
   }
 }
 

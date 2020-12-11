@@ -1,5 +1,13 @@
 @import "src/assets/styles/variables";
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
 .my-activities {
   margin: 5px;
   padding-top: 30px;
