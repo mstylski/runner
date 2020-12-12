@@ -7,11 +7,11 @@ import {ActivityModel} from '../../shared/models/activity-model';
 @Injectable({providedIn: 'root'})
 export class ActivityResolveService implements Resolve<ActivityModel> {
 
-  constructor(private athleteService: ActivityService) {
+  constructor(private activityService: ActivityService) {
   }
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<ActivityModel> {
-    return this.athleteService.getActivity(route.params.id);
+    return this.activityService.getActivity(route.params.id);
   }
 }

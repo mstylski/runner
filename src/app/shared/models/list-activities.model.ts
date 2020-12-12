@@ -10,7 +10,7 @@ export interface Map {
   resource_state: number;
 }
 
-export interface WorkoutData {
+export interface Activities {
   resource_state?: number;
   athlete?: Athlete;
   name?: string;

@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivityService} from '../../activity.service';
-import {WorkoutData} from '../../shared/models/list-activities.model';
-import {BehaviorSubject} from 'rxjs';
+import {Activities} from '../../shared/models/list-activities.model';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
 
 @Component({
@@ -10,46 +10,49 @@ import {debounceTime, switchMap} from 'rxjs/operators';
   styleUrls: ['./my-activities.component.scss']
 })
 
-export class MyActivitiesComponent implements OnInit {
-  private readonly pagination$ = new BehaviorSubject<number>(0);
-  pageIndex = 1;
-  count = 1;
-  isLoading = false;
-  readonly displayedColumns: string[] = ['name', 'distance', 'moving_time', 'elapsed_time', 'max_speed',
-    'total_elevation_gain', 'start_date_local', 'start_latlng', 'timezone', 'location_country'];
-  workoutData: WorkoutData[];
+export class MyActivitiesComponent implements OnInit, OnDestroy {
+  currentPageIndex = 1;
+  readonly columns: string[] = [
+    'name', 'distance', 'moving_time', 'elapsed_time', 'max_speed',
+    'total_elevation_gain', 'start_date_local', 'start_latlng', 'timezone', 'location_country'
+  ];
+  activities: Activities[] = [];
+  private readonly subscriptions = new Subscription();
+  private readonly pagination$ = new BehaviorSubject<number>(this.currentPageIndex);
 
-  constructor(private activityService: ActivityService) {
-  }
+  constructor(private activityService: ActivityService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getActivities();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   pageNext() {
-    this.count = this.count + 1;
-    this.pagination$.next(this.count);
+    this.currentPageIndex = this.currentPageIndex + 1;
+    this.pagination$.next(this.currentPageIndex);
   }
 
   pageBefore() {
-    this.count = this.count - 1;
-    this.pagination$.next(this.count);
+    this.currentPageIndex = this.currentPageIndex - 1;
+    this.pagination$.next(this.currentPageIndex);
+  }
+
+  formatTime(seconds: number): string {
+    const secondsInOneMinute = 60;
+    const minutes = Math.floor(seconds / secondsInOneMinute);
+    return minutes + ':' + (seconds - minutes * secondsInOneMinute);
   }
 
   private getActivities() {
-    this.pagination$.pipe(
+    const subscription = this.pagination$.pipe(
       debounceTime(400),
-      switchMap(() => {
-        return this.activityService.getActivities(this.pageIndex.toString());
-      })
+      switchMap((pageIndex) => this.activityService.getActivities(pageIndex)),
     )
-      .subscribe(activities => {
-        this.workoutData = activities;
-      });
-  }
+    .subscribe(activities => this.activities = activities);
 
-  formatTime(value: number): string {
-    const minutes: number = Math.floor(value / 60);
-    return minutes + ':' + (value - minutes * 60);
+    this.subscriptions.add(subscription);
   }
 }

@@ -11,14 +11,11 @@ export class AthleteService {
   constructor(private http: HttpClient) {
   }
 
-getAthlete(): Observable<AthleteModel> {
+  getAthlete(): Observable<AthleteModel> {
     return this.http.get<AthleteModel>(`${environment.apiUrl}athlete`);
-}
+  }
 
-getAthleteStats(id: number): Observable<AthleteStatsModel> {
-  const params = {
-    scope: 'activity:read_all'
-  };
-  return this.http.get<AthleteStatsModel>(`${environment.apiUrl}athletes${id}/stats`, { params });
-}
+  getAthleteStats(athleteId: number): Observable<AthleteStatsModel> {
+    return this.http.get<AthleteStatsModel>(`${environment.apiUrl}athletes/${athleteId}/stats`);
+  }
 }

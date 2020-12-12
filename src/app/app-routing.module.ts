@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {AthleteComponent} from './athlete/athlete.component';
 import {DashboardComponent} from './core/dashboard/dashboard.component';
 import {MyActivitiesComponent} from './training/my-activities/my-activities.component';
@@ -22,8 +22,9 @@ const routes: Routes = [
   },
   {
     path: 'dashboard', component: DashboardComponent,
-    children: [{path: 'athlete', component: AthleteComponent},
-      {path: 'my-activities/:id', component: DetailActivityComponent, resolve: {athlete: ActivityResolveService}},
+    children: [
+      {path: 'athlete', component: AthleteComponent},
+      {path: 'my-activities/:id', component: DetailActivityComponent, resolve: {activity: ActivityResolveService}},
       {path: 'my-activities', component: MyActivitiesComponent},
       {path: 'training-calendar', component: TrainingCalendarComponent},
       {path: 'my-segments', component: MySegmentsComponent},

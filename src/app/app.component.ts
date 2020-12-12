@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {AuthService} from './auth.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,9 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'runner';
+  isLoggedIn = this.authService.isLoggedIn();
+
+  constructor(private authService: AuthService) {
+  }
 
 }

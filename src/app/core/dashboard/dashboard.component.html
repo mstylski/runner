@@ -1,7 +1,6 @@
-<app-header></app-header>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
-
-
-
+<ng-container *ngIf="isLoggedIn">
+  <app-header></app-header>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</ng-container>

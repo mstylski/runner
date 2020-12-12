@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
-import {WorkoutData} from './shared/models/list-activities.model';
+import {Activities} from './shared/models/list-activities.model';
 import {ActivityModel} from './shared/models/activity-model';
 import {HttpClient} from '@angular/common/http';
 
@@ -11,12 +11,13 @@ export class ActivityService {
   constructor(private http: HttpClient) {
   }
 
-  getActivities(page: string): Observable<WorkoutData[]> {
+  getActivities(page: number): Observable<Activities[]> {
     const params = {
       per_page: '20',
-      page,
+      page: page.toString(),
     };
-    return this.http.get<WorkoutData[]>(`${environment.apiUrl}athlete/activities`, {params});
+
+    return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});
   }
 
   getActivity(id: number): Observable<ActivityModel> {

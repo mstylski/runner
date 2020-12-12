@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {AuthService} from '../../auth.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
+  isLoggedIn = this.authService.isLoggedIn();
+  readonly code = this.route.snapshot.queryParamMap.get('code') as string;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute,
+  ) {
+    if (this.code && !this.isLoggedIn) {
+      this.authService.getAccessToken(this.code).subscribe(response => {
+        this.authService.setAuthToken(response.access_token, response.refresh_token);
+        this.authService.setAthlete(response.athlete);
+        this.isLoggedIn = this.authService.isLoggedIn();
+      });
+    }
   }
-
 }
