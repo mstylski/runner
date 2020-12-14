@@ -123,13 +123,13 @@ export interface HighlightedKudoser {
 }
 
 export interface ActivityModel {
-  id?: number;
+  id: number;
   resource_state: number;
   external_id: string;
   upload_id: number;
   athlete?: Athlete;
   name?: string;
-  distance?: number;
+  distance: number;
   moving_time?: number;
   elapsed_time?: number;
   total_elevation_gain?: number;

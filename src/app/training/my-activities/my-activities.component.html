@@ -28,9 +28,13 @@
       <th mat-header-cell *matHeaderCellDef>Moving Elapsed Time</th>
       <td mat-cell *matCellDef="let workoutData"> {{ formatTime(workoutData.elapsed_time) }}  </td>
     </ng-container>
+    <ng-container matColumnDef="average_speed">
+      <th mat-header-cell *matHeaderCellDef>Avg Speed</th>
+      <td mat-cell *matCellDef="let workoutData"> {{ workoutData.average_speed * 3.6 | number: '1.0-0' }}km/h</td>
+    </ng-container>
     <ng-container matColumnDef="max_speed">
       <th mat-header-cell *matHeaderCellDef>Max Speed</th>
-      <td mat-cell *matCellDef="let workoutData"> {{ workoutData.max_speed | number: '1.0-0'}}km/h</td>
+      <td mat-cell *matCellDef="let workoutData"> {{ workoutData.max_speed * 3.6 | number: '1.0-0' }}km/h</td>
     </ng-container>
     <ng-container matColumnDef="total_elevation_gain">
       <th mat-header-cell *matHeaderCellDef>Total Elevation Gain</th>

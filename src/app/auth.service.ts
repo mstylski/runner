@@ -10,7 +10,8 @@ export class AuthService {
   accessToken = '';
   refreshToken = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   isLoggedIn() {
     return this.accessToken || window.localStorage.getItem('accessToken');
@@ -49,6 +50,7 @@ export class AuthService {
 
   setAthlete(athlete: AthleteModel) {
     this.athlete = athlete;
-    window.localStorage.setItem('loggedAthlete', JSON.stringify(this.athlete)); // stringify bo do Localstorage ttrzeba zapisac string mozna tylko, stringify sprowadza obiekt do stringa
+    window.localStorage.setItem('loggedAthlete', JSON.stringify(this.athlete));
+    // stringify bo do Localstorage ttrzeba zapisac string mozna tylko, stringify sprowadza obiekt do stringa
   }
 }

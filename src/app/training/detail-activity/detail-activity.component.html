@@ -1,1 +1,32 @@
-<p>detail-activity works!</p>
+<div class="d-flex justify-content-between">
+  <mat-card class="mat-card-top">
+    <mat-card-header>
+      <span   mat-card-avatar>
+        <img [src]="athlete?.profile" alt="avatar" class="avatar">
+      </span>
+      <span>
+
+      </span>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <div>{{athlete.firstname}} {{athlete.lastname}}</div>
+      <div>{{athlete.city}}</div>
+      <div>{{athlete.country}}</div>
+      <div>{{activity.description}}</div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="mat-card-top">
+    <mat-card-header></mat-card-header>
+    <mat-card-content>
+
+    </mat-card-content>
+  </mat-card>
+  </div>
+<div class="mt-2">
+  <mat-card class="mat-card-bottom">
+    <mat-card-header></mat-card-header>
+    <mat-card-content>
+
+    </mat-card-content>
+  </mat-card>
+</div>

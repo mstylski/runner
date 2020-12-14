@@ -13,7 +13,7 @@
           Personal Best
         </mat-card-header>
         <mat-card-content>
-          <div>1KM</div>
+          <div>1km</div>
           <div>1MILE</div>
           <div>5KM</div>
           <div>10KM</div>
@@ -24,20 +24,24 @@
       </mat-card>
     </div>
   <div class="col-md-8">
-    <mat-card>
+    <button mat-raised-button (click)="pageBefore()" [disabled]="currentPageIndex === 1">Page Before</button>
+    <button mat-raised-button (click)="pageNext()">Page Next</button>
+    Current page: {{ currentPageIndex }}
+    <mat-card *ngFor="let activity of activities" class="mt-3">
       <mat-card-header>
-        <div mat-card-avatar>Avatar</div>
-        Here user name + date of traning
+        <div mat-card-avatar>
+          <img [src]="athlete?.profile_medium" alt="avatar" class="avatar">
+        </div>
+        <p>{{athlete?.firstname}} {{athlete?.lastname}}</p>
       </mat-card-header>
       <mat-card-content>
-        <div>
-          <h3>Title</h3>
-          <span>Distance</span>
-          <span>Elev Gain</span>
-          <span>Time</span>
+        <div class="mt-4">
+          <p>{{activity.name}}</p>
+          <p>{{activity.start_date_local | date:'HH:mm | dd/MM/yyyy'}}</p>
+          <p>{{activity.distance | number: '1.0-0' }}km</p>
+          <p>{{formatTime(activity.moving_time)}}</p>
         </div>
       </mat-card-content>
-      <img mat-card-image src="" alt=""> //CLICKABLE MAP
     </mat-card>
   </div>
 </div>

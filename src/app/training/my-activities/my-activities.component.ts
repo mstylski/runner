@@ -13,7 +13,7 @@ import {debounceTime, switchMap} from 'rxjs/operators';
 export class MyActivitiesComponent implements OnInit, OnDestroy {
   currentPageIndex = 1;
   readonly columns: string[] = [
-    'name', 'distance', 'moving_time', 'elapsed_time', 'max_speed',
+    'name', 'distance', 'moving_time', 'elapsed_time', 'max_speed', 'average_speed',
     'total_elevation_gain', 'start_date_local', 'start_latlng', 'timezone', 'location_country'
   ];
   activities: Activities[] = [];
@@ -42,8 +42,14 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
 
   formatTime(seconds: number): string {
     const secondsInOneMinute = 60;
+    const minutesInHours = 60;
     const minutes = Math.floor(seconds / secondsInOneMinute);
-    return minutes + ':' + (seconds - minutes * secondsInOneMinute);
+    const hours = Math.floor(minutes / minutesInHours);
+    if (hours >= 60 || minutes >= 60) {
+      return hours + ':' + (minutes - hours * secondsInOneMinute);
+    } else {
+      return minutes + ':' + (seconds - minutes * secondsInOneMinute);
+    }
   }
 
   private getActivities() {
