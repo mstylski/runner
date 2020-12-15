@@ -1,27 +1,65 @@
 <div class="d-flex justify-content-between">
   <mat-card class="mat-card-top">
-    <mat-card-header>
-      <span   mat-card-avatar>
+    <mat-card-header class="mt-2">
+      <span mat-card-avatar>
         <img [src]="athlete?.profile" alt="avatar" class="avatar">
       </span>
-      <span>
-
+      <span class="mt-2">
+        <div class="ml-5 pl-4 mt-2">
+<small>{{activity.start_date_local | date: 'EEEE | MMMM d | y | h:mm:ss | a'}}</small>
+      </div>
+      <h2 class="ml-5 pl-4 mt-2">{{activity.name}}</h2>
+<small><div class="ml-5 pl-4 mt-2">{{activity.device_name}}</div></small>
       </span>
     </mat-card-header>
-    <mat-card-content class="content">
-      <div>{{athlete.firstname}} {{athlete.lastname}}</div>
-      <div>{{athlete.city}}</div>
-      <div>{{athlete.country}}</div>
-      <div>{{activity.description}}</div>
-    </mat-card-content>
   </mat-card>
   <mat-card class="mat-card-top">
-    <mat-card-header></mat-card-header>
     <mat-card-content>
-
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md">
+            {{ activity.distance | number: '1.0-0' }}km
+            <div>Distance</div>
+          </div>
+          <div class="col-md">
+            <div>{{ formatTime( activity.moving_time) }}</div>
+            <div>Moving Time</div>
+          </div>
+          <div class="col-md">
+           {{ formatSplits(activity.moving_time) }}/km
+            <div>Pace</div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md">
+            One of three columns
+          </div>
+          <div class="col-md">
+            One of three columns
+          </div>
+          <div class="col-md">
+            One of three columns
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md">
+            One of three columns
+          </div>
+          <div class="col-md">
+            One of three columns
+          </div>
+          <div class="col-md">
+            One of three columns
+          </div>
+        </div>
+      </div>
     </mat-card-content>
   </mat-card>
-  </div>
+</div>
 <div class="mt-2">
   <mat-card class="mat-card-bottom">
     <mat-card-header></mat-card-header>

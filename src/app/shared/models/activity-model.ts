@@ -130,7 +130,7 @@ export interface ActivityModel {
   athlete?: Athlete;
   name?: string;
   distance: number;
-  moving_time?: number;
+  moving_time: number;
   elapsed_time?: number;
   total_elevation_gain?: number;
   type: string;

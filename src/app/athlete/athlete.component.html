@@ -32,14 +32,14 @@
         <div mat-card-avatar>
           <img [src]="athlete?.profile_medium" alt="avatar" class="avatar">
         </div>
-        <p>{{athlete?.firstname}} {{athlete?.lastname}}</p>
+        <p>{{ athlete?.firstname }} {{ athlete?.lastname }}</p>
       </mat-card-header>
       <mat-card-content>
         <div class="mt-4">
-          <p>{{activity.name}}</p>
-          <p>{{activity.start_date_local | date:'HH:mm | dd/MM/yyyy'}}</p>
-          <p>{{activity.distance | number: '1.0-0' }}km</p>
-          <p>{{formatTime(activity.moving_time)}}</p>
+          <p>{{ activity.name}}</p>
+          <p>{{ activity.start_date_local | date:'HH:mm | dd/MM/yyyy' }}</p>
+          <p>{{ activity.distance | number: '1.0-0' }}km</p>
+          <p>{{ formatTime( activity.moving_time) }}</p>
         </div>
       </mat-card-content>
     </mat-card>

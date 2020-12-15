@@ -63,13 +63,14 @@ const MaterialModules = [
 @NgModule({
   exports: MaterialModules,
   providers: [
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3000 } },
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000}},
     {
       provide: MAT_CHIPS_DEFAULT_OPTIONS,
       useValue: {
         separatorKeyCodes: [ENTER, COMMA]
       }
-    }
+    },
   ]
 })
-export class MaterialModule {}
+export class MaterialModule {
+}
