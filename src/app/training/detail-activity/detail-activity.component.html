@@ -15,45 +15,102 @@
   </mat-card>
   <mat-card class="mat-card-top">
     <mat-card-content>
-      <div class="container mt-5">
+      <div class="container mt-4">
         <div class="row">
           <div class="col-md">
-            {{ activity.distance | number: '1.0-0' }}km
-            <div>Distance</div>
+            <div class="d-flex">
+              <div class="mt-2 mr-2 distance">
+                <span class="material-icons">near_me</span>
+              </div>
+              <div>
+                <span>{{ getDistance(activity.distance) }}km</span>
+                <span>
+                 <br><small class="text-uppercase">Distance</small>
+            </span>
+              </div>
+            </div>
           </div>
           <div class="col-md">
-            <div>{{ formatTime( activity.moving_time) }}</div>
-            <div>Moving Time</div>
+            <div class="d-flex">
+              <div class="mt-2 mr-2">
+                <span class="material-icons moving">history</span>
+              </div>
+              <div>
+                <span>{{ formatTime(activity.moving_time) }}</span>
+                <span><small class="text-uppercase"> Moving Time</small></span>
+              </div>
+            </div>
           </div>
           <div class="col-md">
-           {{ formatSplits(activity.moving_time) }}/km
-            <div>Pace</div>
+            <div class="d-flex">
+              <div class="mt-2 mr-2">
+                <span class="material-icons">watch</span>
+              </div>
+              <span>{{getAvgTime(activity.distance, activity.moving_time)}}</span>
+              <div><small class="text-uppercase"><br>Pace</small></div>
+            </div>
           </div>
         </div>
       </div>
       <div class="container">
         <div class="row">
           <div class="col-md">
-            One of three columns
+            <div class="d-flex">
+              <div class="mt-2 mr-2">
+                <span class="material-icons heart">local_fire_department</span>
+              </div>
+              <div>
+                <span>{{activity.calories}} kcal</span>
+                <span><small class="text-uppercase"><br>Calories</small></span>
+              </div>
+            </div>
           </div>
           <div class="col-md">
-            One of three columns
+            <div class="d-flex">
+              <div class="mt-2 mr-2 speed"><span class="material-icons">speed</span></div>
+              <div>
+                <span>{{getSpeed(activity.average_speed)}}</span>
+                <span><small class="text-uppercase"><br>Avg Speed</small></span>
+              </div>
+            </div>
           </div>
           <div class="col-md">
-            One of three columns
+            <div class="d-flex">
+              <div class="mt-2 mr-2 heart"><span class="material-icons">speed</span></div>
+              <div>
+                <span>{{getSpeed(activity.max_speed)}}</span>
+                <span><small class="text-uppercase"><br>Max Speed</small></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="container">
         <div class="row">
           <div class="col-md">
-            One of three columns
+            <div class="d-flex">
+              <div class="mt-2 mr-2 heart"><span class="material-icons">favorite_border</span></div>
+              <div>
+                <span>{{getHeartrate(activity.average_heartrate)}}</span>
+                <span><div><small class="text-uppercase">Avg Heartrate</small></div></span>
+              </div>
+            </div>
           </div>
           <div class="col-md">
-            One of three columns
+            <div class="d-flex">
+              <div class="mt-2 mr-2 heart"><span class="material-icons">favorite</span></div>
+              <div>
+                <span>{{getHeartrate(activity.max_heartrate)}}</span>
+                <span><div><small class="text-uppercase">Max Heartrate</small></div></span>
+              </div>
+            </div>
           </div>
           <div class="col-md">
-            One of three columns
+            <div class="d-flex">
+              <div class="mt-2 mr-2"><span class="material-icons elevation">trending_up</span></div>
+              <div><span>{{activity.total_elevation_gain}}m</span>
+                <span><div><small class="text-uppercase">Elevation Gain</small></div></span></div>
+            </div>
           </div>
         </div>
       </div>

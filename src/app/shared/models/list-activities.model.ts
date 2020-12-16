@@ -23,8 +23,8 @@ export interface Activities {
   id?: number;
   external_id?: string;
   upload_id?: number;
-  start_date?: Date;
-  start_date_local?: Date;
+  start_date: Date;
+  start_date_local: Date;
   timezone?: string;
   utc_offset?: number;
   start_latlng?: any;

@@ -78,5 +78,4 @@ export class AthleteComponent implements OnInit, OnDestroy {
       return minutes + ':' + (seconds - minutes * secondsInOneMinute);
     }
   }
-
 }
