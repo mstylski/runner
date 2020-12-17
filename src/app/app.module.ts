@@ -15,6 +15,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { DetailActivityComponent } from './training/detail-activity/detail-activity.component';
 import {AuthService} from './auth.service';
 import {AthleteService} from './athlete.service';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {AthleteService} from './athlete.service';
     DetailActivityComponent,
   ],
   imports: [
+    ChartsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

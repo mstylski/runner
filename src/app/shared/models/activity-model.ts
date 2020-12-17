@@ -59,13 +59,14 @@ export interface SegmentEffort {
 }
 
 export interface SplitsMetric {
-  distance?: number;
+  distance: number;
   elapsed_time?: number;
-  elevation_difference?: number;
-  moving_tim?: number;
-  split?: number;
+  elevation_difference: number;
+  moving_time: number;
+  split: number;
   average_speed?: number;
   pace_zone?: number;
+  average_heartrate: number;
 }
 
 export interface Lap {
@@ -175,7 +176,7 @@ export interface ActivityModel {
   description?: string;
   calories?: number;
   segment_efforts?: SegmentEffort[];
-  splits_metric?: SplitsMetric[];
+  splits_metric: SplitsMetric[];
   laps?: Lap[];
   gear?: Gear;
   partner_brand_tag?: any;

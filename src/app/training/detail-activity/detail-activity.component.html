@@ -15,7 +15,7 @@
   </mat-card>
   <mat-card class="mat-card-top">
     <mat-card-content>
-      <div class="container mt-4">
+      <div class="container mt-3">
         <div class="row">
           <div class="col-md">
             <div class="d-flex">
@@ -37,7 +37,7 @@
               </div>
               <div>
                 <span>{{ formatTime(activity.moving_time) }}</span>
-                <span><small class="text-uppercase"> Moving Time</small></span>
+                <span><small class="text-uppercase"><br>Moving Time</small></span>
               </div>
             </div>
           </div>
@@ -46,8 +46,9 @@
               <div class="mt-2 mr-2">
                 <span class="material-icons">watch</span>
               </div>
-              <span>{{getAvgTime(activity.distance, activity.moving_time)}}</span>
-              <div><small class="text-uppercase"><br>Pace</small></div>
+              <span>{{getAvgTime(activity.distance, activity.moving_time)}}
+                <small class="text-uppercase"><br>Pace</small></span>
+              <span></span>
             </div>
           </div>
         </div>
@@ -117,11 +118,70 @@
     </mat-card-content>
   </mat-card>
 </div>
-<div class="mt-2">
-  <mat-card class="mat-card-bottom">
-    <mat-card-header></mat-card-header>
-    <mat-card-content>
+<div class="d-flex justify-content-between">
+  <div class="mt-2">
+    <mat-card class="mat-card-bottom-1">
+      <h2 class="splits-header">Splits</h2>
+      <mat-card-content>
+        <div>
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th scope="col">KM</th>
+              <th scope="col">Pace</th>
+              <th scope="col">Elevation</th>
+              <th scope="col">HR</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let metric of activity.splits_metric">
+              <td>{{metric.split}}</td>
+              <td>{{getAvgSplit(metric.distance, metric.moving_time)}}</td>
+              <td>{{metric.elevation_difference}}m</td>
+              <td>{{metric.average_heartrate | number: '1.0-0'}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="mt-2">
+    <mat-card class="mat-card-bottom-2">
+      <mat-card-header></mat-card-header>
+      <mat-card-content>
 
-    </mat-card-content>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div class="mt-2">
+  <mat-card>
+    <mat-card-title>
+      <mat-card-content>
+        <div class="flex">
+          <div class="flex-item">
+            <div style="display: block;">
+              <canvas baseChart width="400" height="200"
+                      [datasets]="lineChartData"
+                      [options]="lineChartOptions"
+                      [colors]="lineChartColors"
+                      [legend]="lineChartLegend"
+                      [chartType]="lineChartType"
+                      [plugins]="lineChartPlugins"
+              ></canvas>
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="flex-item">
+              <table class="table table-responsive table-condensed">
+                <tr *ngFor="let d of lineChartData; let i=index" [class]="'line-'+i">
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card-title>
   </mat-card>
 </div>
