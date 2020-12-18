@@ -80,7 +80,8 @@ export interface Lap {
   distance?: number;
   start_index?: number;
   end_index?: number;
-  total_elevation_gain?: number;
+  total_elevation_gain: number;
+  average_heartrate: number;
   average_speed?: number;
   max_speed?: number;
   average_cadence?: number;
@@ -177,7 +178,7 @@ export interface ActivityModel {
   calories?: number;
   segment_efforts?: SegmentEffort[];
   splits_metric: SplitsMetric[];
-  laps?: Lap[];
+  laps: Lap[];
   gear?: Gear;
   partner_brand_tag?: any;
   photos?: Photos;

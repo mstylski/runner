@@ -7,6 +7,9 @@ import {AthleteModel} from '../../shared/models/athlete.model';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 import {BaseChartDirective, Color} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import * as L from 'leaflet';
+import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates.model';
+
 
 @Component({
   selector: 'app-detail-activity',
@@ -14,6 +17,8 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
   styleUrls: ['./detail-activity.component.scss']
 })
 export class DetailActivityComponent implements OnInit {
+  map: L.Map;
+
   lineChartData: ChartDataSets[] = [];
   // @ts-ignore
   lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -88,6 +93,7 @@ export class DetailActivityComponent implements OnInit {
   @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
   activity: ActivityModel;
   athlete: AthleteModel;
+  coordinates: ActivityCoordinatesModel;
 
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
@@ -97,6 +103,26 @@ export class DetailActivityComponent implements OnInit {
   ngOnInit(): void {
     this.getAthlete();
     this.getActivity();
+    this.showMap();
+    this.getActivityCoordinates();
+  }
+
+  getActivityCoordinates() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.activityService.getActivityCoordinates(id).subscribe(coordinates => {
+      this.coordinates = coordinates[0];
+      this.drawActivityOnMap();
+    });
+  }
+
+  drawActivityOnMap() {
+    const config = {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+    };
+    L.polyline(this.coordinates.data, config).addTo(this.map);
+    this.map.setView(this.coordinates.data[0], 12);
   }
 
   getActivity() {
@@ -148,7 +174,21 @@ export class DetailActivityComponent implements OnInit {
   }
 
   prepareEleveationChartData() {
-    const elevations = this.activity.splits_metric.map((metric) => metric.elevation_difference * 30);
-    return this.lineChartData.push({data: elevations, label: 'Elevation'});
+    const elevations = this.activity.laps.map((lap) => lap.total_elevation_gain);
+    const heartrate = this.activity.laps.map((lap) => lap.average_heartrate);
+    return this.lineChartData.push({data: elevations, label: 'Elevation'}, {data: heartrate, label: 'Heartrate' });
   }
+
+  showMap() {
+    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
+    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
+        ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox/streets-v11',
+      updateWhenZooming: false,
+      crossOrigin: true,
+      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tpb240OThrMGtkOTJyb3ljeDU4eTVsZCJ9.35ZTqLgPeRQ-SiIV8wdjMw`
+    }).addTo(this.map);
+  }
+
 }
