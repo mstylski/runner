@@ -4,6 +4,7 @@ import {environment} from '../environments/environment';
 import {Activities} from './shared/models/list-activities.model';
 import {ActivityModel} from './shared/models/activity-model';
 import {HttpClient} from '@angular/common/http';
+import {ActivityCoordinateResponse, ActivityCoordinatesModel} from './shared/models/activity-coordinates.model';
 
 @Injectable({providedIn: 'root'})
 export class ActivityService {
@@ -25,6 +26,13 @@ export class ActivityService {
       scope: 'activity:read_all'
     };
     return this.http.get<ActivityModel>(`${environment.apiUrl}activities/${id}`, {params});
+  }
+
+  getActivityCoordinates(id: number): Observable<ActivityCoordinateResponse> {
+    const params = {
+      scope: 'activity:read_all'
+    };
+    return this.http.get<ActivityCoordinateResponse>(`${environment.apiUrl}activities/${id}/streams/latlng`, {params});
   }
 }
 
