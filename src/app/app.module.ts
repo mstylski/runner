@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ActivityService} from './activity.service';
@@ -16,6 +16,7 @@ import { DetailActivityComponent } from './training/detail-activity/detail-activ
 import {AuthService} from './auth.service';
 import {AthleteService} from './athlete.service';
 import {ChartsModule} from 'ng2-charts';
+import {DemoUtilsModule} from './demo-utils/module';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {ChartsModule} from 'ng2-charts';
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    DemoUtilsModule
   ],
   providers: [
     AuthService,
@@ -47,7 +49,7 @@ import {ChartsModule} from 'ng2-charts';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

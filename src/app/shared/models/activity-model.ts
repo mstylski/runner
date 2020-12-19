@@ -77,7 +77,7 @@ export interface Lap {
   moving_time: number;
   start_date: Date;
   start_date_local: Date;
-  distance?: number;
+  distance: number;
   start_index?: number;
   end_index?: number;
   total_elevation_gain: number;
@@ -88,7 +88,7 @@ export interface Lap {
   device_watts?: boolean;
   average_watts?: number;
   lap_index?: number;
-  split?: number;
+  split: number;
 }
 
 export interface Gear {

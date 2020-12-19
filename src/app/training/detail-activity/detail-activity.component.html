@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-between">
+<div *ngIf="activity" class="d-flex justify-content-between">
   <mat-card class="mat-card-top">
     <mat-card-header class="mt-2">
       <span mat-card-avatar>
@@ -133,7 +133,7 @@
               <th scope="col">HR</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="activity">
             <tr *ngFor="let metric of activity.splits_metric">
               <td>{{metric.split}}</td>
               <td>{{getAvgSplit(metric.distance, metric.moving_time)}}</td>
@@ -166,6 +166,7 @@
                       [datasets]="lineChartData"
                       [options]="lineChartOptions"
                       [colors]="lineChartColors"
+                      [labels]="lineChartLabels"
                       [legend]="lineChartLegend"
                       [chartType]="lineChartType"
                       [plugins]="lineChartPlugins"
@@ -175,7 +176,11 @@
           <div class="d-flex">
             <div class="flex-item">
               <table class="table table-responsive table-condensed">
+<!--                <tr>-->
+<!--                  <th *ngFor="let label of lineChartLabels">{{label}}</th>-->
+<!--                </tr>-->
                 <tr *ngFor="let d of lineChartData; let i=index" [class]="'line-'+i">
+<!--                  <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>-->
                 </tr>
               </table>
             </div>

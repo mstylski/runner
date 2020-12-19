@@ -4,7 +4,7 @@ import {environment} from '../environments/environment';
 import {Activities} from './shared/models/list-activities.model';
 import {ActivityModel} from './shared/models/activity-model';
 import {HttpClient} from '@angular/common/http';
-import {ActivityCoordinateResponse, ActivityCoordinatesModel} from './shared/models/activity-coordinates.model';
+import {ActivityCoordinateResponse} from './shared/models/activity-coordinates.model';
 
 @Injectable({providedIn: 'root'})
 export class ActivityService {

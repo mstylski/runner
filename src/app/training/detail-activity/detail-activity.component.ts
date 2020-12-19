@@ -5,7 +5,7 @@ import {ActivityService} from '../../activity.service';
 import {AthleteService} from '../../athlete.service';
 import {AthleteModel} from '../../shared/models/athlete.model';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
-import {BaseChartDirective, Color} from 'ng2-charts';
+import {BaseChartDirective, Color, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import * as L from 'leaflet';
 import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates.model';
@@ -20,6 +20,8 @@ export class DetailActivityComponent implements OnInit {
   map: L.Map;
 
   lineChartData: ChartDataSets[] = [];
+  lineChartLabels: Label[] = [];
+
   // @ts-ignore
   lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
@@ -34,7 +36,7 @@ export class DetailActivityComponent implements OnInit {
           id: 'y-axis-1',
           position: 'right',
           gridLines: {
-            color: 'rgba(255,0,0,0.3)',
+            color: 'rgb(207,162,162)',
           },
           ticks: {
             fontColor: 'red',
@@ -61,22 +63,6 @@ export class DetailActivityComponent implements OnInit {
     },
   };
   public lineChartColors: Color[] = [
-    {
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    {
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
     {
       backgroundColor: 'rgba(255,0,0,0.3)',
       borderColor: 'red',
@@ -130,7 +116,8 @@ export class DetailActivityComponent implements OnInit {
     this.activityService.getActivity(id).subscribe(
       activity => {
         this.activity = activity;
-        this.prepareEleveationChartData();
+        this.prepareElevationChartData();
+        this.prepareLineChartLabels();
       });
   }
 
@@ -173,10 +160,18 @@ export class DetailActivityComponent implements OnInit {
     return `${(heartrate).toFixed(0)} bpm`;
   }
 
-  prepareEleveationChartData() {
+  prepareLineChartLabels() {
+    const splits = this.activity.laps.map((lap, index) => this.activity.laps
+      .slice(0, index + 1)
+      .reduce((acc, laps) => acc + laps.distance, 0));
+    return `${splits}`;
+  }
+
+
+  prepareElevationChartData() {
     const elevations = this.activity.laps.map((lap) => lap.total_elevation_gain);
     const heartrate = this.activity.laps.map((lap) => lap.average_heartrate);
-    return this.lineChartData.push({data: elevations, label: 'Elevation'}, {data: heartrate, label: 'Heartrate' });
+    return this.lineChartData.push({data: heartrate, label: 'Heartrate'}, {data: elevations, label: 'Elevation'});
   }
 
   showMap() {

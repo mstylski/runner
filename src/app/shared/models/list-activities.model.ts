@@ -27,8 +27,8 @@ export interface Activities {
   start_date_local: Date;
   timezone?: string;
   utc_offset?: number;
-  start_latlng?: any;
-  end_latlng?: any;
+  start_latlng: any;
+  end_latlng: any;
   location_city?: any;
   location_state?: any;
   location_country?: string;
@@ -37,7 +37,7 @@ export interface Activities {
   comment_count?: number;
   athlete_count?: number;
   photo_count?: number;
-  map?: Map[];
+  map: Map[];
   trainer?: boolean;
   commute?: boolean;
   manual?: boolean;

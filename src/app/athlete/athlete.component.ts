@@ -16,7 +16,6 @@ import {debounceTime, switchMap} from 'rxjs/operators';
 export class AthleteComponent implements OnInit, OnDestroy {
   activities: Activities[] = [];
   currentPageIndex = 1;
-
   athlete: AthleteModel;
   stats: AthleteStatsModel;
   private readonly subscriptions = new Subscription();

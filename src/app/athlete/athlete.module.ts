@@ -16,7 +16,6 @@ import {CalendarModule} from 'angular-calendar';
 @NgModule({
   declarations: [
     AthleteComponent,
-    TrainingCalendarComponent,
     MyActivitiesComponent,
     SegmentSearchComponent,
     MySegmentsComponent,
