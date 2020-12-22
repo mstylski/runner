@@ -62,6 +62,7 @@ export class DetailActivityComponent implements OnInit {
       ],
     },
   };
+
   public lineChartColors: Color[] = [
     {
       backgroundColor: 'rgba(255,0,0,0.3)',

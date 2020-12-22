@@ -6,7 +6,8 @@
   <table mat-table table [dataSource]="activities">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let workoutData"> {{ workoutData.name }}  </td>
+      <td mat-cell *matCellDef="let workoutData"><button mat-raised-button (click)="workoutData.name" color="warn">
+        {{ workoutData.name }}</button></td>
     </ng-container>
     <ng-container matColumnDef="start_date_local">
       <th mat-header-cell *matHeaderCellDef>Date</th>

@@ -55,7 +55,7 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
   private getActivities() {
     const subscription = this.pagination$.pipe(
       debounceTime(400),
-      switchMap((pageIndex) => this.activityService.getActivities(pageIndex)),
+      switchMap((pageIndex) => this.activityService.getActivitiesWithPagination(pageIndex)),
     )
     .subscribe(activities => this.activities = activities);
 

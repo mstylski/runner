@@ -12,12 +12,20 @@ export class ActivityService {
   constructor(private http: HttpClient) {
   }
 
-  getActivities(page: number): Observable<Activities[]> {
+  getActivitiesWithPagination(page: number): Observable<Activities[]> {
     const params = {
       per_page: '20',
       page: page.toString(),
     };
 
+    return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});
+  }
+
+  getActivities(before: () => string, after: number): Observable<Activities[]> {
+    const params = {
+      after: after.toString(),
+      before: before.toString(),
+    };
     return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});
   }
 

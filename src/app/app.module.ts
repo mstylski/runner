@@ -16,7 +16,7 @@ import { DetailActivityComponent } from './training/detail-activity/detail-activ
 import {AuthService} from './auth.service';
 import {AthleteService} from './athlete.service';
 import {ChartsModule} from 'ng2-charts';
-import {DemoUtilsModule} from './demo-utils/module';
+import {UtilsModule} from './training/training-calendar/utils/module';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import {DemoUtilsModule} from './demo-utils/module';
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-    DemoUtilsModule
+    UtilsModule
   ],
   providers: [
     AuthService,

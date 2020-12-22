@@ -59,7 +59,7 @@ export class AthleteComponent implements OnInit, OnDestroy {
   private getActivities() {
     const subscription = this.pagination$.pipe(
       debounceTime(400),
-      switchMap((pageIndex) => this.activityService.getActivities(pageIndex)),
+      switchMap((pageIndex) => this.activityService.getActivitiesWithPagination(pageIndex)),
     )
       .subscribe(activities => this.activities = activities);
 
@@ -76,5 +76,9 @@ export class AthleteComponent implements OnInit, OnDestroy {
     } else {
       return minutes + ':' + (seconds - minutes * secondsInOneMinute);
     }
+  }
+
+  getMap() {
+    this.activities.map((activities) => activities.map);
   }
 }

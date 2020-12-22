@@ -1,109 +1,39 @@
-import {ChangeDetectionStrategy, Component, TemplateRef, ViewChild} from '@angular/core';
-import {addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays} from 'date-fns';
+import {ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {isSameDay, isSameMonth, parseISO} from 'date-fns';
 import {Subject} from 'rxjs';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
-
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
+import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
+import {Activities} from '../../shared/models/list-activities.model';
+import {ActivityService} from '../../activity.service';
+import {colors} from './utils/colors';
 
 @Component({
   selector: 'app-training-calendar',
   templateUrl: './training-calendar.component.html',
   styleUrls: ['./training-calendar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class TrainingCalendarComponent {
+
+export class TrainingCalendarComponent implements OnInit {
+  activities: Activities[] = [];
   @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
-
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
-
   viewDate: Date = new Date();
-
   modalData: {
     action: string;
     event: CalendarEvent;
   };
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({event}: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({event}: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
   refresh: Subject<any> = new Subject();
+  events: CalendarEvent[] = [];
+  activeDayIsOpen = false;
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  private after = new Date().toISOString;
+  private before = 1;
 
-  activeDayIsOpen = true;
 
-  constructor(private modal: NgbModal) {
+  constructor(private modal: NgbModal,
+              private activityService: ActivityService) {
   }
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
@@ -114,11 +44,7 @@ export class TrainingCalendarComponent {
     }
   }
 
-  eventTimesChanged({
-                      event,
-                      newStart,
-                      newEnd,
-                    }: CalendarEventTimesChangedEvent): void {
+  eventTimesChanged({event, newStart, newEnd}: CalendarEventTimesChangedEvent): void {
     this.events = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
@@ -137,33 +63,34 @@ export class TrainingCalendarComponent {
     this.modal.open(this.modalContent, {size: 'lg'});
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
   setView(view: CalendarView) {
     this.view = view;
   }
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  private getActivities() {
+    this.activityService.getActivities(this.after, this.before).subscribe(activities => {
+      return this.activities = activities;
+    });
+  }
+
+  prepareCalendarEvents() {
+    this.events = this.activities.map((activity) => {
+      return {
+        title: activity.name,
+        id: activity.id,
+        // @ts-ignore
+        start: parseISO(activity.start_date_local),
+        color: colors.blue,
+      };
+    });
+  }
+
+  ngOnInit() {
+    this.getActivities();
   }
 }
 
