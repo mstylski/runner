@@ -19,8 +19,8 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
   activities: Activities[] = [];
   private readonly subscriptions = new Subscription();
   private readonly pagination$ = new BehaviorSubject<number>(this.currentPageIndex);
-
-  constructor(private activityService: ActivityService) {}
+  constructor(private activityService: ActivityService) {
+  }
 
   ngOnInit() {
     this.getActivities();
@@ -57,7 +57,7 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
       debounceTime(400),
       switchMap((pageIndex) => this.activityService.getActivitiesWithPagination(pageIndex)),
     )
-    .subscribe(activities => this.activities = activities);
+      .subscribe(activities => this.activities = activities);
 
     this.subscriptions.add(subscription);
   }

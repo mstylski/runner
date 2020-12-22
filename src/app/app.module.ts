@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import { NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ActivityService} from './activity.service';
@@ -11,17 +11,19 @@ import {CoreModule} from './core/core.module';
 import {MaterialModule} from './shared/material/material.module';
 import {AthleteModule} from './athlete/athlete.module';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { DetailActivityComponent } from './training/detail-activity/detail-activity.component';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {DetailActivityComponent} from './training/detail-activity/detail-activity.component';
 import {AuthService} from './auth.service';
 import {AthleteService} from './athlete.service';
 import {ChartsModule} from 'ng2-charts';
 import {UtilsModule} from './training/training-calendar/utils/module';
+import {RoutesDetailsComponent} from './routes/routes-details/routes-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DetailActivityComponent,
+    RoutesDetailsComponent,
   ],
   imports: [
     ChartsModule,

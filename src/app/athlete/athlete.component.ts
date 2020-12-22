@@ -77,8 +77,7 @@ export class AthleteComponent implements OnInit, OnDestroy {
       return minutes + ':' + (seconds - minutes * secondsInOneMinute);
     }
   }
-
-  getMap() {
-    this.activities.map((activities) => activities.map);
+  getRecentDistance(distance: number) {
+    return `${(distance / 1000).toFixed(1)}km`;
   }
 }

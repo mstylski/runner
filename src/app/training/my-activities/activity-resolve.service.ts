@@ -2,7 +2,7 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/rou
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {ActivityService} from '../../activity.service';
-import {ActivityModel} from '../../shared/models/activity-model';
+import {ActivityModel} from '../../shared/models/activity.model';
 
 @Injectable({providedIn: 'root'})
 export class ActivityResolveService implements Resolve<ActivityModel> {

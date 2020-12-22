@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {isSameDay, isSameMonth, parseISO} from 'date-fns';
 import {Subject} from 'rxjs';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -27,10 +27,6 @@ export class TrainingCalendarComponent implements OnInit {
   refresh: Subject<any> = new Subject();
   events: CalendarEvent[] = [];
   activeDayIsOpen = false;
-
-  private after = new Date().toISOString;
-  private before = 1;
-
 
   constructor(private modal: NgbModal,
               private activityService: ActivityService) {
@@ -72,8 +68,9 @@ export class TrainingCalendarComponent implements OnInit {
   }
 
   private getActivities() {
-    this.activityService.getActivities(this.after, this.before).subscribe(activities => {
-      return this.activities = activities;
+    this.activityService.getActivities().subscribe(activities => {
+      this.activities = activities;
+      this.prepareCalendarEvents();
     });
   }
 

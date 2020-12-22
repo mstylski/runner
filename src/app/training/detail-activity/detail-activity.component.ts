@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ActivityModel} from '../../shared/models/activity-model';
+import {ActivityModel, Primary} from '../../shared/models/activity.model';
 import {ActivityService} from '../../activity.service';
 import {AthleteService} from '../../athlete.service';
 import {AthleteModel} from '../../shared/models/athlete.model';
@@ -8,7 +8,7 @@ import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 import {BaseChartDirective, Color, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import * as L from 'leaflet';
-import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates.model';
+import {ActivityCoordinatesModel} from '../../shared/models/activity.coordinates.model';
 
 
 @Component({
@@ -81,6 +81,7 @@ export class DetailActivityComponent implements OnInit {
   activity: ActivityModel;
   athlete: AthleteModel;
   coordinates: ActivityCoordinatesModel;
+  urls: Primary;
 
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,

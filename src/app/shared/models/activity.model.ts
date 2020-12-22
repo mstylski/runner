@@ -105,10 +105,10 @@ export interface Urls {
 }
 
 export interface Primary {
-  id?: any;
-  unique_id?: string;
-  urls?: Urls;
-  source?: number;
+  id: any;
+  unique_id: string;
+  urls: Urls;
+  source: number;
 }
 
 export interface Photos {

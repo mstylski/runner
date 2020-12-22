@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
 import {Activities} from './shared/models/list-activities.model';
-import {ActivityModel} from './shared/models/activity-model';
+import {ActivityModel} from './shared/models/activity.model';
 import {HttpClient} from '@angular/common/http';
-import {ActivityCoordinateResponse} from './shared/models/activity-coordinates.model';
+import {ActivityCoordinateResponse} from './shared/models/activity.coordinates.model';
 
 @Injectable({providedIn: 'root'})
 export class ActivityService {
@@ -17,14 +17,15 @@ export class ActivityService {
       per_page: '20',
       page: page.toString(),
     };
-
     return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});
   }
 
-  getActivities(before: () => string, after: number): Observable<Activities[]> {
+  getActivities(): Observable<Activities[]> {
+    const after = Math.round(new Date().getTime() / 1000 );
     const params = {
-      after: after.toString(),
-      before: before.toString(),
+      before: after.toString(),
+      after: '1514809418',
+      per_page: '200',
     };
     return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});
   }
@@ -43,4 +44,3 @@ export class ActivityService {
     return this.http.get<ActivityCoordinateResponse>(`${environment.apiUrl}activities/${id}/streams/latlng`, {params});
   }
 }
-

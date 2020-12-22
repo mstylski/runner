@@ -13,6 +13,8 @@ import {PaceCalculatorComponent} from './calculators/pace-calculator/pace-calcul
 import {WingsForLifeComponent} from './calculators/wings-for-life/wings-for-life.component';
 import {ActivityResolveService} from './training/my-activities/activity-resolve.service';
 import {DetailActivityComponent} from './training/detail-activity/detail-activity.component';
+import {RoutesResolverService} from './routes/routes-resolver.service';
+import {RoutesDetailsComponent} from './routes/routes-details/routes-details.component';
 
 const routes: Routes = [
   {
@@ -33,7 +35,8 @@ const routes: Routes = [
       {path: 'wings-for-life', component: WingsForLifeComponent},
       {path: 'pace-calculator', component: PaceCalculatorComponent},
       {path: 'distance-calculator', component: DistanceCalculatorComponent},
-      {path: 'routes', component: RoutesComponent}
+      {path: 'routes', component: RoutesComponent},
+      {path: 'routes/:id', component: RoutesDetailsComponent, resolve: {routes: RoutesResolverService}}
     ]
   },
 ];
