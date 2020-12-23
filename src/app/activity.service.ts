@@ -14,7 +14,15 @@ export class ActivityService {
 
   getActivitiesWithPagination(page: number): Observable<Activities[]> {
     const params = {
-      per_page: '20',
+      per_page: '3',
+      page: page.toString(),
+    };
+    return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});
+  }
+
+  getActivitiesWithPagination2(page: number): Observable<Activities[]> {
+    const params = {
+      per_page: '10',
       page: page.toString(),
     };
     return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});

@@ -98,4 +98,5 @@ export class AthleteComponent implements OnInit, OnDestroy {
   getFilteredDistance() {
     this.listOfActivities.filter((activity) => activity.distance <= 1000);
   }
+
 }
