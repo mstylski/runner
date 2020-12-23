@@ -99,24 +99,6 @@ export interface Gear {
   distance?: number;
 }
 
-export interface Urls {
-  100?: string;
-  600?: string;
-}
-
-export interface Primary {
-  id: any;
-  unique_id: string;
-  urls: Urls;
-  source: number;
-}
-
-export interface Photos {
-  primary?: Primary;
-  use_primary_photo?: boolean;
-  count?: number;
-}
-
 export interface HighlightedKudoser {
   destination_url: string;
   display_name: string;
@@ -181,7 +163,19 @@ export interface ActivityModel {
   laps: Lap[];
   gear?: Gear;
   partner_brand_tag?: any;
-  photos?: Photos;
+  photos: {
+    primary: {
+      id: any;
+      unique_id: string;
+      urls: {
+        100: string;
+        600: string;
+      };
+      source: number;
+    };
+    use_primary_photo?: boolean;
+    count?: number;
+  };
   highlighted_kudosers?: HighlightedKudoser[];
   device_name?: string;
   embed_token?: string;

@@ -7,6 +7,8 @@ import {ActivityService} from '../activity.service';
 import {Activities} from '../shared/models/list-activities.model';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
+import {ActivityModel} from '../shared/models/activity.model';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-athlete',
@@ -14,7 +16,8 @@ import {debounceTime, switchMap} from 'rxjs/operators';
   styleUrls: ['./athlete.component.scss']
 })
 export class AthleteComponent implements OnInit, OnDestroy {
-  activities: Activities[] = [];
+  listOfActivities: Activities[] = [];
+  activitiesId: ActivityModel;
   currentPageIndex = 1;
   athlete: AthleteModel;
   stats: AthleteStatsModel;
@@ -24,7 +27,8 @@ export class AthleteComponent implements OnInit, OnDestroy {
   constructor(
     private athleteService: AthleteService,
     private authService: AuthService,
-    private activityService: ActivityService) {
+    private activityService: ActivityService,
+    private route: ActivatedRoute) {
 
   }
 
@@ -32,6 +36,7 @@ export class AthleteComponent implements OnInit, OnDestroy {
     this.getAthlete();
     this.getStats();
     this.getActivities();
+    this.getFilteredDistance();
   }
 
   ngOnDestroy() {
@@ -56,12 +61,20 @@ export class AthleteComponent implements OnInit, OnDestroy {
     this.athleteService.getAthleteStats(this.authService.getLoggedAthlete().id).subscribe(stats => this.stats = stats);
   }
 
+  getActivity() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.activityService.getActivity(id).subscribe(
+      activity => {
+        this.activitiesId = activity;
+      });
+  }
+
   private getActivities() {
     const subscription = this.pagination$.pipe(
       debounceTime(400),
       switchMap((pageIndex) => this.activityService.getActivitiesWithPagination(pageIndex)),
     )
-      .subscribe(activities => this.activities = activities);
+      .subscribe(activities => this.listOfActivities = activities);
 
     this.subscriptions.add(subscription);
   }
@@ -77,7 +90,12 @@ export class AthleteComponent implements OnInit, OnDestroy {
       return minutes + ':' + (seconds - minutes * secondsInOneMinute);
     }
   }
+
   getRecentDistance(distance: number) {
     return `${(distance / 1000).toFixed(1)}km`;
+  }
+
+  getFilteredDistance() {
+    this.listOfActivities.filter((activity) => activity.distance <= 1000);
   }
 }

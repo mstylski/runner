@@ -1,11 +1,11 @@
-<div class="d-flex justify-content-between">
+<div class="d-flex">
   <div class="col-md-4">
     <mat-card>
       <mat-card-header class="mb-3">
         <div mat-card-avatar>
           <img [src]="athlete?.profile_medium" alt="avatar" class="avatar">
         </div>
-        <p>{{athlete?.firstname}} {{athlete?.lastname}}</p>
+        <strong>{{athlete?.firstname}} {{athlete?.lastname}}</strong>
       </mat-card-header>
     </mat-card>
     <mat-card class="mt-3">
@@ -75,7 +75,7 @@ directions_run
       </div>
     </mat-tab>
     <mat-tab label="Cycling">
-      <div class="example-large-box mat-elevation-z4">
+      <div class="large-box mat-elevation-z4">
         <tr>
           <td><strong>Last-4-Week-Rides</strong>
             <span class="material-icons ml-2 rides">
@@ -138,11 +138,11 @@ directions_bike
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="col-md-8">
+  <div class="col-md-3">
     <button mat-raised-button (click)="pageBefore()" [disabled]="currentPageIndex === 1">Page Before</button>
     <button mat-raised-button (click)="pageNext()">Page Next</button>
     Current page: {{ currentPageIndex }}
-    <mat-card *ngFor="let activity of activities" class="mt-3">
+    <mat-card *ngFor="let activity of listOfActivities" class="mt-3">
       <mat-card-header>
         <div mat-card-avatar>
           <img [src]="athlete?.profile_medium" alt="avatar" class="avatar">
@@ -159,6 +159,17 @@ directions_bike
       </mat-card-content>
     </mat-card>
   </div>
+  <div class="w-100">
+    <mat-card>
+      <mat-card-header>
+<h2>Best Estimated Efforts</h2>
+      </mat-card-header>
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
+
 
 

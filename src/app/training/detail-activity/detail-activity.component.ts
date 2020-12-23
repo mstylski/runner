@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ActivityModel, Primary} from '../../shared/models/activity.model';
+import {ActivityModel} from '../../shared/models/activity.model';
 import {ActivityService} from '../../activity.service';
 import {AthleteService} from '../../athlete.service';
 import {AthleteModel} from '../../shared/models/athlete.model';
@@ -81,7 +81,6 @@ export class DetailActivityComponent implements OnInit {
   activity: ActivityModel;
   athlete: AthleteModel;
   coordinates: ActivityCoordinatesModel;
-  urls: Primary;
 
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
@@ -184,7 +183,7 @@ export class DetailActivityComponent implements OnInit {
       id: 'mapbox/streets-v11',
       updateWhenZooming: false,
       crossOrigin: true,
-      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tpb240OThrMGtkOTJyb3ljeDU4eTVsZCJ9.35ZTqLgPeRQ-SiIV8wdjMw`
+      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMTZpdXJ3MGc5MDJ0cDg0Z2c1cnByNyJ9.Y3IaFavNQmF8ZTiqeAn3Wg`
     }).addTo(this.map);
   }
 

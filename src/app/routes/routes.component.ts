@@ -1,11 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RoutesService} from '../routes.service';
 import {RoutesModel} from '../shared/models/routes.model';
-
-
-interface Map {
-  map: Map;
-}
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-routes',
@@ -13,11 +9,11 @@ interface Map {
   styleUrls: ['./routes.component.scss']
 })
 export class RoutesComponent implements OnInit {
-  runningRoutes: RoutesModel;
+  runningRoutes: RoutesModel[] = [];
   id: number;
 
-
-  constructor(private routesService: RoutesService) {
+  constructor(private routesService: RoutesService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -31,5 +27,4 @@ export class RoutesComponent implements OnInit {
   getRoutes() {
     this.routesService.getRoutes().subscribe(route => this.runningRoutes = route);
   }
-
 }

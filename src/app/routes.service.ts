@@ -12,14 +12,11 @@ export class RoutesService {
   constructor(private http: HttpClient) {
   }
 
-  getRoute(id: number): Observable<RoutesModel> {
-    return this.http.get<RoutesModel>(`${environment.apiUrl}routes/${id}`);
-  }
-
-  getRoutes(): Observable<RoutesModel> {
+  getRoutes(): Observable<RoutesModel[]> {
     const params = {
       scope: 'read_all'
     };
-    return this.http.get<RoutesModel>(`${environment.apiUrl}athletes/32974624/routes`, {params});
+    return this.http.get<RoutesModel[]>(`${environment.apiUrl}athletes/32974624/routes`, {params});
   }
+
 }

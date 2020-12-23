@@ -59,12 +59,6 @@ export interface Segment {
   athlete_segment_stats: AthleteSegmentStats;
 }
 
-export interface MapUrls {
-  map_urls: {
-    url: string;
-      retina_url: string;
-  };
-}
 
 export interface RoutesModel {
   athlete: Athlete;
@@ -74,7 +68,10 @@ export interface RoutesModel {
   id: number;
   id_str: string;
   map: Map;
-  urls: MapUrls;
+  map_urls: {
+    url: string;
+    retina_url: string;
+  };
   name: string;
   private: boolean;
   starred: boolean;
