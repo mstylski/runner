@@ -152,7 +152,10 @@ directions_bike
         </mat-card-header>
         <mat-card-content>
           <div class="mt-4">
-            <p>{{ activity.name}}</p>
+            <p>
+              <img *ngIf="activity.type === 'Run'" src="assets/images/run.png" alt="run">
+              <img *ngIf="activity.type === 'Ride'" src="assets/images/ride.png" alt="ride">
+              {{ activity.name}}</p>
             <p>{{ activity.start_date_local | date:'HH:mm | dd/MM/yyyy' }}</p>
             <p>{{ (activity.distance / 1000).toFixed(1) }}km</p>
             <p>{{ formatTime(activity.moving_time) }}</p>

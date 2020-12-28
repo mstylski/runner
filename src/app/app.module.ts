@@ -18,11 +18,15 @@ import {AthleteService} from './athlete.service';
 import {ChartsModule} from 'ng2-charts';
 import {UtilsModule} from './training/training-calendar/utils/module';
 import {CommonModule} from '@angular/common';
+import { RoutesDetailsComponent } from './routes/routes-details/routes-details.component';
+import { MySegmentsDetailsComponent } from './segments/my-segments/my-segments-details/my-segments-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DetailActivityComponent,
+    RoutesDetailsComponent,
+    MySegmentsDetailsComponent,
   ],
   imports: [
     CommonModule,

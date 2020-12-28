@@ -20,11 +20,10 @@ export class RoutesService {
     return this.http.get<RoutesModel[]>(`${environment.apiUrl}athletes/32974624/routes`, {params});
   }
 
-  getRoutesCoordinates(id: number): Observable<RoutesCoordinatesModel> {
+  getRoutesCoordinates(id: string): Observable<RoutesCoordinatesModel> {
     const params = {
       scope: 'read_all'
     };
     return this.http.get<RoutesCoordinatesModel>(`${environment.apiUrl}routes/${id}/streams`, {params});
   }
-
 }

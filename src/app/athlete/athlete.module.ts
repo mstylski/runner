@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {AthleteComponent} from './athlete.component';
 import {SharedModule} from '../shared/shared.module';
-import {SegmentSearchComponent} from '../segments/segment-search/segment-search.component';
 import {MySegmentsComponent} from '../segments/my-segments/my-segments.component';
-import {SegmentExploreComponent} from '../segments/my-segments/segment-explore/segment-explore.component';
+import {SegmentExploreComponent} from '../segments/segment-explore/segment-explore.component';
 import {RoutesComponent} from '../routes/routes.component';
 import {WingsForLifeComponent} from '../calculators/wings-for-life/wings-for-life.component';
 import {DistanceCalculatorComponent} from '../calculators/distance-calculator/distance-calculator.component';
@@ -17,7 +16,6 @@ import {BrowserModule} from '@angular/platform-browser';
   declarations: [
     AthleteComponent,
     MyActivitiesComponent,
-    SegmentSearchComponent,
     MySegmentsComponent,
     SegmentExploreComponent,
     RoutesComponent,

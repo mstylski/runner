@@ -9,6 +9,8 @@
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let workoutData">
           <button mat-raised-button (click)="workoutData.name" color="warn">
+            <img *ngIf="workoutData.type === 'Run'" src="assets/images/run.png" alt="run">
+            <img *ngIf="workoutData.type === 'Ride'" src="assets/images/ride.png" alt="ride">
             {{ workoutData.name }}</button>
         </td>
       </ng-container>

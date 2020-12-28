@@ -1,1 +1,59 @@
-<p>my-segments works!</p>
+<h2>My Segements</h2>
+<div class="mat-elevation-z8">
+  <button mat-raised-button (click)="pageBefore()" [disabled]="currentPageIndex === 1">Page Before</button>
+  <button mat-raised-button (click)="pageNext()">Page Next</button>
+  Current page: {{ currentPageIndex }}
+  <table mat-table table [dataSource]="segments">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let segment">
+        {{segment.name}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef>City</th>
+      <td mat-cell *matCellDef="let segment">
+        {{segment.city}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="distance">
+      <th mat-header-cell *matHeaderCellDef>Distance</th>
+      <td mat-cell *matCellDef="let segment">
+        {{(segment.distance / 1000).toFixed(1)}}km
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="elevation_high">
+      <th mat-header-cell *matHeaderCellDef>Elevation High</th>
+      <td mat-cell *matCellDef="let segment">
+        {{segment.elevation_high}}m
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="elevation_low">
+      <th mat-header-cell *matHeaderCellDef>Elevation Low</th>
+      <td mat-cell *matCellDef="let segment">
+        {{segment.elevation_low}}m
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="elevation_difference">
+      <th mat-header-cell *matHeaderCellDef>Elevation Difference</th>
+      <td mat-cell *matCellDef="let segment">
+        {{(segment.elevation_high - segment.elevation_low).toFixed(1)}}m
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef>Country</th>
+      <td mat-cell *matCellDef="let segment">
+        {{segment.country}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef>State</th>
+      <td mat-cell *matCellDef="let segment">
+        {{segment.state}}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns" [routerLink]="row.id"></tr>
+  </table>
+</div>
+

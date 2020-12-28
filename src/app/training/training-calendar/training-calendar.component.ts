@@ -6,6 +6,7 @@ import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angul
 import {Activities} from '../../shared/models/list-activities.model';
 import {ActivityService} from '../../activity.service';
 import {colors} from './utils/colors';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-training-calendar',
@@ -29,7 +30,9 @@ export class TrainingCalendarComponent implements OnInit {
   activeDayIsOpen = false;
 
   constructor(private modal: NgbModal,
-              private activityService: ActivityService) {
+              private activityService: ActivityService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
@@ -54,9 +57,8 @@ export class TrainingCalendarComponent implements OnInit {
     this.handleEvent('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = {event, action};
-    this.modal.open(this.modalContent, {size: 'lg'});
+  handleEvent(action: string, event: CalendarEvent) {
+    this.router.navigate([`dashboard/my-activities/${event.id}`]);
   }
 
   setView(view: CalendarView) {

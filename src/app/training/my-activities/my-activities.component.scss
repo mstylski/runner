@@ -11,14 +11,19 @@
 }
 
 .mat-elevation-z8 {
-  width: 1000px;
+  width: 1300px;
 }
 
 th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   padding: 21px;
-  background-color: $antiquewhite;
+  background-color: $light-grey;
 }
 
 .paginator {
-  width: 1000px;
+  width: 1200px;
 }
+
+button {
+  width: 180px;
+}
+

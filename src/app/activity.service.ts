@@ -34,7 +34,7 @@ export class ActivityService {
     const params = {
       before: after.toString(),
       after: '1514809418',
-      per_page: '200',
+      per_page: '50',
     };
     return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});
   }

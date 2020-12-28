@@ -6,7 +6,7 @@
       <mat-card-content>
         <div><strong><small>Distance</small> {{getDistance(runningRoute.distance)}}km</strong><br></div>
         <div><strong><small>Elevation Gain:</small> {{runningRoute["elevation_gain"].toFixed(0)}} m</strong></div>
-        <img  [src]="runningRoute.map_urls.retina_url">
+        <img  [src]="runningRoute.map_urls.retina_url" [routerLink]="[runningRoute.id_str]" alt="map">
       </mat-card-content>
     </mat-card>
   </div>
