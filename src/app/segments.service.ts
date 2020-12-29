@@ -35,5 +35,14 @@ export class SegmentsService {
     };
     return this.http.get<SegmentModel>(`${environment.apiUrl}segments/${id}`, {params});
   }
+
+  getSegmentsStreams(id: number): Observable<any> {
+    const params = {
+      scope: 'read_all',
+      keys: JSON.stringify(['distance', 'latlng', 'altitude']),
+      key_by_type: true.toString(),
+    };
+    return this.http.get<any>(`${environment.apiUrl}segments/${id}/streams`, {params});
+  }
 }
 

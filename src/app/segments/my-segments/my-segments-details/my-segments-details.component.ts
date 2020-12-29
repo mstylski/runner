@@ -17,10 +17,16 @@ export class MySegmentsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSegment();
+    this.getSegmentsStreams();
   }
 
   getSegment() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.segmentsService.getSegment(id).subscribe(segments => this.segments = segments);
+  }
+
+  getSegmentsStreams() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.segmentsService.getSegmentsStreams(id).subscribe(segments => this.segments = segments);
   }
 }
