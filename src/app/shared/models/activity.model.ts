@@ -77,7 +77,7 @@ export interface Lap {
   moving_time: number;
   start_date: Date;
   start_date_local: Date;
-  distance?: number;
+  distance: number;
   start_index?: number;
   end_index?: number;
   total_elevation_gain: number;
@@ -88,7 +88,7 @@ export interface Lap {
   device_watts?: boolean;
   average_watts?: number;
   lap_index?: number;
-  split?: number;
+  split: number;
 }
 
 export interface Gear {
@@ -97,24 +97,6 @@ export interface Gear {
   name?: string;
   resource_state?: number;
   distance?: number;
-}
-
-export interface Urls {
-  100?: string;
-  600?: string;
-}
-
-export interface Primary {
-  id?: any;
-  unique_id?: string;
-  urls?: Urls;
-  source?: number;
-}
-
-export interface Photos {
-  primary?: Primary;
-  use_primary_photo?: boolean;
-  count?: number;
 }
 
 export interface HighlightedKudoser {
@@ -181,7 +163,19 @@ export interface ActivityModel {
   laps: Lap[];
   gear?: Gear;
   partner_brand_tag?: any;
-  photos?: Photos;
+  photos: {
+    primary: {
+      id: any;
+      unique_id: string;
+      urls: {
+        100: string;
+        600: string;
+      };
+      source: number;
+    };
+    use_primary_photo?: boolean;
+    count?: number;
+  };
   highlighted_kudosers?: HighlightedKudoser[];
   device_name?: string;
   embed_token?: string;

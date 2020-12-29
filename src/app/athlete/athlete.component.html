@@ -1,48 +1,167 @@
-<div class="d-flex justify-content-between">
-    <div class="col-md-4">
+<div class="athlete">
+  <div class="d-flex">
+    <div class="col-md-4 mt-3">
       <mat-card>
         <mat-card-header class="mb-3">
           <div mat-card-avatar>
             <img [src]="athlete?.profile_medium" alt="avatar" class="avatar">
           </div>
-          <p>{{athlete?.firstname}} {{athlete?.lastname}}</p>
+          <strong>{{athlete?.firstname}} {{athlete?.lastname}}</strong>
         </mat-card-header>
       </mat-card>
-      <mat-card class="mt-3">
-        <mat-card-header>
-          Personal Best
-        </mat-card-header>
+      <mat-card class="mt-3 mb-5">
         <mat-card-content>
-          <div>1km</div>
-          <div>1MILE</div>
-          <div>5KM</div>
-          <div>10KM</div>
-          <div>21,1KM</div>
-          <div>21,1KM</div>
-          <div>42,095KM</div>
+          <table class="table table-hover" *ngIf="stats">
+            <thead>
+            <h2>My Stats</h2>
+            </thead>
+            <tbody>
+            <mat-tab-group dynamicHeight>
+              <mat-tab label="Running">
+                <div class="example-large-box mat-elevation-z4">
+                  <tr>
+                    <td><strong>Last-4-Week-Runs</strong>
+                      <span class="material-icons ml-2 runs">
+directions_run
+</span></td>
+                  </tr>
+                  <tr>
+                    <td>Distance</td>
+                    <td>{{getRecentDistance(stats.recent_run_totals.distance)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Time</td>
+                    <td>{{formatTime(stats.recent_run_totals.moving_time)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Elevation Gain</td>
+                    <td>{{stats.recent_run_totals.elevation_gain.toFixed(0)}}m</td>
+                  </tr>
+                  <tr>
+                    <td><strong>All-Time-Runs</strong>
+                      <span class="material-icons ml-2 runs">
+directions_run
+</span></td>
+                  </tr>
+                  <tr>
+                    <td>Distance</td>
+                    <td>{{getRecentDistance(stats.all_run_totals.distance)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total Number of Runs</td>
+                    <td>{{stats.all_run_totals.count}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Year-To-Date-Runs</strong>
+                      <span class="material-icons ml-2 runs" >
+directions_run
+</span></td>
+                  </tr>
+                  <tr>
+                    <td>Distance</td>
+                    <td>{{getRecentDistance(stats.ytd_run_totals.distance)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Time</td>
+                    <td>{{formatTime(stats.ytd_run_totals.moving_time)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Elevation Gain</td>
+                    <td>{{stats.ytd_run_totals.elevation_gain}}m</td>
+                  </tr>
+                  <tr>
+                    <td>Total Number of Runs</td>
+                    <td>{{stats.ytd_run_totals.count}}</td>
+                  </tr>
+                </div>
+              </mat-tab>
+              <mat-tab label="Cycling">
+                <div class="large-box mat-elevation-z4">
+                  <tr>
+                    <td><strong>Last-4-Week-Rides</strong>
+                      <span class="material-icons ml-2 rides">
+directions_bike
+</span></td>
+                  </tr>
+                  <tr>
+                    <td>Distance</td>
+                    <td>{{getRecentDistance(stats.recent_ride_totals.distance)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Time</td>
+                    <td>{{formatTime(stats.recent_ride_totals.moving_time)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Elevation Gain</td>
+                    <td>{{stats.recent_ride_totals.elevation_gain.toFixed(0)}}m</td>
+                  </tr>
+                  <tr>
+                    <td><strong>All-Time-Rides</strong>
+                      <span class="material-icons ml-2 rides">
+directions_bike
+</span></td>
+                  </tr>
+                  <tr>
+                    <td>Distance</td>
+                    <td>{{getRecentDistance(stats.all_ride_totals.distance)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total Number of Rides</td>
+                    <td>{{stats.all_ride_totals.count}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Year-To-Date-Rides</strong>
+                      <span class="material-icons ml-2 rides">
+directions_bike
+</span></td>
+                  </tr>
+                  <tr>
+                    <td>Distance</td>
+                    <td>{{getRecentDistance(stats.ytd_ride_totals.distance)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Time</td>
+                    <td>{{formatTime(stats.ytd_ride_totals.moving_time)}}</td>
+                  </tr>
+                  <tr>
+                    <td>Elevation Gain</td>
+                    <td>{{stats.ytd_ride_totals.elevation_gain}}m</td>
+                  </tr>
+                  <tr>
+                    <td>Total Number of Rides</td>
+                    <td>{{stats.ytd_ride_totals.count}}</td>
+                  </tr>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+            </tbody>
+          </table>
         </mat-card-content>
       </mat-card>
     </div>
-  <div class="col-md-8">
-    <button mat-raised-button (click)="pageBefore()" [disabled]="currentPageIndex === 1">Page Before</button>
-    <button mat-raised-button (click)="pageNext()">Page Next</button>
-    Current page: {{ currentPageIndex }}
-    <mat-card *ngFor="let activity of activities" class="mt-3">
-      <mat-card-header>
-        <div mat-card-avatar>
-          <img [src]="athlete?.profile_medium" alt="avatar" class="avatar">
-        </div>
-        <p>{{ athlete?.firstname }} {{ athlete?.lastname }}</p>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="mt-4">
-          <p>{{ activity.name}}</p>
-          <p>{{ activity.start_date_local | date:'HH:mm | dd/MM/yyyy' }}</p>
-          <p>{{ activity.distance | number: '1.0-0' }}km</p>
-<!--          <p>{{ formatTime(activity.moving_time) }}</p>-->
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <div class="col-md-3 mt-3">
+      <button mat-raised-button (click)="pageBefore()" [disabled]="currentPageIndex === 1" class="mr-1">Page Before</button>
+      <button mat-raised-button (click)="pageNext()">Page Next</button>
+      Current page: {{ currentPageIndex }}
+      <mat-card *ngFor="let activity of listOfActivities" class="mt-3">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <img [src]="athlete?.profile_medium" alt="avatar" class="avatar">
+          </div>
+          <p>{{ athlete?.firstname }} {{ athlete?.lastname }}</p>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="mt-4">
+            <p>
+              <img *ngIf="activity.type === 'Run'" src="assets/images/run.png" alt="run">
+              <img *ngIf="activity.type === 'Ride'" src="assets/images/ride.png" alt="ride">
+              {{ activity.name}}</p>
+            <p>{{ activity.start_date_local | date:'HH:mm | dd/MM/yyyy' }}</p>
+            <p>{{ (activity.distance / 1000).toFixed(1) }}km</p>
+            <p>{{ formatTime(activity.moving_time) }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>
-

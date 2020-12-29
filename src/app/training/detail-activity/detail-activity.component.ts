@@ -1,14 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ActivityModel} from '../../shared/models/activity-model';
+import {ActivityModel} from '../../shared/models/activity.model';
 import {ActivityService} from '../../activity.service';
 import {AthleteService} from '../../athlete.service';
 import {AthleteModel} from '../../shared/models/athlete.model';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
-import {BaseChartDirective, Color} from 'ng2-charts';
+import {BaseChartDirective, Color, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import * as L from 'leaflet';
-import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates.model';
+import {ActivityCoordinatesModel} from '../../shared/models/activity.coordinates.model';
+import {ActivityHeartrateModel} from '../../shared/models/activity.heartrate.distance.model';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class DetailActivityComponent implements OnInit {
   map: L.Map;
 
   lineChartData: ChartDataSets[] = [];
+  lineChartLabels: Label[] = [];
+
   // @ts-ignore
   lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
@@ -27,27 +30,16 @@ export class DetailActivityComponent implements OnInit {
       xAxes: [{}],
       yAxes: [
         {
-          id: 'y-axis-0',
-          position: 'left',
-        },
-        {
           id: 'y-axis-1',
           position: 'right',
-          gridLines: {
-            color: 'rgba(255,0,0,0.3)',
-          },
-          ticks: {
-            fontColor: 'red',
-          }
         }
       ]
     },
     annotation: {
       annotations: [
         {
-          type: 'line',
           mode: 'vertical',
-          scaleID: 'x-axis-0',
+          scaleID: 'x-axis-1',
           value: 'March',
           borderColor: 'orange',
           borderWidth: 2,
@@ -60,23 +52,8 @@ export class DetailActivityComponent implements OnInit {
       ],
     },
   };
+
   public lineChartColors: Color[] = [
-    {
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    {
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
     {
       backgroundColor: 'rgba(255,0,0,0.3)',
       borderColor: 'red',
@@ -91,9 +68,11 @@ export class DetailActivityComponent implements OnInit {
   public lineChartPlugins = [pluginAnnotations];
 
   @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
+
   activity: ActivityModel;
   athlete: AthleteModel;
   coordinates: ActivityCoordinatesModel;
+  heartrateDistance: ActivityHeartrateModel[] = [];
 
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
@@ -105,24 +84,7 @@ export class DetailActivityComponent implements OnInit {
     this.getActivity();
     this.showMap();
     this.getActivityCoordinates();
-  }
-
-  getActivityCoordinates() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.activityService.getActivityCoordinates(id).subscribe(coordinates => {
-      this.coordinates = coordinates[0];
-      this.drawActivityOnMap();
-    });
-  }
-
-  drawActivityOnMap() {
-    const config = {
-      color: 'red',
-      fillColor: '#f03',
-      fillOpacity: 0.5,
-    };
-    L.polyline(this.coordinates.data, config).addTo(this.map);
-    this.map.setView(this.coordinates.data[0], 12);
+    this.getActivityHeartrateDistance();
   }
 
   getActivity() {
@@ -130,7 +92,6 @@ export class DetailActivityComponent implements OnInit {
     this.activityService.getActivity(id).subscribe(
       activity => {
         this.activity = activity;
-        this.prepareEleveationChartData();
       });
   }
 
@@ -173,22 +134,50 @@ export class DetailActivityComponent implements OnInit {
     return `${(heartrate).toFixed(0)} bpm`;
   }
 
-  prepareEleveationChartData() {
-    const elevations = this.activity.laps.map((lap) => lap.total_elevation_gain);
-    const heartrate = this.activity.laps.map((lap) => lap.average_heartrate);
-    return this.lineChartData.push({data: elevations, label: 'Elevation'}, {data: heartrate, label: 'Heartrate' });
-  }
-
   showMap() {
-    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
+    this.map = L.map('mapid').setView([54.086978, 18.608519], 13);
     L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
         ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       id: 'mapbox/streets-v11',
       updateWhenZooming: false,
       crossOrigin: true,
-      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tpb240OThrMGtkOTJyb3ljeDU4eTVsZCJ9.35ZTqLgPeRQ-SiIV8wdjMw`
+      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMmZsYTFiNTZnMDJycWphbGhveDAyMiJ9.mGU2Q44LI8-UTtIOybToHA`
     }).addTo(this.map);
   }
 
+  getActivityCoordinates() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.activityService.getActivityCoordinates(id).subscribe(coordinates => {
+      this.coordinates = coordinates[0];
+      this.drawActivityOnMap();
+    });
+  }
+
+  drawActivityOnMap() {
+    const config = {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+    };
+    L.polyline(this.coordinates.data, config).addTo(this.map);
+    this.map.setView(this.coordinates.data[0], 13);
+  }
+
+  prepareLineChartLabels() {
+    this.lineChartLabels = this.heartrateDistance[0].data.map(v => (v / 1000).toFixed(1));
+  }
+
+  prepareDistanceChartData() {
+    this.lineChartData.push({data: this.heartrateDistance[1].data, label: 'Heartate'});
+  }
+
+  getActivityHeartrateDistance() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.activityService.getActivityHeartrateDistance(id).subscribe(heartrate => {
+      this.heartrateDistance = heartrate;
+      this.prepareDistanceChartData();
+      this.prepareLineChartLabels();
+    });
+  }
 }

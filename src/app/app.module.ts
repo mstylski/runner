@@ -11,18 +11,25 @@ import {CoreModule} from './core/core.module';
 import {MaterialModule} from './shared/material/material.module';
 import {AthleteModule} from './athlete/athlete.module';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { DetailActivityComponent } from './training/detail-activity/detail-activity.component';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {DetailActivityComponent} from './training/detail-activity/detail-activity.component';
 import {AuthService} from './auth.service';
 import {AthleteService} from './athlete.service';
 import {ChartsModule} from 'ng2-charts';
+import {UtilsModule} from './training/training-calendar/utils/module';
+import {CommonModule} from '@angular/common';
+import { RoutesDetailsComponent } from './routes/routes-details/routes-details.component';
+import { MySegmentsDetailsComponent } from './segments/my-segments/my-segments-details/my-segments-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DetailActivityComponent,
+    RoutesDetailsComponent,
+    MySegmentsDetailsComponent,
   ],
   imports: [
+    CommonModule,
     ChartsModule,
     BrowserModule,
     AppRoutingModule,
@@ -37,7 +44,8 @@ import {ChartsModule} from 'ng2-charts';
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    UtilsModule
   ],
   providers: [
     AuthService,
@@ -47,7 +55,7 @@ import {ChartsModule} from 'ng2-charts';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })
