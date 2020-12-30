@@ -4,8 +4,8 @@ import {ActivityModel} from '../../shared/models/activity.model';
 import {ActivityService} from '../../activity.service';
 import {AthleteService} from '../../athlete.service';
 import {AthleteModel} from '../../shared/models/athlete.model';
-import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
-import {BaseChartDirective, Color, Label} from 'ng2-charts';
+import {ChartDataSets, ChartType} from 'chart.js';
+import {BaseChartDirective, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import * as L from 'leaflet';
 import {ActivityCoordinatesModel} from '../../shared/models/activity.coordinates.model';
@@ -19,51 +19,11 @@ import {ActivityHeartrateModel} from '../../shared/models/activity.heartrate.dis
 })
 export class DetailActivityComponent implements OnInit {
   map: L.Map;
-
   lineChartData: ChartDataSets[] = [];
   lineChartLabels: Label[] = [];
-
-  // @ts-ignore
-  lineChartOptions: (ChartOptions & { annotation: any }) = {
-    responsive: true,
-    scales: {
-      xAxes: [{}],
-      yAxes: [
-        {
-          id: 'y-axis-1',
-          position: 'right',
-        }
-      ]
-    },
-    annotation: {
-      annotations: [
-        {
-          mode: 'vertical',
-          scaleID: 'x-axis-1',
-          value: 'March',
-          borderColor: 'orange',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'orange',
-            content: 'LineAnno'
-          }
-        },
-      ],
-    },
+  public lineChartLegend = {
+    display: false,
   };
-
-  public lineChartColors: Color[] = [
-    {
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
-  public lineChartLegend = true;
   public lineChartType: ChartType = 'line';
   public lineChartPlugins = [pluginAnnotations];
 
@@ -80,10 +40,10 @@ export class DetailActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAthlete();
-    this.getActivity();
-    this.showMap();
-    this.getActivityCoordinates();
+    // this.getAthlete();
+    // this.getActivity();
+    // this.showMap();
+    // this.getActivityCoordinates();
     this.getActivityHeartrateDistance();
   }
 
@@ -165,11 +125,17 @@ export class DetailActivityComponent implements OnInit {
   }
 
   prepareLineChartLabels() {
-    this.lineChartLabels = this.heartrateDistance[0].data.map(v => (v / 1000).toFixed(1));
+    this.lineChartLabels = this.heartrateDistance[0].data.map(v => `${(v / 1000).toFixed(1)} km`);
   }
 
   prepareDistanceChartData() {
-    this.lineChartData.push({data: this.heartrateDistance[1].data, label: 'Heartate'});
+    this.lineChartData.push({
+      data: this.heartrateDistance[1].data, label: 'Heartrate',
+      borderColor: 'rgb(214,8,8)',
+      borderWidth: 1.2,
+      showLine: true,
+      pointRadius: 0,
+    });
   }
 
   getActivityHeartrateDistance() {

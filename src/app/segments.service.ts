@@ -4,6 +4,7 @@ import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {SegmentsModel} from './shared/models/segments.model';
 import {SegmentModel} from './shared/models/segment.model';
+import {SegmentsExploreModel} from './shared/models/segments-explore.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,11 @@ export class SegmentsService {
   constructor(private http: HttpClient) {
   }
 
-  segmentsExplore(): Observable<any> {
+  segmentsExplore(): Observable<SegmentsExploreModel[]> {
     const params = {
       bounds: JSON.stringify([54.50, 49.0, 14.07, 24.09])
     };
-    return this.http.get<any>(`${environment.apiUrl}segments/explore`, {params});
+    return this.http.get<SegmentsExploreModel[]>(`${environment.apiUrl}segments/explore`, {params});
   }
 
   segmentsStarred(page: number): Observable<SegmentsModel[]> {

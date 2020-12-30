@@ -1,9 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {RoutesService} from '../../routes.service';
-import {RouteCoordinatesModel} from '../../shared/models/route-coordinates.model';
+import {ElevationGradeModel, RouteCoordinatesModel} from '../../shared/models/route-coordinates.model';
 import {ActivatedRoute} from '@angular/router';
-import {RouteModel} from '../../shared/models/route.model';
+import {RouteModel, Segment} from '../../shared/models/route.model';
 import * as L from 'leaflet';
+import {ChartDataSets, ChartType} from 'chart.js';
+import {BaseChartDirective, Label} from 'ng2-charts';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-routes-details',
@@ -11,20 +14,29 @@ import * as L from 'leaflet';
   styleUrls: ['./routes-details.component.scss']
 })
 export class RoutesDetailsComponent implements OnInit {
-  coordinates: RouteCoordinatesModel;
-  routeModels: RouteModel;
-  map: L.Map;
-  readonly columns: string[] = [
-    'name', 'distance', 'avg_grade', 'elevation_high', 'elevation_low'];
+  lineChartData: ChartDataSets[] = [];
+  lineChartLabels: Label[] = [];
+  public lineChartLegend = {
+    display: false,
+  };
+  public lineChartType: ChartType = 'line';
+  public lineChartPlugins = [pluginAnnotations];
 
+  @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
+  coordinates: RouteCoordinatesModel;
+  elevationGrade: ElevationGradeModel[] = [];
+  routeModel: RouteModel;
+  segments: Segment;
+  map: L.Map;
   constructor(private routesService: RoutesService,
               private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.getRoutesCoordinates();
     this.getRoute();
-    // this.showMap();
+    this.getRoutesCoordinates();
+    this.getElevationGrade();
+    this.showMap();
     this.exportGPX();
   }
 
@@ -60,7 +72,7 @@ export class RoutesDetailsComponent implements OnInit {
 
   getRoute() {
     const id = this.route.snapshot.paramMap.get('id') as string;
-    this.routesService.getRoute(id).subscribe(route => this.routeModels = route);
+    this.routesService.getRoute(id).subscribe(route => this.routeModel = route);
   }
 
   exportGPX() {
@@ -87,5 +99,28 @@ export class RoutesDetailsComponent implements OnInit {
     } else {
       return minutes + ':' + (seconds - minutes * secondsInOneMinute).toFixed(0);
     }
+  }
+
+  prepareLineChartLabels() {
+    this.lineChartLabels = this.elevationGrade[1].data.map(v => `${(v / 1000).toFixed(1)} km`);
+  }
+
+  prepareDistanceChartData() {
+    this.lineChartData.push({
+      data: this.elevationGrade[2].data, label: 'Elevation Grade',
+      borderColor: 'rgb(214,8,8)',
+      borderWidth: 1.2,
+      showLine: true,
+      pointRadius: 0,
+    });
+  }
+
+  getElevationGrade() {
+    const id = this.route.snapshot.paramMap.get('id') as string;
+    this.routesService.getElevationGrade(id).subscribe(elevationGrade => {
+      this.elevationGrade = elevationGrade;
+      this.prepareDistanceChartData();
+      this.prepareLineChartLabels();
+    });
   }
 }
