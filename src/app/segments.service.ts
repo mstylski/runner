@@ -5,6 +5,9 @@ import {HttpClient} from '@angular/common/http';
 import {SegmentsModel} from './shared/models/segments.model';
 import {SegmentModel} from './shared/models/segment.model';
 import {SegmentsExploreModel} from './shared/models/segments-explore.model';
+import {SegmentAltitudeModel} from './shared/models/segment-altitude.model';
+import {SegmentCoordinatesModel, SegmentCoordinatesResponse} from './shared/models/segment-coordinates-model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -37,13 +40,22 @@ export class SegmentsService {
     return this.http.get<SegmentModel>(`${environment.apiUrl}segments/${id}`, {params});
   }
 
-  getSegmentsStreams(id: number): Observable<any> {
+  getSegmentsAltitude(id: number): Observable<SegmentAltitudeModel> {
     const params = {
       scope: 'read_all',
-      keys: JSON.stringify(['distance', 'latlng', 'altitude']),
+      keys: 'altitude',
       key_by_type: true.toString(),
     };
-    return this.http.get<any>(`${environment.apiUrl}segments/${id}/streams`, {params});
+    return this.http.get<SegmentAltitudeModel>(`${environment.apiUrl}segments/${id}/streams`, {params});
+  }
+
+  getSegmentsCoordinates(id: string): Observable<SegmentCoordinatesResponse> {
+    const params = {
+      scope: 'read_all',
+      keys: 'latlng',
+      key_by_type: true.toString(),
+    };
+    return this.http.get<SegmentCoordinatesResponse>(`${environment.apiUrl}segments/${id}/streams`, {params});
   }
 }
 

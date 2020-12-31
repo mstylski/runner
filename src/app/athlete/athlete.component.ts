@@ -8,7 +8,7 @@ import {Activities} from '../shared/models/list-activities.model';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {ActivityModel} from '../shared/models/activity.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-athlete',
@@ -28,7 +28,8 @@ export class AthleteComponent implements OnInit, OnDestroy {
     private athleteService: AthleteService,
     private authService: AuthService,
     private activityService: ActivityService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
 
   }
 
@@ -99,4 +100,7 @@ export class AthleteComponent implements OnInit, OnDestroy {
     this.listOfActivities.filter((activity) => activity.distance <= 1000);
   }
 
+  navigate(id: number) {
+    this.router.navigate([`dashboard/my-activities/${id}`]);
+  }
 }

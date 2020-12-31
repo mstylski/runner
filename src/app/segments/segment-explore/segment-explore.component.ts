@@ -36,6 +36,4 @@ export class SegmentExploreComponent implements OnInit {
       accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMmZsYTFiNTZnMDJycWphbGhveDAyMiJ9.mGU2Q44LI8-UTtIOybToHA`
     }).addTo(this.map);
   }
-
-
 }

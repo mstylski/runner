@@ -10,7 +10,7 @@ import {
   RouteCoordinatesResponse
 } from './shared/models/route-coordinates.model';
 import {RouteModel} from './shared/models/route.model';
-import {ActivityCoordinateResponse} from './shared/models/activity.coordinates.model';
+import {ActivityCoordinateResponse} from './shared/models/activity-coordinates.model';
 
 @Injectable({
   providedIn: 'root'

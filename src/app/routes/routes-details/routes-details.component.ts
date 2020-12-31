@@ -28,6 +28,7 @@ export class RoutesDetailsComponent implements OnInit {
   routeModel: RouteModel;
   segments: Segment;
   map: L.Map;
+
   constructor(private routesService: RoutesService,
               private route: ActivatedRoute) {
   }
@@ -37,7 +38,6 @@ export class RoutesDetailsComponent implements OnInit {
     this.getRoutesCoordinates();
     this.getElevationGrade();
     this.showMap();
-    this.exportGPX();
   }
 
   showMap() {

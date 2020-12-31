@@ -8,8 +8,8 @@ import {ChartDataSets, ChartType} from 'chart.js';
 import {BaseChartDirective, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import * as L from 'leaflet';
-import {ActivityCoordinatesModel} from '../../shared/models/activity.coordinates.model';
-import {ActivityHeartrateModel} from '../../shared/models/activity.heartrate.distance.model';
+import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates.model';
+import {ActivityHeartrateModel} from '../../shared/models/activity-heartrate.distance.model';
 
 
 @Component({
@@ -40,10 +40,10 @@ export class DetailActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getAthlete();
-    // this.getActivity();
-    // this.showMap();
-    // this.getActivityCoordinates();
+    this.getAthlete();
+    this.getActivity();
+    this.showMap();
+    this.getActivityCoordinates();
     this.getActivityHeartrateDistance();
   }
 
@@ -95,7 +95,7 @@ export class DetailActivityComponent implements OnInit {
   }
 
   showMap() {
-    this.map = L.map('mapid').setView([54.086978, 18.608519], 13);
+    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
     L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
         ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -121,7 +121,7 @@ export class DetailActivityComponent implements OnInit {
       fillOpacity: 0.5,
     };
     L.polyline(this.coordinates.data, config).addTo(this.map);
-    this.map.setView(this.coordinates.data[0], 13);
+    this.map.setView(this.coordinates.data[0], 12);
   }
 
   prepareLineChartLabels() {

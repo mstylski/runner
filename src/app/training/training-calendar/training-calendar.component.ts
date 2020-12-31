@@ -31,8 +31,7 @@ export class TrainingCalendarComponent implements OnInit {
 
   constructor(private modal: NgbModal,
               private activityService: ActivityService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private router: Router) {
   }
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {

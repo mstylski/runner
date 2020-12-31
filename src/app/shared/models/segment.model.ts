@@ -35,4 +35,5 @@ export interface SegmentModel {
   starred_date: Date;
   pr_time?: number;
   athlete_pr_effort: AthletePrEffort;
+  total_elevation_gain: number;
 }
