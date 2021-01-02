@@ -1,17 +1,21 @@
 <div *ngIf="activity" class="d-flex justify-content-between">
   <mat-card class="mat-card-top">
-    <mat-card-header class="mt-2">
+    <mat-card-header>
       <span mat-card-avatar>
         <img [src]="athlete?.profile" alt="avatar" class="avatar">
       </span>
-      <span class="mt-2">
-        <div class="ml-5 pl-4 mt-2">
-<small>{{activity.start_date_local | date: 'EEEE | MMMM d | y | h:mm:ss | a'}}</small>
+      <span>
+        <div class="ml-5 pl-4">
+<small><strong>{{activity.start_date_local | date: 'EEEE | MMMM d | y | h:mm:ss | a'}}</strong></small>
+                        <h2>{{activity.name}}</h2>
+          <small><div *ngIf="activity.description">{{activity.description}}</div></small>
+          <small>{{activity.device_name}}</small>
       </div>
-      <h2 class="ml-5 pl-4 mt-2">{{activity.name}}</h2>
-<small><div class="ml-5 pl-4 mt-2">{{activity.device_name}}</div></small>
       </span>
     </mat-card-header>
+    <div class="photo" *ngIf="activity.photos.primary.urls['100']"><img
+      [src]="activity.photos.primary.urls['100']" width="38" alt="100" (click)="showGallery()">
+    </div>
   </mat-card>
   <mat-card class="mat-card-top">
     <mat-card-content>
@@ -159,16 +163,18 @@
   <mat-card class="mb-3">
     <mat-card-title>
       <mat-card-content>
-            <div style="display: block">
-              <canvas baseChart width="400" height="150"
-                      [datasets]="lineChartData"
-                      [labels]="lineChartLabels"
-                      [chartType]="lineChartType"
-                      [plugins]="lineChartPlugins"
-              ></canvas>
-            </div>
+        <div style="display: block">
+          <canvas baseChart width="400" height="150"
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [chartType]="lineChartType"
+                  [plugins]="lineChartPlugins"
+          ></canvas>
+        </div>
       </mat-card-content>
     </mat-card-title>
   </mat-card>
 </div>
+
+
 

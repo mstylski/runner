@@ -20,6 +20,7 @@ import {UtilsModule} from './training/training-calendar/utils/module';
 import {CommonModule} from '@angular/common';
 import { RoutesDetailsComponent } from './routes/routes-details/routes-details.component';
 import { MySegmentsDetailsComponent } from './segments/my-segments/my-segments-details/my-segments-details.component';
+import {IvyGalleryModule} from 'angular-gallery';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MySegmentsDetailsComponent } from './segments/my-segments/my-segments-d
     MySegmentsDetailsComponent,
   ],
   imports: [
+    [IvyGalleryModule],
     CommonModule,
     ChartsModule,
     BrowserModule,

@@ -10,6 +10,7 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import * as L from 'leaflet';
 import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates.model';
 import {ActivityHeartrateModel} from '../../shared/models/activity-heartrate.distance.model';
+import {Gallery} from 'angular-gallery';
 
 
 @Component({
@@ -36,15 +37,29 @@ export class DetailActivityComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
-              private athleteService: AthleteService) {
+              private athleteService: AthleteService,
+              private gallery: Gallery) {
+  }
+
+  showGallery(index: number = 0) {
+    const prop: any = {};
+    prop.images = [
+      {path: `${this.fetchBigPhoto()}`},
+    ];
+    prop.index = index;
+    this.gallery.load(prop);
+  }
+
+  fetchBigPhoto() {
+    return this.activity.photos.primary.urls['600'];
   }
 
   ngOnInit(): void {
     this.getAthlete();
     this.getActivity();
-    this.showMap();
-    this.getActivityCoordinates();
-    this.getActivityHeartrateDistance();
+    // this.showMap();
+    // this.getActivityCoordinates();
+    // this.getActivityHeartrateDistance();
   }
 
   getActivity() {

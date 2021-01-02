@@ -1,2 +1,55 @@
-<p>pace-calculator works!</p>
-
+<h2>Pace Calculator</h2>
+<h3>
+  With the help of the RUN PACE calculator, you can determine what the pace of your run is <br>
+  necessary to achieve the planned result over a given distance.</h3>
+<form [formGroup]="modelForm" *ngIf="modelForm">
+  <mat-card class="pace-calculator">
+    <mat-card-header></mat-card-header>
+    <mat-card-content>
+      <h3>Planned result:</h3>
+      <span>
+    <mat-form-field>
+    <mat-label>hour</mat-label>
+    <input matInput formControlName="hour">
+  </mat-form-field>
+</span>
+      <span class="ml-1">
+    <mat-form-field>
+    <mat-label>minute</mat-label>
+    <input matInput formControlName="minute">
+  </mat-form-field>
+</span>
+      <span class="ml-1">
+    <mat-form-field>
+    <mat-label>sec</mat-label>
+    <input matInput formControlName="sec">
+  </mat-form-field>
+</span>
+      <h3>Put distance or choose one:</h3>
+      <span>
+        <mat-form-field>
+    <mat-label>distance</mat-label>
+    <input matInput formControlName="distance">
+  </mat-form-field>
+        <mat-form-field class="ml-1">
+    <mat-label>km/miles</mat-label>
+    <mat-select name="r_distance_unit" id="r-distance-unit" formControlName="kmMiles">
+      <mat-option *ngFor="let option of milesKilometersOptions" [value]="option.value">{{option.label}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+        <mat-form-field class="ml-1">
+    <mat-label>pick event</mat-label>
+    <mat-select id="event-select" formControlName="distanceSelect">
+      <mat-option *ngFor="let option of distanceOptions" [value]="option.value">{{option.label}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+    </span>
+    </mat-card-content>
+    <button mat-raised-button> Submit</button>
+    <button
+      mat-raised-button color="default"
+      (click)="modelForm.reset()"
+    >Reset
+    </button>
+  </mat-card>
+  </form>
