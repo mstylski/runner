@@ -14,7 +14,7 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
   currentPageIndex = 1;
   readonly columns: string[] = [
     'name', 'distance', 'moving_time', 'elapsed_time', 'max_speed', 'average_speed',
-    'total_elevation_gain', 'start_date_local', 'start_latlng', 'timezone', 'location_country'
+    'total_elevation_gain', 'start_date_local', 'start_latlng', 'timezone', 'location_country', 'details'
   ];
   activities: Activities[] = [];
   private readonly subscriptions = new Subscription();

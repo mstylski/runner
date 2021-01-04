@@ -9,25 +9,29 @@ import {PaceCalculatorModel} from '../../shared/models/pace-calculator.model';
 })
 export class PaceCalculatorComponent implements OnInit {
   modelForm: FormGroup;
-  pace: PaceCalculatorModel;
+  paceModel: PaceCalculatorModel;
+  pace: string;
+  hour: number;
+  minute: number;
+  seconds: number;
 
-  milesKilometersOptions = [
-    {label: 'km', value: 1000},
-    {label: 'mile', value: 1609}
+  readonly milesKilometersOptions = [
+    {label: 'km', value: 1},
+    {label: 'mile', value: 1.609}
   ];
 
-  distanceOptions = [
-    {label: 'Marathon', value: 42195},
-    {label: 'Half Marathon', value: 21095},
-    {label: '5KM', value: 5000},
-    {label: '8KM', value: 8000},
-    {label: '10KM', value: 10000},
-    {label: '15KM', value: 15000},
-    {label: '20KM', value: 20000},
-    {label: '25KM', value: 25000},
-    {label: '30KM', value: 30000},
-    {label: '10Miles', value: 16090},
-    {label: '20Miles', value: 32180},
+  readonly distanceOptions = [
+    {label: 'Marathon', value: 42.195},
+    {label: 'Half Marathon', value: 21.095},
+    {label: '5KM', value: 5},
+    {label: '8KM', value: 8},
+    {label: '10KM', value: 10},
+    {label: '15KM', value: 15},
+    {label: '20KM', value: 20},
+    {label: '25KM', value: 25},
+    {label: '30KM', value: 30},
+    {label: '10Miles', value: 16.090},
+    {label: '20Miles', value: 32.180},
   ];
 
   constructor(private formBuilder: FormBuilder) {
@@ -42,32 +46,28 @@ export class PaceCalculatorComponent implements OnInit {
       hour: '',
       minute: '',
       sec: '',
-      kmMiles: this.milesKilometersOptions[0].value,
+      distanceUnit: this.milesKilometersOptions[0].value,
       distance: '',
-      distanceSelect: '',
+      distanceType: '',
     };
-
-    const pace = this.pace || defaultValues;
+    const pace = this.paceModel || defaultValues;
     this.modelForm = this.formBuilder.group({
       hour: [pace.hour],
       minute: [pace.minute],
       sec: [pace.sec],
-      kmMiles: [pace.kmMiles],
+      distanceUnit: [pace.distanceUnit],
       distance: [pace.distance],
-      distanceSelect: [pace.distanceSelect],
+      distanceType: [pace.distanceType],
     });
   }
 
-  getPace(seconds: number): string {
-    const secondsInOneMinute = 60;
-    const minutesInHours = 60;
-    const minutes = Math.floor(seconds / secondsInOneMinute);
-    const hours = Math.floor(minutes / minutesInHours);
-    if (hours >= 60 || minutes >= 60) {
-      return hours + ':' + (minutes - hours * secondsInOneMinute).toFixed(0);
-    } else {
-      return minutes + ':' + (seconds - minutes * secondsInOneMinute).toFixed(0);
-    }
+  getPace() {
+    const formValue = this.modelForm.value;
+    const secondsFraction = Number(formValue.sec) / 60;
+    const paceTimeBase = (Number(formValue.hour) * 60) + Number(formValue.minute) + secondsFraction;
+    const speed = paceTimeBase / Number(formValue.distance) || Number(formValue.distanceType);
+    const speedMinutesBase = Math.floor(speed);
+    const secondsRestFraction = speed % 1 * 60;
+    this.pace = `${speedMinutesBase}:${secondsRestFraction.toFixed(0)}`;
   }
-
 }

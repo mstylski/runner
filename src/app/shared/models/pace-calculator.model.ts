@@ -4,9 +4,9 @@ export interface PaceCalculatorModel {
   hour: number;
   minute: number;
   sec: number;
-  kmMiles: kmMiles;
+  distanceUnit: kmMiles;
   distance: number;
-  distanceSelect: number;
+  distanceType: number;
 }
 
 

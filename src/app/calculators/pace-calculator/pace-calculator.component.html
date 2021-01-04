@@ -33,19 +33,19 @@
   </mat-form-field>
         <mat-form-field class="ml-1">
     <mat-label>km/miles</mat-label>
-    <mat-select name="r_distance_unit" id="r-distance-unit" formControlName="kmMiles">
+    <mat-select name="r_distance_unit" id="r-distance-unit" formControlName="distanceUnit">
       <mat-option *ngFor="let option of milesKilometersOptions" [value]="option.value">{{option.label}}</mat-option>
     </mat-select>
   </mat-form-field>
         <mat-form-field class="ml-1">
     <mat-label>pick event</mat-label>
-    <mat-select id="event-select" formControlName="distanceSelect">
+    <mat-select id="event-select" formControlName="distanceType">
       <mat-option *ngFor="let option of distanceOptions" [value]="option.value">{{option.label}}</mat-option>
     </mat-select>
   </mat-form-field>
     </span>
     </mat-card-content>
-    <button mat-raised-button> Submit</button>
+    <button mat-raised-button class="mr-2" (click)="getPace()">Submit</button>
     <button
       mat-raised-button color="default"
       (click)="modelForm.reset()"
@@ -53,3 +53,6 @@
     </button>
   </mat-card>
   </form>
+<div class="mt-5">
+  To reach your goal, you need to ran at {{pace}}/km
+</div>

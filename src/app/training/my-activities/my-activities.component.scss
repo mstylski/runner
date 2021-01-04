@@ -7,7 +7,7 @@
 
 .type-of-sport {
   width: 70px;
-  border: 1px solid rgba(28,110,164,0.14);
+  border: 1px solid rgba(28, 110, 164, 0.14);
 }
 
 .mat-elevation-z8 {
@@ -15,7 +15,7 @@
 }
 
 th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
-  padding: 21px;
+  padding: 16px;
   background-color: $light-grey;
 }
 
@@ -27,3 +27,9 @@ button {
   width: 180px;
 }
 
+
+.details {
+  width: 15px;
+  align-items: center;
+  text-align: center;
+}
