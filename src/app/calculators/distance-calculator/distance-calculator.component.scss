@@ -1,0 +1,20 @@
+@import "src/assets/styles/variables";
+
+.distance-calculator {
+  width: 250px;
+  margin-left: 5px;
+}
+
+.distance {
+  background: url("/assets/images/mountain_running2.jpg") no-repeat;
+  height: 700px;
+}
+
+
+.distance-result {
+  color: $strava-orange;
+}
+
+h2, h3 {
+  color: white;
+}

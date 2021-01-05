@@ -39,6 +39,7 @@ export class PaceCalculatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.updateDistance();
   }
 
   private buildForm(): void {
@@ -65,9 +66,14 @@ export class PaceCalculatorComponent implements OnInit {
     const formValue = this.modelForm.value;
     const secondsFraction = Number(formValue.sec) / 60;
     const paceTimeBase = (Number(formValue.hour) * 60) + Number(formValue.minute) + secondsFraction;
-    const speed = paceTimeBase / Number(formValue.distance) || Number(formValue.distanceType);
+    const speed = paceTimeBase / Number(formValue.distance);
     const speedMinutesBase = Math.floor(speed);
     const secondsRestFraction = speed % 1 * 60;
+    console.log(secondsRestFraction);
     this.pace = `${speedMinutesBase}:${secondsRestFraction.toFixed(0)}`;
+  }
+
+  updateDistance() {
+    this.modelForm.get('distanceType')?.valueChanges.subscribe(value => this.modelForm.get('distance')?.patchValue(value));
   }
 }

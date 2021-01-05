@@ -1,1 +1,54 @@
-<p>distance-calculator works!</p>
+<div class="distance">
+  <h2>Distance Calculator</h2>
+  <h3>
+    You will learn how far you can run at a set pace in a given time.
+  </h3>
+  <form [formGroup]="modelForm" *ngIf="modelForm">
+    <mat-card class="distance-calculator">
+      <mat-card-header></mat-card-header>
+      <mat-card-content>
+        <h3>Planned time of run:</h3>
+        <span>
+    <mat-form-field>
+    <mat-label>hour</mat-label>
+    <input matInput formControlName="hour">
+  </mat-form-field>
+</span>
+        <span class="ml-1">
+    <mat-form-field>
+    <mat-label>minute</mat-label>
+    <input matInput formControlName="minute">
+  </mat-form-field>
+</span>
+        <span class="ml-1">
+    <mat-form-field>
+    <mat-label>sec</mat-label>
+    <input matInput formControlName="sec">
+  </mat-form-field>
+</span>
+        <h3>Planned Pace of run:</h3>
+        <span>
+        <mat-form-field>
+    <mat-label>minutes</mat-label>
+    <input matInput formControlName="paceMinutes">
+  </mat-form-field>
+        <mat-form-field class="ml-1">
+    <mat-label>seconds</mat-label>
+    <input matInput formControlName="paceSeconds">
+  </mat-form-field>
+    </span>
+      </mat-card-content>
+      <button mat-raised-button class="mr-2" (click)="getDistance()">Submit</button>
+      <button
+        mat-raised-button color="default"
+        (click)="modelForm.reset()"
+      >Reset
+      </button>
+<strong>
+  <div class="mt-1 distance-result">
+    You will run {{distance}}
+  </div>
+</strong>
+    </mat-card>
+  </form>
+</div>

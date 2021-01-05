@@ -4,7 +4,7 @@ import {SegmentModel} from '../../../shared/models/segment.model';
 import {ActivatedRoute} from '@angular/router';
 import * as L from 'leaflet';
 import {SegmentAltitudeModel} from '../../../shared/models/segment-altitude.model';
-import {SegmentCoordinatesModel} from '../../../shared/models/segment-coordinates-model';
+import {LatLang, SegmentCoordinatesModel, SegmentCoordinatesResponse} from '../../../shared/models/segment-coordinates-model';
 
 @Component({
   selector: 'app-my-segments-details',
@@ -14,11 +14,17 @@ import {SegmentCoordinatesModel} from '../../../shared/models/segment-coordinate
 export class MySegmentsDetailsComponent implements OnInit {
   map: L.Map;
   segment: SegmentModel;
-  coordinates: SegmentCoordinatesModel;
+  coordinates: any;
   altitude: SegmentAltitudeModel;
 
   constructor(private segmentsService: SegmentsService,
               private route: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
+    this.getSegmentsCoordinates();
+    this.getSegment();
+    this.getSegmentsAltitude();
   }
 
   showMap() {
@@ -33,22 +39,24 @@ export class MySegmentsDetailsComponent implements OnInit {
     }).addTo(this.map);
   }
 
+  getSegmentsCoordinates() {
+    const id = this.route.snapshot.paramMap.get('id') as string;
+    this.segmentsService.getSegmentsCoordinates(id).subscribe(data => {
+      this.coordinates = data;
+      this.drawActivityOnMap();
+      this.showMap();
+    });
+  }
   drawActivityOnMap() {
     const config = {
       color: 'red',
-      fillColor: '#f03',
+      fillColor: '#ff0033',
       fillOpacity: 0.5,
     };
-    L.polyline(this.coordinates.latlng.data , config).addTo(this.map);
+    L.polyline(this.coordinates, config).addTo(this.map);
     this.map.setView(this.coordinates.latlng.data[0], 12);
   }
 
-  ngOnInit(): void {
-    this.showMap();
-    this.getSegmentsCoordinates();
-    this.getSegment();
-    this.getSegmentsAltitude();
-  }
 
   getSegment() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -59,11 +67,5 @@ export class MySegmentsDetailsComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.segmentsService.getSegmentsAltitude(id).subscribe(segments => this.altitude = segments);
   }
-  getSegmentsCoordinates() {
-    const id = this.route.snapshot.paramMap.get('id') as string;
-    this.segmentsService.getSegmentsCoordinates(id).subscribe(coordinates => {
-      this.coordinates.latlng = coordinates[0];
-      this.drawActivityOnMap();
-    });
-  }
+
 }

@@ -14,7 +14,7 @@ export interface Distance {
   resolution: string;
 }
 
-export type SegmentCoordinatesResponse = [LatLang, LatLang];
+export type SegmentCoordinatesResponse = [LatLang, Distance];
 
 export interface SegmentCoordinatesModel {
   latlng: LatLang;

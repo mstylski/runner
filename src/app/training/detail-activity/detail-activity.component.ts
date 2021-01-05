@@ -57,9 +57,9 @@ export class DetailActivityComponent implements OnInit {
   ngOnInit(): void {
     this.getAthlete();
     this.getActivity();
-    // this.showMap();
-    // this.getActivityCoordinates();
-    // this.getActivityHeartrateDistance();
+    this.showMap();
+    this.getActivityCoordinates();
+    this.getActivityHeartrateDistance();
   }
 
   getActivity() {
