@@ -1,1 +1,40 @@
-<p>wings-for-life works!</p>
+<h2>Wings for Life Calculator</h2>
+<div class="wings"></div>
+<div class="wings-container">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="modelForm" *ngIf="modelForm">
+        <h3>
+          You need
+          <mat-form-field class="ml-1 select-minutes">
+            <mat-select formControlName="minutes">
+              <mat-option *ngFor="let option of minutes" [value]="option.value">{{option.label}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          to run
+          <mat-form-field class="ml-1 select-km">
+            <mat-select formControlName="kilometers">
+              <mat-option *ngFor="let option of kilometers" [value]="option.value">{{option.label}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          before you are overtaken by the Pursuit Car. You have to run at a pace
+          <mat-form-field class="ml-1 select">
+            <mat-select formControlName="pace">
+              <mat-option *ngFor="let option of pace" [value]="option.value">{{option.label}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </h3>
+      </form>
+      <mat-slider
+        aria-label
+        (input)="updateForm($event)"
+        [step]="1000"
+        thumbLabel
+        tickInterval="1000"
+        [displayWith]="formatLabel"
+        min="1000"
+        max="76000">
+      </mat-slider>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -127,12 +127,12 @@
         </mat-card-content>
       </mat-card>
     </div>
-    <div class="col-md-3 mt-3">
+    <div class="col-md-3 mt-1">
       <button mat-raised-button (click)="pageBefore()" [disabled]="currentPageIndex === 1" class="mr-1">Page Before
       </button>
       <button mat-raised-button (click)="pageNext()">Page Next</button>
       Current page: {{ currentPageIndex }}
-      <mat-card *ngFor="let activity of listOfActivities" class="mt-3">
+      <mat-card *ngFor="let activity of listOfActivities" class="mt-1">
         <mat-card-header>
           <div mat-card-avatar>
             <img [src]="athlete?.profile_medium" alt="avatar" class="avatar">

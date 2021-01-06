@@ -1,0 +1,41 @@
+@import "src/assets/styles/variables";
+
+mat-slider {
+  width: 100%;
+  color: red;
+}
+
+.select {
+  background-color: $strava-orange;
+  border-radius: 4px;
+  width: 270px;
+  height: 40px;
+}
+
+
+.select-km {
+  background-color: $strava-orange;
+  border-radius: 4px;
+  width: 150px;
+  height: 40px;
+}
+
+.select-minutes {
+  background-color: $strava-orange;
+  border-radius: 4px;
+  width: 200px;
+  height: 40px;
+}
+
+
+.wings-container {
+  .mat-form-field-wrapper {
+    position: unset;
+  }
+}
+
+.wings {
+  background: url("/assets/images/wings.jpg")   no-repeat;
+  height: 690px;
+}
+

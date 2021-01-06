@@ -69,7 +69,6 @@ export class PaceCalculatorComponent implements OnInit {
     const speed = paceTimeBase / Number(formValue.distance);
     const speedMinutesBase = Math.floor(speed);
     const secondsRestFraction = speed % 1 * 60;
-    console.log(secondsRestFraction);
     this.pace = `${speedMinutesBase}:${secondsRestFraction.toFixed(0)}`;
   }
 

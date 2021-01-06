@@ -11,6 +11,8 @@ import {MyActivitiesComponent} from '../training/my-activities/my-activities.com
 import {CalendarModule} from 'angular-calendar';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
+import {MatSliderModule} from '@angular/material/slider';
+import {NgxSliderModule} from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import {BrowserModule} from '@angular/platform-browser';
     SharedModule,
     CalendarModule,
     CommonModule,
-    BrowserModule
+    BrowserModule,
+    MatSliderModule,
+    NgxSliderModule
   ]
 })
 export class AthleteModule {

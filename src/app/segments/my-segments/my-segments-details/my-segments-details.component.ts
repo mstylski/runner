@@ -4,7 +4,6 @@ import {SegmentModel} from '../../../shared/models/segment.model';
 import {ActivatedRoute} from '@angular/router';
 import * as L from 'leaflet';
 import {SegmentAltitudeModel} from '../../../shared/models/segment-altitude.model';
-import {LatLang, SegmentCoordinatesModel, SegmentCoordinatesResponse} from '../../../shared/models/segment-coordinates-model';
 
 @Component({
   selector: 'app-my-segments-details',
@@ -47,6 +46,7 @@ export class MySegmentsDetailsComponent implements OnInit {
       this.showMap();
     });
   }
+
   drawActivityOnMap() {
     const config = {
       color: 'red',

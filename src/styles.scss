@@ -7,4 +7,20 @@ html, body { height: 100%}
 body {  font-family: Roboto, "Helvetica Neue", sans-serif; background-color: $light-grey;
   margin: 0;}
 
+.wings-container{
+  .mat-form-field-infix {
+    display: contents!important;
+  }
+}
+.mat-accent .mat-slider-track-fill, .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label {
+  background-color: $strava-orange;
+}
+
+.wings-container{
+  .mat-select-value {
+    color: white;
+    font-size: 36px;
+    text-align: center;
+  }
+}
 

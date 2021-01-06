@@ -26,7 +26,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {NgModule} from '@angular/core';
 
-
 const MaterialModules = [
   MatButtonModule,
   MatCheckboxModule,
@@ -56,9 +55,8 @@ const MaterialModules = [
   MatTableModule,
   MatSortModule,
   MatBottomSheetModule,
-  MatChipsModule
+  MatChipsModule,
 ];
-
 
 @NgModule({
   exports: MaterialModules,

@@ -8,7 +8,8 @@ import {DistanceCalculatorModel} from '../../shared/models/distance-calculator.m
   styleUrls: ['./distance-calculator.component.scss']
 })
 export class DistanceCalculatorComponent implements OnInit {
-  distance: string;
+  distanceKM: string;
+  distanceMiles: string;
   modelForm: FormGroup;
   distanceModel: DistanceCalculatorModel;
   constructor(private formBuilder: FormBuilder) { }
@@ -41,9 +42,13 @@ export class DistanceCalculatorComponent implements OnInit {
     const formValue = this.modelForm.value;
     const changePaceIntoSeconds = Number(formValue.paceMinutes * 60) + Number(formValue.paceSeconds);
     const changeTimeIntoSeconds = Number(formValue.hour * 3600) + Number(formValue.minute * 60) + Number(formValue.sec);
-    const distanceWithRest = Number((changeTimeIntoSeconds) / Number(changePaceIntoSeconds));
-    const distanceBase = Math.floor(distanceWithRest);
-    const metersRestFraction = distanceWithRest % 1 * 1000;
-    this.distance = `${distanceBase} KM : ${metersRestFraction.toFixed(0)} METERS`;
+    const distanceWithRestKM = Number((changeTimeIntoSeconds) / Number(changePaceIntoSeconds));
+    const distanceWithRestMiles = Number((changeTimeIntoSeconds) / Number(changePaceIntoSeconds) / 1.609);
+    const distanceBaseMiles = Math.floor(distanceWithRestMiles);
+    const metersRestFractionMiles = distanceWithRestMiles % 1 * 1000;
+    const distanceBaseKM = Math.floor(distanceWithRestKM);
+    const metersRestFractionKM = distanceWithRestKM % 1 * 1000;
+    this.distanceKM = `${distanceBaseKM} KM : ${metersRestFractionKM.toFixed(0)} METERS`;
+    this.distanceMiles = `${distanceBaseMiles} MILES : ${metersRestFractionMiles.toFixed(0)} METERS`;
   }
 }
