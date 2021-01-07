@@ -1,4 +1,3 @@
-
 export interface ActivityHeartrateModel {
   type: string;
   data: number[];

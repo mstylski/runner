@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {PaceCalculatorModel} from '../../shared/models/pace-calculator.model';
+import {distanceOptions, milesKilometersOptions} from './pace-data';
 
 @Component({
   selector: 'app-pace-calculator',
@@ -10,32 +11,14 @@ import {PaceCalculatorModel} from '../../shared/models/pace-calculator.model';
 export class PaceCalculatorComponent implements OnInit {
   modelForm: FormGroup;
   paceModel: PaceCalculatorModel;
+  milesKilometersOptions = milesKilometersOptions;
+  distanceOptions = distanceOptions;
   pace: string;
   hour: number;
   minute: number;
   seconds: number;
 
-  readonly milesKilometersOptions = [
-    {label: 'km', value: 1},
-    {label: 'mile', value: 1.609}
-  ];
-
-  readonly distanceOptions = [
-    {label: 'Marathon', value: 42.195},
-    {label: 'Half Marathon', value: 21.095},
-    {label: '5KM', value: 5},
-    {label: '8KM', value: 8},
-    {label: '10KM', value: 10},
-    {label: '15KM', value: 15},
-    {label: '20KM', value: 20},
-    {label: '25KM', value: 25},
-    {label: '30KM', value: 30},
-    {label: '10Miles', value: 16.090},
-    {label: '20Miles', value: 32.180},
-  ];
-
-  constructor(private formBuilder: FormBuilder) {
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.buildForm();

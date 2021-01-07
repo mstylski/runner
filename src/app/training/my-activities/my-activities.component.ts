@@ -3,6 +3,7 @@ import {ActivityService} from '../../activity.service';
 import {Activities} from '../../shared/models/list-activities.model';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
+import {FormatTimeService} from '../../shared/format-time.service';
 
 @Component({
   selector: 'app-my-activities',
@@ -20,10 +21,20 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
   private readonly subscriptions = new Subscription();
   private readonly pagination$ = new BehaviorSubject<number>(this.currentPageIndex);
 
-  constructor(private activityService: ActivityService) {}
+  constructor(private activityService: ActivityService,
+              private formatTimeService: FormatTimeService) {}
 
   ngOnInit() {
     this.getActivities();
+  }
+
+  private getActivities() {
+    const subscription = this.pagination$.pipe(
+      debounceTime(400),
+      switchMap((pageIndex) => this.activityService.getActivitiesWithPagination2(pageIndex)),
+    )
+      .subscribe(activities => this.activities = activities);
+    this.subscriptions.add(subscription);
   }
 
   ngOnDestroy() {
@@ -40,24 +51,7 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
     this.pagination$.next(this.currentPageIndex);
   }
 
-  formatTime(seconds: number): string {
-    const secondsInOneMinute = 60;
-    const minutesInHours = 60;
-    const minutes = Math.floor(seconds / secondsInOneMinute);
-    const hours = Math.floor(minutes / minutesInHours);
-    if (hours >= 60 || minutes >= 60) {
-      return hours + ':' + (minutes - hours * secondsInOneMinute);
-    } else {
-      return minutes + ':' + (seconds - minutes * secondsInOneMinute);
-    }
-  }
-
-  private getActivities() {
-    const subscription = this.pagination$.pipe(
-      debounceTime(400),
-      switchMap((pageIndex) => this.activityService.getActivitiesWithPagination2(pageIndex)),
-    )
-      .subscribe(activities => this.activities = activities);
-    this.subscriptions.add(subscription);
+  getFormattedTime(data: number) {
+    this.formatTimeService.formatTime(data);
   }
 }

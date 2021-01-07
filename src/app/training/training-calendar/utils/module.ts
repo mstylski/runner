@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 
 @NgModule({
-    imports: [FormsModule, CalendarModule, CommonModule, RouterModule],
+  imports: [FormsModule, CalendarModule, CommonModule, RouterModule],
   declarations: [TrainingCalendarComponent],
   exports: [TrainingCalendarComponent],
 })

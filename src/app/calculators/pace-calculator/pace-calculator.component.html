@@ -1,5 +1,5 @@
+<h2>Pace Calculator</h2>
 <div class="pace">
-  <h2>Pace Calculator</h2>
   <h3>
     With the help of the RUN PACE calculator, you can determine what the pace of your run is <br>
     necessary to achieve the planned result over a given distance.</h3>
@@ -47,16 +47,12 @@
     </span>
       </mat-card-content>
       <button mat-raised-button class="mr-2" (click)="getPace()">Submit</button>
-      <button
-        mat-raised-button color="default"
-        (click)="modelForm.reset()"
-      >Reset
-      </button>
-<strong>
-  <div class="mt-1 pace-description">
-    To reach your goal, you need to ran at pace {{pace}}/km
-  </div>
-</strong>
+      <button mat-raised-button color="default" (click)="modelForm.reset()">Reset</button>
+      <strong>
+        <div class="mt-1 pace-description">
+          To reach your goal, you need to ran at pace {{pace}}/km
+        </div>
+      </strong>
     </mat-card>
   </form>
 </div>

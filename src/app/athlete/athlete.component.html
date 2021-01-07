@@ -29,7 +29,7 @@
                   </tr>
                   <tr>
                     <td>Time</td>
-                    <td>{{formatTime(stats.recent_run_totals.moving_time)}}</td>
+                    <td>{{formattedTime(stats.recent_run_totals.moving_time)}}</td>
                   </tr>
                   <tr>
                     <td>Elevation Gain</td>
@@ -57,7 +57,7 @@
                   </tr>
                   <tr>
                     <td>Time</td>
-                    <td>{{formatTime(stats.ytd_run_totals.moving_time)}}</td>
+                    <td>{{formattedTime(stats.ytd_run_totals.moving_time)}}</td>
                   </tr>
                   <tr>
                     <td>Elevation Gain</td>
@@ -81,7 +81,7 @@
                   </tr>
                   <tr>
                     <td>Time</td>
-                    <td>{{formatTime(stats.recent_ride_totals.moving_time)}}</td>
+                    <td>{{formattedTime(stats.recent_ride_totals.moving_time)}}</td>
                   </tr>
                   <tr>
                     <td>Elevation Gain</td>
@@ -109,7 +109,7 @@
                   </tr>
                   <tr>
                     <td>Time</td>
-                    <td>{{formatTime(stats.ytd_ride_totals.moving_time)}}</td>
+                    <td>{{formattedTime(stats.ytd_ride_totals.moving_time)}}</td>
                   </tr>
                   <tr>
                     <td>Elevation Gain</td>
@@ -147,8 +147,8 @@
               {{ activity.name}}</p>
             <p>{{ activity.start_date_local | date:'HH:mm | dd/MM/yyyy' }}</p>
             <p>{{ (activity.distance / 1000).toFixed(1) }}km</p>
-            <p>{{ formatTime(activity.moving_time) }}</p>
-          <button mat-raised-button (click)="navigate(activity.id)">Show details</button>
+            <p>{{ formattedTime(activity.moving_time) }}</p>
+            <button mat-raised-button (click)="navigate(activity.id)">Show details</button>
           </div>
         </mat-card-content>
       </mat-card>

@@ -1,4 +1,3 @@
-
 export interface DistanceCalculatorModel {
   hour: number;
   minute: number;

@@ -10,8 +10,7 @@ export class AuthService {
   accessToken = '';
   refreshToken = '';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   isLoggedIn() {
     return this.accessToken || window.localStorage.getItem('accessToken');
@@ -20,7 +19,7 @@ export class AuthService {
   getAccessToken(code: string): Observable<any> {
     const params = {
       client_id: environment.stravaClientID,
-      client_secret: '91e4ea8376741e19631c1ab8c4a1fc3c5a98dee5',
+      client_secret: '76b36b39f12ea4f411ad874067bf4955864b1dcc',
       code,
       grant_type: 'authorization_code',
     };
@@ -30,7 +29,7 @@ export class AuthService {
   getRefreshToken(token: string): Observable<any> {
     const params = {
       client_id: environment.stravaClientID,
-      client_secret: '91e4ea8376741e19631c1ab8c4a1fc3c5a98dee5',
+      client_secret: '76b36b39f12ea4f411ad874067bf4955864b1dcc',
       grant_type: 'refresh_token',
       refresh_token: token,
     };
@@ -45,12 +44,11 @@ export class AuthService {
   }
 
   getLoggedAthlete() {
-    return this.athlete || JSON.parse(window.localStorage.getItem('loggedAthlete') as string); // sprowadzic string spowrotem do obiektu JS
+    return this.athlete || JSON.parse(window.localStorage.getItem('loggedAthlete') as string);
   }
 
   setAthlete(athlete: AthleteModel) {
     this.athlete = athlete;
     window.localStorage.setItem('loggedAthlete', JSON.stringify(this.athlete));
-    // stringify bo do Localstorage ttrzeba zapisac string mozna tylko, stringify sprowadza obiekt do stringa
   }
 }

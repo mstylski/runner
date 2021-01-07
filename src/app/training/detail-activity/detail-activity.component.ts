@@ -11,17 +11,23 @@ import * as L from 'leaflet';
 import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates.model';
 import {ActivityHeartrateModel} from '../../shared/models/activity-heartrate.distance.model';
 import {Gallery} from 'angular-gallery';
-
+import {MapService} from '../../shared/map.service';
+import {FormatTimeService} from '../../shared/format-time.service';
 
 @Component({
   selector: 'app-detail-activity',
   templateUrl: './detail-activity.component.html',
   styleUrls: ['./detail-activity.component.scss']
 })
+
 export class DetailActivityComponent implements OnInit {
   map: L.Map;
   lineChartData: ChartDataSets[] = [];
   lineChartLabels: Label[] = [];
+  activity: ActivityModel;
+  athlete: AthleteModel;
+  coordinates: ActivityCoordinatesModel;
+  heartrateDistance: ActivityHeartrateModel[] = [];
   public lineChartLegend = {
     display: false,
   };
@@ -30,28 +36,12 @@ export class DetailActivityComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
 
-  activity: ActivityModel;
-  athlete: AthleteModel;
-  coordinates: ActivityCoordinatesModel;
-  heartrateDistance: ActivityHeartrateModel[] = [];
-
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
               private athleteService: AthleteService,
-              private gallery: Gallery) {
-  }
-
-  showGallery(index: number = 0) {
-    const prop: any = {};
-    prop.images = [
-      {path: `${this.fetchBigPhoto()}`},
-    ];
-    prop.index = index;
-    this.gallery.load(prop);
-  }
-
-  fetchBigPhoto() {
-    return this.activity.photos.primary.urls['600'];
+              private gallery: Gallery,
+              private mapService: MapService,
+              private formatTimeService: FormatTimeService) {
   }
 
   ngOnInit(): void {
@@ -70,30 +60,35 @@ export class DetailActivityComponent implements OnInit {
       });
   }
 
+  showGallery(index: number = 0) {
+    const prop: any = {};
+    prop.images = [
+      {path: `${this.fetchBigPhoto()}`},
+    ];
+    prop.index = index;
+    this.gallery.load(prop);
+  }
+
+  fetchBigPhoto() {
+    return this.activity.photos.primary?.urls['600'];
+  }
+
   getAthlete() {
     this.athleteService.getAthlete().subscribe(athlete => this.athlete = athlete);
   }
 
-  formatTime(seconds: number): string {
-    const secondsInOneMinute = 60;
-    const minutesInHours = 60;
-    const minutes = Math.floor(seconds / secondsInOneMinute);
-    const hours = Math.floor(minutes / minutesInHours);
-    if (hours >= 60 || minutes >= 60) {
-      return hours + ':' + (minutes - hours * secondsInOneMinute).toFixed(0);
-    } else {
-      return minutes + ':' + (seconds - minutes * secondsInOneMinute).toFixed(0);
-    }
-  }
-
   getAvgTime(distance: number, movingTime: number) {
     const secondsFor1KM = 1000 / (distance / movingTime);
-    return `${this.formatTime(secondsFor1KM)}/km`;
+    return `${this.getFormattedTime(secondsFor1KM)}/km`;
   }
 
   getAvgSplit(distance: number, movingTime: number) {
     const secondsFor1KM = 1000 / (distance / movingTime);
-    return `${this.formatTime(secondsFor1KM)}/km`;
+    return `${this.getFormattedTime(secondsFor1KM)}/km`;
+  }
+
+  getFormattedTime(data: number) {
+    this.formatTimeService.formatTime(data);
   }
 
   getDistance(distance: number) {
@@ -110,15 +105,7 @@ export class DetailActivityComponent implements OnInit {
   }
 
   showMap() {
-    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
-    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
-        ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      id: 'mapbox/streets-v11',
-      updateWhenZooming: false,
-      crossOrigin: true,
-      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMmZsYTFiNTZnMDJycWphbGhveDAyMiJ9.mGU2Q44LI8-UTtIOybToHA`
-    }).addTo(this.map);
+    this.mapService.showMap();
   }
 
   getActivityCoordinates() {

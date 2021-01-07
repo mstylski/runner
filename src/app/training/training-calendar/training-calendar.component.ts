@@ -6,13 +6,12 @@ import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angul
 import {Activities} from '../../shared/models/list-activities.model';
 import {ActivityService} from '../../activity.service';
 import {colors} from './utils/colors';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-training-calendar',
   templateUrl: './training-calendar.component.html',
   styleUrls: ['./training-calendar.component.scss'],
-
 })
 
 export class TrainingCalendarComponent implements OnInit {
@@ -31,7 +30,17 @@ export class TrainingCalendarComponent implements OnInit {
 
   constructor(private modal: NgbModal,
               private activityService: ActivityService,
-              private router: Router) {
+              private router: Router) {}
+
+  ngOnInit() {
+    this.getActivities();
+  }
+
+  private getActivities() {
+    this.activityService.getActivities().subscribe(activities => {
+      this.activities = activities;
+      this.prepareCalendarEvents();
+    });
   }
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
@@ -68,13 +77,6 @@ export class TrainingCalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  private getActivities() {
-    this.activityService.getActivities().subscribe(activities => {
-      this.activities = activities;
-      this.prepareCalendarEvents();
-    });
-  }
-
   prepareCalendarEvents() {
     this.events = this.activities.map((activity) => {
       return {
@@ -85,10 +87,6 @@ export class TrainingCalendarComponent implements OnInit {
         color: colors.blue,
       };
     });
-  }
-
-  ngOnInit() {
-    this.getActivities();
   }
 }
 

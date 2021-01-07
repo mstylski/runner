@@ -1,4 +1,3 @@
-
 export interface Athlete {
   id: number;
   resource_state: number;
@@ -58,7 +57,6 @@ export interface Segment {
   athlete_pr_effort: AthletePrEffort;
   athlete_segment_stats: AthleteSegmentStats;
 }
-
 
 export interface RoutesModel {
   athlete: Athlete;

@@ -1,4 +1,3 @@
-
 export interface Athlete {
   id: number;
   resource_state: number;

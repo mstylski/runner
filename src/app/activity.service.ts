@@ -10,8 +10,7 @@ import {ActivityHeartrateModel} from './shared/models/activity-heartrate.distanc
 @Injectable({providedIn: 'root'})
 export class ActivityService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getActivitiesWithPagination(page: number): Observable<Activities[]> {
     const params = {
@@ -52,7 +51,6 @@ export class ActivityService {
     };
     return this.http.get<ActivityCoordinateResponse>(`${environment.apiUrl}activities/${id}/streams/latlng`, {params});
   }
-
 
   getActivityHeartrateDistance(id: number): Observable<ActivityHeartrateModel[]> {
     const params = {

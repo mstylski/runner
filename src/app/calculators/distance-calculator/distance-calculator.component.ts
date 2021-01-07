@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DistanceCalculatorModel} from '../../shared/models/distance-calculator.model';
 
@@ -12,7 +12,8 @@ export class DistanceCalculatorComponent implements OnInit {
   distanceMiles: string;
   modelForm: FormGroup;
   distanceModel: DistanceCalculatorModel;
-  constructor(private formBuilder: FormBuilder) { }
+
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.buildForm();

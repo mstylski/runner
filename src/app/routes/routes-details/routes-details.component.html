@@ -1,6 +1,4 @@
 <h2 *ngIf="routeModel">{{routeModel.name}}</h2>
-<button mat-raised-button (click)="exportGPX()">Export GPX</button>
-<button mat-raised-button (click)="exportTCX()" class="ml-1">Export TCX</button>
 <div class="d-flex justify-content-between">
   <mat-card class="mt-3">
     <mat-card-content>
@@ -38,7 +36,7 @@
                 <span class="material-icons moving">history</span>
               </div>
               <div>
-                <span>{{ formatTime(routeModel.estimated_moving_time) }}</span>
+                <span>{{ getFormattedTime() }}</span>
                 <span><small class="text-uppercase"><br>Moving Time</small></span>
               </div>
             </div>
@@ -87,8 +85,8 @@
                   [datasets]="lineChartData"
                   [labels]="lineChartLabels"
                   [chartType]="lineChartType"
-                  [plugins]="lineChartPlugins"
-          ></canvas>
+                  [plugins]="lineChartPlugins">
+          </canvas>
         </div>
       </mat-card-content>
     </mat-card-title>

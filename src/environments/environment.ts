@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://www.strava.com/api/v3/',
-  stravaClientID: '57403',
+  stravaClientID: '57822',
   // stravaRedirectUrl: 'http:/localhost:4200'
 };
 

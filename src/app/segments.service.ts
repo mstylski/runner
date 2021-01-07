@@ -4,25 +4,14 @@ import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {SegmentsModel} from './shared/models/segments.model';
 import {SegmentModel} from './shared/models/segment.model';
-import {SegmentsExploreModel} from './shared/models/segments-explore.model';
 import {SegmentAltitudeModel} from './shared/models/segment-altitude.model';
-import {SegmentCoordinatesModel, SegmentCoordinatesResponse} from './shared/models/segment-coordinates-model';
+import {SegmentCoordinatesResponse} from './shared/models/segment-coordinates-model';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class SegmentsService {
 
-  constructor(private http: HttpClient) {
-  }
-
-  segmentsExplore(): Observable<SegmentsExploreModel[]> {
-    const params = {
-      bounds: JSON.stringify([54.50, 49.0, 14.07, 24.09])
-    };
-    return this.http.get<SegmentsExploreModel[]>(`${environment.apiUrl}segments/explore`, {params});
-  }
+  constructor(private http: HttpClient) {}
 
   segmentsStarred(page: number): Observable<SegmentsModel[]> {
     const params = {

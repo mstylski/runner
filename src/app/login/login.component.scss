@@ -1,0 +1,16 @@
+@import "src/assets/styles/variables";
+
+.button {
+  background-color: $strava-orange;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.strava-runner {
+  background: url("/assets/images/strava_runner.jpg");
+  height: 700px;
+}
+

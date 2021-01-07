@@ -8,8 +8,7 @@ import {AthleteStatsModel} from './shared/models/athlete-stats.model';
 @Injectable({providedIn: 'root'})
 export class AthleteService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAthlete(): Observable<AthleteModel> {
     return this.http.get<AthleteModel>(`${environment.apiUrl}athlete`);

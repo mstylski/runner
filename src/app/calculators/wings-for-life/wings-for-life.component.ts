@@ -18,8 +18,7 @@ export class WingsForLifeComponent implements OnInit {
   kilometers = kilometers;
   pace = pace;
 
-  constructor(private formBuilder: FormBuilder) {
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.buildForm();

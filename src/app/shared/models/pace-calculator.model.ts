@@ -1,5 +1,3 @@
-
-
 export interface PaceCalculatorModel {
   hour: number;
   minute: number;

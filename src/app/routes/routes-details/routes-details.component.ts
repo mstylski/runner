@@ -7,6 +7,8 @@ import * as L from 'leaflet';
 import {ChartDataSets, ChartType} from 'chart.js';
 import {BaseChartDirective, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import {MapService} from '../../shared/map.service';
+import {FormatTimeService} from '../../shared/format-time.service';
 
 @Component({
   selector: 'app-routes-details',
@@ -30,7 +32,9 @@ export class RoutesDetailsComponent implements OnInit {
   map: L.Map;
 
   constructor(private routesService: RoutesService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private mapService: MapService,
+              private formatTimeService: FormatTimeService) {
   }
 
   ngOnInit(): void {
@@ -40,24 +44,16 @@ export class RoutesDetailsComponent implements OnInit {
     this.showMap();
   }
 
-  showMap() {
-    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
-    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
-        ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      id: 'mapbox/streets-v11',
-      updateWhenZooming: false,
-      crossOrigin: true,
-      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMmZsYTFiNTZnMDJycWphbGhveDAyMiJ9.mGU2Q44LI8-UTtIOybToHA`
-    }).addTo(this.map);
-  }
-
   getRoutesCoordinates() {
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.routesService.getRoutesCoordinates(id).subscribe(coordinates => {
       this.coordinates = coordinates[0];
       this.drawActivityOnMap();
     });
+  }
+
+  showMap() {
+    this.mapService.showMap();
   }
 
   drawActivityOnMap() {
@@ -75,30 +71,12 @@ export class RoutesDetailsComponent implements OnInit {
     this.routesService.getRoute(id).subscribe(route => this.routeModel = route);
   }
 
-  exportGPX() {
-    const id = this.route.snapshot.paramMap.get('id') as string;
-    this.routesService.exportGPX(id).subscribe();
-  }
-
-  exportTCX() {
-    const id = this.route.snapshot.paramMap.get('id') as string;
-    this.routesService.exportTCX(id).subscribe();
+  getFormattedTime() {
+    this.formatTimeService.formatTime(this.routeModel.estimated_moving_time);
   }
 
   getDistance(distance: number) {
     return (distance / 1000).toFixed(1);
-  }
-
-  formatTime(seconds: number): string {
-    const secondsInOneMinute = 60;
-    const minutesInHours = 60;
-    const minutes = Math.floor(seconds / secondsInOneMinute);
-    const hours = Math.floor(minutes / minutesInHours);
-    if (hours >= 60 || minutes >= 60) {
-      return hours + ':' + (minutes - hours * secondsInOneMinute).toFixed(0);
-    } else {
-      return minutes + ':' + (seconds - minutes * secondsInOneMinute).toFixed(0);
-    }
   }
 
   prepareLineChartLabels() {

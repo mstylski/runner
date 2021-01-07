@@ -17,8 +17,7 @@ export class MySegmentsComponent implements OnInit, OnDestroy {
     'elevation_low', 'elevation_difference', 'state' ];
   segments: SegmentsModel[] = [];
 
-  constructor(private segmentsService: SegmentsService) {
-  }
+  constructor(private segmentsService: SegmentsService) {}
 
   ngOnInit(): void {
     this.segmentsStarred();

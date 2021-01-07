@@ -1,9 +1,7 @@
 <div *ngIf="activity" class="d-flex justify-content-between">
   <mat-card class="mat-card-top">
     <mat-card-header>
-      <span mat-card-avatar>
-        <img [src]="athlete?.profile" alt="avatar" class="avatar">
-      </span>
+      <span mat-card-avatar><img [src]="athlete?.profile" alt="avatar" class="avatar"></span>
       <span>
         <div class="ml-5 pl-4">
 <small><strong>{{activity.start_date_local | date: 'EEEE | MMMM d | y | h:mm:ss | a'}}</strong></small>
@@ -40,7 +38,7 @@
                 <span class="material-icons moving">history</span>
               </div>
               <div>
-                <span>{{ formatTime(activity.moving_time) }}</span>
+                <span>{{ getFormattedTime(activity.moving_time) }}</span>
                 <span><small class="text-uppercase"><br>Moving Time</small></span>
               </div>
             </div>

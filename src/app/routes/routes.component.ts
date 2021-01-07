@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RoutesService} from '../routes.service';
 import {RoutesModel} from '../shared/models/routes.model';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-routes',
@@ -11,9 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 export class RoutesComponent implements OnInit {
   runningRoutes: RoutesModel[] = [];
 
-  constructor(private routesService: RoutesService,
-              private route: ActivatedRoute) {
-  }
+  constructor(private routesService: RoutesService) {}
 
   ngOnInit(): void {
     this.getRoutes();
