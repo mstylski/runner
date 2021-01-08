@@ -12,7 +12,6 @@ import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates
 import {ActivityHeartrateModel} from '../../shared/models/activity-heartrate.distance.model';
 import {Gallery} from 'angular-gallery';
 import {MapService} from '../../shared/map.service';
-import {FormatTimeService} from '../../shared/format-time.service';
 
 @Component({
   selector: 'app-detail-activity',
@@ -39,9 +38,7 @@ export class DetailActivityComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
               private athleteService: AthleteService,
-              private gallery: Gallery,
-              private mapService: MapService,
-              private formatTimeService: FormatTimeService) {
+              private gallery: Gallery) {
   }
 
   ngOnInit(): void {
@@ -70,7 +67,7 @@ export class DetailActivityComponent implements OnInit {
   }
 
   fetchBigPhoto() {
-    return this.activity.photos.primary?.urls['600'];
+    return this.activity.photos.primary.urls['600'];
   }
 
   getAthlete() {
@@ -87,8 +84,16 @@ export class DetailActivityComponent implements OnInit {
     return `${this.getFormattedTime(secondsFor1KM)}/km`;
   }
 
-  getFormattedTime(data: number) {
-    this.formatTimeService.formatTime(data);
+  getFormattedTime(seconds: number) {
+    const secondsInOneMinute = 60;
+    const minutesInHours = 60;
+    const minutes = Math.floor(seconds / secondsInOneMinute);
+    const hours = Math.floor(minutes / minutesInHours);
+    if (hours >= 60 || minutes >= 60) {
+      return hours + ':' + (minutes - hours * secondsInOneMinute).toFixed(0);
+    } else {
+      return minutes + ':' + (seconds - minutes * secondsInOneMinute).toFixed(0);
+    }
   }
 
   getDistance(distance: number) {
@@ -105,7 +110,15 @@ export class DetailActivityComponent implements OnInit {
   }
 
   showMap() {
-    this.mapService.showMap();
+    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
+    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
+        ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox/streets-v11',
+      updateWhenZooming: false,
+      crossOrigin: true,
+      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMmZsYTFiNTZnMDJycWphbGhveDAyMiJ9.mGU2Q44LI8-UTtIOybToHA`
+    }).addTo(this.map);
   }
 
   getActivityCoordinates() {

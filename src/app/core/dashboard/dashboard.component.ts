@@ -13,8 +13,7 @@ export class DashboardComponent {
 
   constructor(
     private authService: AuthService,
-    private route: ActivatedRoute,
-  ) {
+    private route: ActivatedRoute) {
     if (this.code && !this.isLoggedIn) {
       this.authService.getAccessToken(this.code).subscribe(response => {
         this.authService.setAuthToken(response.access_token, response.refresh_token);

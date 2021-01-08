@@ -13,6 +13,6 @@ export interface Altitude {
 }
 
 export interface SegmentAltitudeModel {
-  distance: Distance;
   altitude: Altitude;
+  distance: Distance;
 }

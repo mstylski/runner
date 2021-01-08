@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
 import {AthleteModel} from './shared/models/athlete.model';
-
 @Injectable({providedIn: 'root'})
 export class AuthService {
   athlete: AthleteModel;
@@ -51,4 +50,5 @@ export class AuthService {
     this.athlete = athlete;
     window.localStorage.setItem('loggedAthlete', JSON.stringify(this.athlete));
   }
+
 }

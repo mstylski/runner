@@ -18,7 +18,7 @@ import {LoginComponent} from './login/login.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard/athlete',
+    redirectTo: 'dashboard/athlete',
     pathMatch: 'full',
   },
   {path: 'login', component: LoginComponent},

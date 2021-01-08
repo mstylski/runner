@@ -4,7 +4,7 @@ import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {SegmentsModel} from './shared/models/segments.model';
 import {SegmentModel} from './shared/models/segment.model';
-import {SegmentAltitudeModel} from './shared/models/segment-altitude.model';
+import {Altitude, SegmentAltitudeModel} from './shared/models/segment-altitude.model';
 import {SegmentCoordinatesResponse} from './shared/models/segment-coordinates-model';
 
 
@@ -29,13 +29,13 @@ export class SegmentsService {
     return this.http.get<SegmentModel>(`${environment.apiUrl}segments/${id}`, {params});
   }
 
-  getSegmentsAltitude(id: number): Observable<SegmentAltitudeModel> {
+  getSegmentsAltitude(id: number): Observable<SegmentAltitudeModel[]> {
     const params = {
       scope: 'read_all',
       keys: 'altitude',
       key_by_type: true.toString(),
     };
-    return this.http.get<SegmentAltitudeModel>(`${environment.apiUrl}segments/${id}/streams`, {params});
+    return this.http.get<SegmentAltitudeModel[]>(`${environment.apiUrl}segments/${id}/streams`, {params});
   }
 
   getSegmentsCoordinates(id: string): Observable<SegmentCoordinatesResponse> {

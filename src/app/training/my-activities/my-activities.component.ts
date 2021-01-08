@@ -3,7 +3,6 @@ import {ActivityService} from '../../activity.service';
 import {Activities} from '../../shared/models/list-activities.model';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
-import {FormatTimeService} from '../../shared/format-time.service';
 
 @Component({
   selector: 'app-my-activities',
@@ -21,8 +20,7 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
   private readonly subscriptions = new Subscription();
   private readonly pagination$ = new BehaviorSubject<number>(this.currentPageIndex);
 
-  constructor(private activityService: ActivityService,
-              private formatTimeService: FormatTimeService) {}
+  constructor(private activityService: ActivityService) {}
 
   ngOnInit() {
     this.getActivities();
@@ -51,7 +49,15 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
     this.pagination$.next(this.currentPageIndex);
   }
 
-  getFormattedTime(data: number) {
-    this.formatTimeService.formatTime(data);
+  getFormattedTime(seconds: number) {
+    const secondsInOneMinute = 60;
+    const minutesInHours = 60;
+    const minutes = Math.floor(seconds / secondsInOneMinute);
+    const hours = Math.floor(minutes / minutesInHours);
+    if (hours >= 60 || minutes >= 60) {
+      return hours + ':' + (minutes - hours * secondsInOneMinute).toFixed(0);
+    } else {
+      return minutes + ':' + (seconds - minutes * secondsInOneMinute).toFixed(0);
+    }
   }
 }

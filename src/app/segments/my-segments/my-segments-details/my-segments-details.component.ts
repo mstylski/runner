@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SegmentsService} from '../../../segments.service';
 import {SegmentModel} from '../../../shared/models/segment.model';
 import {ActivatedRoute} from '@angular/router';
 import * as L from 'leaflet';
-import {SegmentAltitudeModel} from '../../../shared/models/segment-altitude.model';
+import {Altitude, Distance, SegmentAltitudeModel} from '../../../shared/models/segment-altitude.model';
 import {MapService} from '../../../shared/map.service';
+import {ChartDataSets, ChartType} from 'chart.js';
+import {BaseChartDirective, Label} from 'ng2-charts';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-my-segments-details',
@@ -15,21 +18,40 @@ export class MySegmentsDetailsComponent implements OnInit {
   map: L.Map;
   segment: SegmentModel;
   coordinates: any;
-  altitude: SegmentAltitudeModel;
+  altitudeData: SegmentAltitudeModel[] = [];
+  lineChartData: ChartDataSets[] = [];
+  lineChartLabels: Label[] = [];
+  public lineChartLegend = {
+    display: false,
+  };
+  public lineChartType: ChartType = 'line';
+  public lineChartPlugins = [pluginAnnotations];
+
+  @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
+
 
   constructor(private segmentsService: SegmentsService,
-              private route: ActivatedRoute,
-              private mapService: MapService) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.getSegmentsCoordinates();
     this.getSegment();
     this.getSegmentsAltitude();
+    this.getAltitude();
+    // this.showMap();
   }
 
   showMap() {
-    this.mapService.showMap();
+    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
+    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
+        ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox/streets-v11',
+      updateWhenZooming: false,
+      crossOrigin: true,
+      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMmZsYTFiNTZnMDJycWphbGhveDAyMiJ9.mGU2Q44LI8-UTtIOybToHA`
+    }).addTo(this.map);
   }
 
   getSegmentsCoordinates() {
@@ -37,7 +59,6 @@ export class MySegmentsDetailsComponent implements OnInit {
     this.segmentsService.getSegmentsCoordinates(id).subscribe(data => {
       this.coordinates = data;
       this.drawActivityOnMap();
-      this.showMap();
     });
   }
 
@@ -58,6 +79,29 @@ export class MySegmentsDetailsComponent implements OnInit {
 
   getSegmentsAltitude() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.segmentsService.getSegmentsAltitude(id).subscribe(segments => this.altitude = segments);
+    this.segmentsService.getSegmentsAltitude(id).subscribe(segments => this.altitudeData = segments);
+  }
+
+  prepareLineChartLabels() {
+    this.lineChartLabels = this.altitudeData[1].distance.data.map(v => `${(v / 1000).toFixed(1)} km`);
+  }
+
+  prepareDistanceChartData() {
+    this.lineChartData.push({
+      data: this.altitudeData[0].altitude.data, label: 'Altitude',
+      borderColor: 'rgb(214,8,8)',
+      borderWidth: 1.2,
+      showLine: true,
+      pointRadius: 0,
+    });
+  }
+
+  getAltitude() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.segmentsService.getSegmentsAltitude(id).subscribe(data => {
+      this.altitudeData = data;
+      this.prepareDistanceChartData();
+      this.prepareLineChartLabels();
+    });
   }
 }

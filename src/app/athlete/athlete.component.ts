@@ -9,7 +9,6 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {ActivityModel} from '../shared/models/activity.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormatTimeService} from '../shared/format-time.service';
 
 @Component({
   selector: 'app-athlete',
@@ -30,8 +29,7 @@ export class AthleteComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private activityService: ActivityService,
     private route: ActivatedRoute,
-    private router: Router,
-    private formatTimeService: FormatTimeService) {
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -81,8 +79,16 @@ export class AthleteComponent implements OnInit, OnDestroy {
     this.subscriptions.add(subscription);
   }
 
-  formattedTime(data: number) {
-    this.formatTimeService.formatTime(data);
+  getFormattedTime(seconds: number) {
+    const secondsInOneMinute = 60;
+    const minutesInHours = 60;
+    const minutes = Math.floor(seconds / secondsInOneMinute);
+    const hours = Math.floor(minutes / minutesInHours);
+    if (hours >= 60 || minutes >= 60) {
+      return hours + ':' + (minutes - hours * secondsInOneMinute).toFixed(0);
+    } else {
+      return minutes + ':' + (seconds - minutes * secondsInOneMinute).toFixed(0);
+    }
   }
 
   getRecentDistance(distance: number) {
