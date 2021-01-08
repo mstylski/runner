@@ -1,178 +1,181 @@
-<div *ngIf="activity" class="d-flex justify-content-between">
-  <mat-card class="mat-card-top">
-    <mat-card-header>
-      <span mat-card-avatar><img [src]="athlete?.profile" alt="avatar" class="avatar"></span>
-      <span>
+<div>
+  <div class="d-flex justify-content-between">
+    <mat-card class="mat-card-top">
+      <mat-card-header>
+        <span mat-card-avatar><img [src]="athlete?.profile" alt="avatar" class="avatar"></span>
+        <span>
         <div class="ml-5 pl-4">
-<small><strong>{{activity.start_date_local | date: 'EEEE | MMMM d | y | h:mm:ss | a'}}</strong></small>
-                        <h2>{{activity.name}}</h2>
-          <small><div *ngIf="activity.description">{{activity.description}}</div></small>
-          <small>{{activity.device_name}}</small>
+<small><strong>{{activity?.start_date_local | date: 'EEEE | MMMM d | y | h:mm:ss | a'}}</strong></small>
+                        <h2>{{activity?.name}}</h2>
+          <small><div *ngIf="activity?.description">{{activity?.description}}</div></small>
+          <small>{{activity?.device_name}}</small>
       </div>
       </span>
-    </mat-card-header>
-    <div class="photo img-fluid"><img
-      [src]="activity.photos.primary.urls['100']" width="38" alt="100" (click)="showGallery()">
-    </div>
-  </mat-card>
-  <mat-card class="mat-card-top">
-    <mat-card-content>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2 distance">
-                <span class="material-icons">near_me</span>
-              </div>
-              <div>
-                <span>{{ getDistance(activity.distance) }}km</span>
-                <span>
+      </mat-card-header>
+      <div class="photo img-fluid"><img *ngIf="activity.photos.primary.urls['100']"
+                                        [src]="activity.photos.primary.urls['100']" width="38" alt="100" (click)="showGallery()">
+      </div>
+    </mat-card>
+    <mat-card class="mat-card-top">
+      <mat-card-content>
+        <div class="container mt-3">
+          <div class="row">
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2 distance">
+                  <span class="material-icons">near_me</span>
+                </div>
+                <div>
+                  <span>{{ getDistance(activity.distance) }}km</span>
+                  <span>
                  <br><small class="text-uppercase">Distance</small>
             </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2">
-                <span class="material-icons moving">history</span>
-              </div>
-              <div>
-                <span>{{ getFormattedTime(activity.moving_time) }}</span>
-                <span><small class="text-uppercase"><br>Moving Time</small></span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2">
-                <span class="material-icons">watch</span>
-              </div>
-              <span>{{getAvgTime(activity.distance, activity.moving_time)}}
-                <small class="text-uppercase"><br>Pace</small></span>
-              <span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2">
-                <span class="material-icons heart">local_fire_department</span>
-              </div>
-              <div>
-                <span>{{activity.calories}} kcal</span>
-                <span><small class="text-uppercase"><br>Calories</small></span>
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2">
+                  <span class="material-icons moving">history</span>
+                </div>
+                <div>
+                  <span>{{ getFormattedTime(activity.moving_time) }}</span>
+                  <span><small class="text-uppercase"><br>Moving Time</small></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2 speed"><span class="material-icons">speed</span></div>
-              <div>
-                <span>{{getSpeed(activity.average_speed)}}</span>
-                <span><small class="text-uppercase"><br>Avg Speed</small></span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2 heart"><span class="material-icons">speed</span></div>
-              <div>
-                <span>{{getSpeed(activity.max_speed)}}</span>
-                <span><small class="text-uppercase"><br>Max Speed</small></span>
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2">
+                  <span class="material-icons">watch</span>
+                </div>
+                <span>{{getAvgTime(activity.distance, activity.moving_time)}}
+                  <small class="text-uppercase"><br>Pace</small></span>
+                <span></span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2 heart"><span class="material-icons">favorite_border</span></div>
-              <div>
-                <span>{{getHeartrate(activity.average_heartrate)}}</span>
-                <span><div><small class="text-uppercase">Avg Heartrate</small></div></span>
+        <div class="container">
+          <div class="row">
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2">
+                  <span class="material-icons heart">local_fire_department</span>
+                </div>
+                <div>
+                  <span>{{activity.calories}} kcal</span>
+                  <span><small class="text-uppercase"><br>Calories</small></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2 heart"><span class="material-icons">favorite</span></div>
-              <div>
-                <span>{{getHeartrate(activity.max_heartrate)}}</span>
-                <span><div><small class="text-uppercase">Max Heartrate</small></div></span>
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2 speed"><span class="material-icons">speed</span></div>
+                <div>
+                  <span>{{getSpeed(activity.average_speed)}}</span>
+                  <span><small class="text-uppercase"><br>Avg Speed</small></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2"><span class="material-icons elevation">trending_up</span></div>
-              <div><span>{{activity.total_elevation_gain}}m</span>
-                <span><div><small class="text-uppercase">Elevation Gain</small></div></span></div>
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2 heart"><span class="material-icons">speed</span></div>
+                <div>
+                  <span>{{getSpeed(activity.max_speed)}}</span>
+                  <span><small class="text-uppercase"><br>Max Speed</small></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
-<div class="d-flex justify-content-between">
-  <div class="mt-3">
-    <mat-card class="mat-card-bottom-1">
-      <h2 class="splits-header">Splits</h2>
-      <mat-card-content>
-        <div>
-          <table class="table table-hover">
-            <thead>
-            <tr>
-              <th scope="col">KM</th>
-              <th scope="col">Pace</th>
-              <th scope="col">Elevation</th>
-              <th scope="col">HR</th>
-            </tr>
-            </thead>
-            <tbody *ngIf="activity">
-            <tr *ngFor="let metric of activity.splits_metric">
-              <td>{{metric.split}}</td>
-              <td>{{getAvgSplit(metric.distance, metric.moving_time)}}</td>
-              <td>{{metric.elevation_difference}}m</td>
-              <td>{{metric.average_heartrate | number: '1.0-0'}}</td>
-            </tr>
-            </tbody>
-          </table>
+        <div class="container">
+          <div class="row">
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2 heart"><span class="material-icons">favorite_border</span></div>
+                <div>
+                  <span>{{getHeartrate(activity.average_heartrate)}}</span>
+                  <span><div><small class="text-uppercase">Avg Heartrate</small></div></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2 heart"><span class="material-icons">favorite</span></div>
+                <div>
+                  <span>{{getHeartrate(activity.max_heartrate)}}</span>
+                  <span><div><small class="text-uppercase">Max Heartrate</small></div></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2"><span class="material-icons elevation">trending_up</span></div>
+                <div><span>{{activity.total_elevation_gain}}m</span>
+                  <span><div><small class="text-uppercase">Elevation Gain</small></div></span></div>
+              </div>
+            </div>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="mt-3">
-    <mat-card class="mat-card-bottom-2">
-      <mat-card-header></mat-card-header>
-      <mat-card-content>
-        <div id="mapid"></div>
-      </mat-card-content>
+  <div class="d-flex justify-content-between">
+    <div class="mt-3">
+      <mat-card class="mat-card-bottom-1">
+        <h2 class="splits-header">Splits</h2>
+        <mat-card-content>
+          <div>
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th scope="col">KM</th>
+                <th scope="col">Pace</th>
+                <th scope="col">Elevation</th>
+                <th scope="col">HR</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="activity">
+              <tr *ngFor="let metric of activity.splits_metric">
+                <td>{{metric.split}}</td>
+                <td>{{getAvgSplit(metric.distance, metric.moving_time)}}</td>
+                <td>{{metric.elevation_difference}}m</td>
+                <td>{{metric.average_heartrate | number: '1.0-0'}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="mt-3">
+      <mat-card class="mat-card-bottom-2">
+        <mat-card-header></mat-card-header>
+        <mat-card-content>
+          <div id="mapid"></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="mt-3 mb-3">
+    <mat-card class="mb-3">
+      <mat-card-title>
+        <mat-card-content>
+          <div style="display: block">
+            <canvas baseChart width="400" height="150"
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [chartType]="lineChartType"
+                    [plugins]="lineChartPlugins"
+            ></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card-title>
     </mat-card>
   </div>
+
+
+
+
 </div>
-<div class="mt-3 mb-3">
-  <mat-card class="mb-3">
-    <mat-card-title>
-      <mat-card-content>
-        <div style="display: block">
-          <canvas baseChart width="400" height="150"
-                  [datasets]="lineChartData"
-                  [labels]="lineChartLabels"
-                  [chartType]="lineChartType"
-                  [plugins]="lineChartPlugins"
-          ></canvas>
-        </div>
-      </mat-card-content>
-    </mat-card-title>
-  </mat-card>
-</div>
-
-
-

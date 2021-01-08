@@ -7,7 +7,6 @@ import * as L from 'leaflet';
 import {ChartDataSets, ChartType} from 'chart.js';
 import {BaseChartDirective, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import {MapService} from '../../shared/map.service';
 
 @Component({
   selector: 'app-routes-details',
@@ -17,9 +16,6 @@ import {MapService} from '../../shared/map.service';
 export class RoutesDetailsComponent implements OnInit {
   lineChartData: ChartDataSets[] = [];
   lineChartLabels: Label[] = [];
-  public lineChartLegend = {
-    display: false,
-  };
   public lineChartType: ChartType = 'line';
   public lineChartPlugins = [pluginAnnotations];
 
@@ -97,13 +93,15 @@ export class RoutesDetailsComponent implements OnInit {
   }
 
   prepareDistanceChartData() {
-    this.lineChartData.push({
-      data: this.elevationGrade[2].data, label: 'Elevation Grade',
-      borderColor: 'rgb(214,8,8)',
-      borderWidth: 1.2,
-      showLine: true,
-      pointRadius: 0,
-    });
+    this.lineChartData = [
+      {
+        data: this.elevationGrade[2].data, label: 'Elevation Grade',
+        borderColor: 'rgb(214,8,8)',
+        borderWidth: 1.2,
+        showLine: true,
+        pointRadius: 0,
+      }
+    ];
   }
 
   getElevationGrade() {

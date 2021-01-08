@@ -21,9 +21,6 @@ export class MySegmentsDetailsComponent implements OnInit {
   altitudeData: SegmentAltitudeModel[] = [];
   lineChartData: ChartDataSets[] = [];
   lineChartLabels: Label[] = [];
-  public lineChartLegend = {
-    display: false,
-  };
   public lineChartType: ChartType = 'line';
   public lineChartPlugins = [pluginAnnotations];
 
@@ -35,11 +32,11 @@ export class MySegmentsDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSegmentsCoordinates();
-    this.getSegment();
+    // this.showMap();
     this.getSegmentsAltitude();
     this.getAltitude();
-    // this.showMap();
+    this.getSegmentsCoordinates();
+    this.getSegment();
   }
 
   showMap() {
@@ -68,7 +65,8 @@ export class MySegmentsDetailsComponent implements OnInit {
       fillColor: '#ff0033',
       fillOpacity: 0.5,
     };
-    L.polyline(this.coordinates, config).addTo(this.map);
+    L.polyline(this.coordinates.latlng.data, config).addTo(this.map);
+    console.log(this.coordinates);
     this.map.setView(this.coordinates.latlng.data[0], 12);
   }
 
@@ -83,17 +81,19 @@ export class MySegmentsDetailsComponent implements OnInit {
   }
 
   prepareLineChartLabels() {
-    this.lineChartLabels = this.altitudeData[1].distance.data.map(v => `${(v / 1000).toFixed(1)} km`);
+    this.lineChartLabels = this.altitudeData[0].distance.data.map(v => `${(v / 1000).toFixed(1)} km`);
   }
 
   prepareDistanceChartData() {
-    this.lineChartData.push({
-      data: this.altitudeData[0].altitude.data, label: 'Altitude',
-      borderColor: 'rgb(214,8,8)',
-      borderWidth: 1.2,
-      showLine: true,
-      pointRadius: 0,
-    });
+    this.lineChartData = [
+      {
+        data: this.altitudeData[1].altitude.data, label: 'Elevation Grade',
+        borderColor: 'rgb(214,8,8)',
+        borderWidth: 1.2,
+        showLine: true,
+        pointRadius: 0,
+      }
+    ];
   }
 
   getAltitude() {

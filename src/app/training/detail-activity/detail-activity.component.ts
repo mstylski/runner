@@ -11,7 +11,6 @@ import * as L from 'leaflet';
 import {ActivityCoordinatesModel} from '../../shared/models/activity-coordinates.model';
 import {ActivityHeartrateModel} from '../../shared/models/activity-heartrate.distance.model';
 import {Gallery} from 'angular-gallery';
-import {MapService} from '../../shared/map.service';
 
 @Component({
   selector: 'app-detail-activity',
@@ -27,9 +26,6 @@ export class DetailActivityComponent implements OnInit {
   athlete: AthleteModel;
   coordinates: ActivityCoordinatesModel;
   heartrateDistance: ActivityHeartrateModel[] = [];
-  public lineChartLegend = {
-    display: false,
-  };
   public lineChartType: ChartType = 'line';
   public lineChartPlugins = [pluginAnnotations];
 
@@ -42,9 +38,9 @@ export class DetailActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.showMap();
     this.getAthlete();
     this.getActivity();
-    this.showMap();
     this.getActivityCoordinates();
     this.getActivityHeartrateDistance();
   }
@@ -144,13 +140,15 @@ export class DetailActivityComponent implements OnInit {
   }
 
   prepareDistanceChartData() {
-    this.lineChartData.push({
-      data: this.heartrateDistance[1].data, label: 'Heartrate',
-      borderColor: 'rgb(214,8,8)',
-      borderWidth: 1.2,
-      showLine: true,
-      pointRadius: 0,
-    });
+    this.lineChartData = [
+      {
+        data: this.heartrateDistance[1].data, label: 'Elevation Grade',
+        borderColor: 'rgb(214,8,8)',
+        borderWidth: 1.2,
+        showLine: true,
+        pointRadius: 0,
+      }
+    ];
   }
 
   getActivityHeartrateDistance() {

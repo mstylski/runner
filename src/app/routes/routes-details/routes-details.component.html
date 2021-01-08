@@ -1,94 +1,97 @@
-<h2 *ngIf="routeModel">{{routeModel.name}}</h2>
-<div class="d-flex justify-content-between">
-  <mat-card class="mt-3">
-    <mat-card-content>
-      <div id="mapid"></div>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="mt-3 right-card">
-    <mat-card-content>
+<div *ngIf="routeModel">
+  <h2>{{routeModel.name}}</h2>
+  <div class="d-flex justify-content-between">
+    <mat-card class="mt-3">
+      <mat-card-content>
+        <div id="mapid"></div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mt-3 right-card">
+      <mat-card-content>
   <span>
     <img [src]="routeModel.athlete.profile" alt="avatar" class="avatar">
   </span>
-      <span class="ml-3">
+        <span class="ml-3">
     {{routeModel.athlete.firstname}}
-        {{routeModel.athlete.lastname}}
+          {{routeModel.athlete.lastname}}
   </span>
-      <div class="mt-2"> Created at {{routeModel.created_at | date:'HH:mm | dd/MM/yyyy'}}</div>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2 distance">
-                <span class="material-icons">near_me</span>
-              </div>
-              <div>
-                <span>{{ getDistance(routeModel.distance) }}km</span>
-                <span>
+        <div class="mt-2"> Created at {{routeModel.created_at | date:'HH:mm | dd/MM/yyyy'}}</div>
+        <div class="container mt-3">
+          <div class="row">
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2 distance">
+                  <span class="material-icons">near_me</span>
+                </div>
+                <div>
+                  <span>{{ getDistance(routeModel.distance) }}km</span>
+                  <span>
                  <br><small class="text-uppercase">Distance</small>
             </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2">
-                <span class="material-icons moving">history</span>
-              </div>
-              <div>
-                <span>{{ getFormattedTime(routeModel.estimated_moving_time) }}</span>
-                <span><small class="text-uppercase"><br>Moving Time</small></span>
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2">
+                  <span class="material-icons moving">history</span>
+                </div>
+                <div>
+                  <span>{{ getFormattedTime(routeModel.estimated_moving_time) }}</span>
+                  <span><small class="text-uppercase"><br>Moving Time</small></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md">
-            <div class="d-flex">
-              <div class="mt-2 mr-2">
-                <span class="material-icons">trending_up</span>
-              </div>
-              <span>{{routeModel.elevation_gain.toFixed(0)}}m
+            <div class="col-md">
+              <div class="d-flex">
+                <div class="mt-2 mr-2">
+                  <span class="material-icons">trending_up</span>
+                </div>
+                <span>{{routeModel.elevation_gain.toFixed(0)}}m
             <small class="text-uppercase"><br>Elevation Gain</small></span>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
-<h2 class="mt-3">Segments</h2>
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Distance</th>
-    <th>Average Grade</th>
-    <th>Elevation High</th>
-    <th>Elevation Low</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let segment of routeModel.segments">
-    <td>{{segment.name}}</td>
-    <td>{{ getDistance(segment.distance) }}km</td>
-    <td>{{segment.average_grade }}%</td>
-    <td>{{ segment.elevation_high }}m</td>
-    <td>{{ segment.elevation_low }}m</td>
-  </tr>
-  </tbody>
-</table>
-<div class="mt-3 mb-3">
-  <mat-card class="mb-3">
-    <mat-card-title>
-      <mat-card-content>
-        <div style="display: block">
-          <canvas baseChart width="400" height="150"
-                  [datasets]="lineChartData"
-                  [labels]="lineChartLabels"
-                  [chartType]="lineChartType"
-                  [plugins]="lineChartPlugins">
-          </canvas>
         </div>
       </mat-card-content>
-    </mat-card-title>
-  </mat-card>
+    </mat-card>
+  </div>
+  <h2 class="mt-3">Segments</h2>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Distance</th>
+      <th>Average Grade</th>
+      <th>Elevation High</th>
+      <th>Elevation Low</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let segment of routeModel.segments">
+      <td>{{segment.name}}</td>
+      <td>{{ getDistance(segment.distance) }}km</td>
+      <td>{{segment.average_grade }}%</td>
+      <td>{{ segment.elevation_high }}m</td>
+      <td>{{ segment.elevation_low }}m</td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="mt-3 mb-3">
+    <mat-card class="mb-3">
+      <mat-card-title>
+        <mat-card-content>
+          <div style="display: block">
+            <canvas baseChart width="400" height="150"
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [chartType]="lineChartType"
+                    [plugins]="lineChartPlugins">
+            </canvas>
+          </div>
+        </mat-card-content>
+      </mat-card-title>
+    </mat-card>
+  </div>
+
 </div>
