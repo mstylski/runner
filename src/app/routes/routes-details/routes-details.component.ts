@@ -31,8 +31,8 @@ export class RoutesDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRoute();
     this.showMap();
+    this.getRoute();
     this.getRoutesCoordinates();
     this.getElevationGrade();
   }

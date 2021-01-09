@@ -3,16 +3,28 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
 import {AthleteModel} from './shared/models/athlete.model';
+import {isAfter} from 'date-fns';
+
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  expiredAt: number;
   athlete: AthleteModel;
   accessToken = '';
   refreshToken = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   isLoggedIn() {
     return this.accessToken || window.localStorage.getItem('accessToken');
+  }
+
+  isTokenExpired() {
+    return isAfter(new Date(), new Date(this.getExpiredAt() * 1000));
+  }
+
+  getExpiredAt() {
+    return this.expiredAt || Number(window.localStorage.getItem('expiredAt'));
   }
 
   getAccessToken(code: string): Observable<any> {
@@ -51,4 +63,8 @@ export class AuthService {
     window.localStorage.setItem('loggedAthlete', JSON.stringify(this.athlete));
   }
 
+  setExpiredAt(expiredAt: number) {
+    this.expiredAt = expiredAt;
+    window.localStorage.setItem('expiredAt', expiredAt.toString());
+  }
 }

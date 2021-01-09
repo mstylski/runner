@@ -1,12 +1,12 @@
-<div *ngIf="routeModel">
-  <h2>{{routeModel.name}}</h2>
+<div>
+  <h2>{{routeModel?.name}}</h2>
   <div class="d-flex justify-content-between">
     <mat-card class="mt-3">
       <mat-card-content>
         <div id="mapid"></div>
       </mat-card-content>
     </mat-card>
-    <mat-card class="mt-3 right-card">
+    <mat-card class="mt-3 right-card" *ngIf="routeModel">
       <mat-card-content>
   <span>
     <img [src]="routeModel.athlete.profile" alt="avatar" class="avatar">
@@ -68,7 +68,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let segment of routeModel.segments">
+    <tr *ngFor="let segment of routeModel?.segments">
       <td>{{segment.name}}</td>
       <td>{{ getDistance(segment.distance) }}km</td>
       <td>{{segment.average_grade }}%</td>
@@ -93,5 +93,4 @@
       </mat-card-title>
     </mat-card>
   </div>
-
 </div>

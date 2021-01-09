@@ -168,8 +168,8 @@ export interface ActivityModel {
       id: any;
       unique_id: string;
       urls: {
-        100: string;
-        600: string;
+        100?: string | null;
+        600: string | null;
       };
       source: number;
     };

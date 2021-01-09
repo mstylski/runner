@@ -18,7 +18,7 @@ export class MySegmentsDetailsComponent implements OnInit {
   map: L.Map;
   segment: SegmentModel;
   coordinates: any;
-  altitudeData: SegmentAltitudeModel[] = [];
+  altitudeData: SegmentAltitudeModel
   lineChartData: ChartDataSets[] = [];
   lineChartLabels: Label[] = [];
   public lineChartType: ChartType = 'line';
@@ -32,7 +32,7 @@ export class MySegmentsDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.showMap();
+    this.showMap();
     this.getSegmentsAltitude();
     this.getAltitude();
     this.getSegmentsCoordinates();
@@ -81,13 +81,13 @@ export class MySegmentsDetailsComponent implements OnInit {
   }
 
   prepareLineChartLabels() {
-    this.lineChartLabels = this.altitudeData[0].distance.data.map(v => `${(v / 1000).toFixed(1)} km`);
+    this.lineChartLabels = this.altitudeData.distance.data.map(v => `${(v / 1000).toFixed(1)} km`);
   }
 
   prepareDistanceChartData() {
     this.lineChartData = [
       {
-        data: this.altitudeData[1].altitude.data, label: 'Elevation Grade',
+        data: this.altitudeData.altitude.data, label: 'Elevation Grade',
         borderColor: 'rgb(214,8,8)',
         borderWidth: 1.2,
         showLine: true,
