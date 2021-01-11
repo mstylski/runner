@@ -2,19 +2,19 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {Observable} from 'rxjs';
-import {AthleteModel} from './shared/models/athlete.model';
-import {AthleteStatsModel} from './shared/models/athlete-stats.model';
+import {Athlete} from './shared/models/athlete.model';
+import {AthleteStats} from './shared/models/athlete-stats.model';
 
 @Injectable({providedIn: 'root'})
 export class AthleteService {
 
   constructor(private http: HttpClient) {}
 
-  getAthlete(): Observable<AthleteModel> {
-    return this.http.get<AthleteModel>(`${environment.apiUrl}athlete`);
+  getAthlete(): Observable<Athlete> {
+    return this.http.get<Athlete>(`${environment.apiUrl}athlete`);
   }
 
-  getAthleteStats(athleteId: number): Observable<AthleteStatsModel> {
-    return this.http.get<AthleteStatsModel>(`${environment.apiUrl}athletes/${athleteId}/stats`);
+  getAthleteStats(athleteId: number): Observable<AthleteStats> {
+    return this.http.get<AthleteStats>(`${environment.apiUrl}athletes/${athleteId}/stats`);
   }
 }

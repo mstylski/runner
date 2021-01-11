@@ -36,13 +36,6 @@ export class TrainingCalendarComponent implements OnInit {
     this.getActivities();
   }
 
-  private getActivities() {
-    this.activityService.getActivities().subscribe(activities => {
-      this.activities = activities;
-      this.prepareCalendarEvents();
-    });
-  }
-
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       this.activeDayIsOpen = !((isSameDay(this.viewDate, date) && this.activeDayIsOpen) ||
@@ -86,6 +79,13 @@ export class TrainingCalendarComponent implements OnInit {
         start: parseISO(activity.start_date_local),
         color: colors.blue,
       };
+    });
+  }
+
+  private getActivities() {
+    this.activityService.getActivities().subscribe(activities => {
+      this.activities = activities;
+      this.prepareCalendarEvents();
     });
   }
 }

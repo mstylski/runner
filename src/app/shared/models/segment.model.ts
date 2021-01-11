@@ -8,7 +8,7 @@ export interface AthletePrEffort {
   is_kom: boolean;
 }
 
-export interface SegmentModel {
+export interface Segment {
   id: number;
   resource_state: number;
   name: string;

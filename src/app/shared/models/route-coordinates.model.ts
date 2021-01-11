@@ -1,18 +1,18 @@
 export type LatLang = [number, number];
 export type DistanceAndLatitude = [number];
 
-export interface RouteCoordinatesModel {
+export interface RouteCoordinates {
   type: string;
   data: LatLang[];
 }
 
-export interface ElevationGradeModel {
+export interface ElevationGrade {
   type: string;
   data: DistanceAndLatitude;
 }
 
-export type RouteCoordinatesResponse = [RouteCoordinatesModel, RouteCoordinatesModel];
+export type RouteCoordinatesResponse = [RouteCoordinates, RouteCoordinates];
 
-export type  ElevationGradeResponse = [ElevationGradeModel];
+export type  ElevationGradeResponse = [ElevationGrade];
 
 

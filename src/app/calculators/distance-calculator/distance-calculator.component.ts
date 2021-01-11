@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {DistanceCalculatorModel} from '../../shared/models/distance-calculator.model';
+import {DistanceCalculator} from '../../shared/models/distance-calculator.model';
 
 @Component({
   selector: 'app-distance-calculator',
@@ -11,32 +11,12 @@ export class DistanceCalculatorComponent implements OnInit {
   distanceKM: string;
   distanceMiles: string;
   modelForm: FormGroup;
-  distanceModel: DistanceCalculatorModel;
+  distance: DistanceCalculator;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.buildForm();
-  }
-
-  private buildForm(): void {
-    const defaultValues = {
-      hour: '',
-      minute: '',
-      sec: '',
-      distance: '',
-      paceMinutes: '',
-      paceSeconds: ''
-    };
-    const distance = this.distanceModel || defaultValues;
-    this.modelForm = this.formBuilder.group({
-      hour: [distance.hour],
-      minute: [distance.minute],
-      sec: [distance.sec],
-      distance: [distance.distance],
-      paceMinutes: [distance.paceMinutes],
-      paceSeconds: [distance.paceSeconds],
-    });
   }
 
   getDistance() {
@@ -51,5 +31,25 @@ export class DistanceCalculatorComponent implements OnInit {
     const metersRestFractionKM = distanceWithRestKM % 1 * 1000;
     this.distanceKM = `${distanceBaseKM} KM : ${metersRestFractionKM.toFixed(0)} METERS`;
     this.distanceMiles = `${distanceBaseMiles} MILES : ${metersRestFractionMiles.toFixed(0)} METERS`;
+  }
+
+  private buildForm(): void {
+    const defaultValues = {
+      hour: '',
+      minute: '',
+      sec: '',
+      distance: '',
+      paceMinutes: '',
+      paceSeconds: ''
+    };
+    const distance = this.distance || defaultValues;
+    this.modelForm = this.formBuilder.group({
+      hour: [distance.hour],
+      minute: [distance.minute],
+      sec: [distance.sec],
+      distance: [distance.distance],
+      paceMinutes: [distance.paceMinutes],
+      paceSeconds: [distance.paceSeconds],
+    });
   }
 }

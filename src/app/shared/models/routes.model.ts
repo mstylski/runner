@@ -58,7 +58,7 @@ export interface Segment {
   athlete_segment_stats: AthleteSegmentStats;
 }
 
-export interface RoutesModel {
+export interface Routes {
   athlete: Athlete;
   description: string;
   distance: number;

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {PaceCalculatorModel} from '../../shared/models/pace-calculator.model';
+import {PaceCalculator} from '../../shared/models/pace-calculator.model';
 import {distanceOptions, milesKilometersOptions} from './pace-data';
 
 @Component({
@@ -10,7 +10,7 @@ import {distanceOptions, milesKilometersOptions} from './pace-data';
 })
 export class PaceCalculatorComponent implements OnInit {
   modelForm: FormGroup;
-  paceModel: PaceCalculatorModel;
+  paceCalculator: PaceCalculator;
   milesKilometersOptions = milesKilometersOptions;
   distanceOptions = distanceOptions;
   pace: string;
@@ -25,26 +25,6 @@ export class PaceCalculatorComponent implements OnInit {
     this.updateDistance();
   }
 
-  private buildForm(): void {
-    const defaultValues = {
-      hour: '',
-      minute: '',
-      sec: '',
-      distanceUnit: this.milesKilometersOptions[0].value,
-      distance: '',
-      distanceType: '',
-    };
-    const pace = this.paceModel || defaultValues;
-    this.modelForm = this.formBuilder.group({
-      hour: [pace.hour],
-      minute: [pace.minute],
-      sec: [pace.sec],
-      distanceUnit: [pace.distanceUnit],
-      distance: [pace.distance],
-      distanceType: [pace.distanceType],
-    });
-  }
-
   getPace() {
     const formValue = this.modelForm.value;
     const secondsFraction = Number(formValue.sec) / 60;
@@ -55,7 +35,27 @@ export class PaceCalculatorComponent implements OnInit {
     this.pace = `${speedMinutesBase}:${secondsRestFraction.toFixed(0)}`;
   }
 
-  updateDistance() {
+  private buildForm(): void {
+    const defaultValues = {
+      hour: '',
+      minute: '',
+      sec: '',
+      distanceUnit: this.milesKilometersOptions[0].value,
+      distance: '',
+      distanceType: '',
+    };
+    const pace = this.paceCalculator || defaultValues;
+    this.modelForm = this.formBuilder.group({
+      hour: [pace.hour],
+      minute: [pace.minute],
+      sec: [pace.sec],
+      distanceUnit: [pace.distanceUnit],
+      distance: [pace.distance],
+      distanceType: [pace.distanceType],
+    });
+  }
+
+  private updateDistance() {
     this.modelForm.get('distanceType')?.valueChanges.subscribe(value => this.modelForm.get('distance')?.patchValue(value));
   }
 }

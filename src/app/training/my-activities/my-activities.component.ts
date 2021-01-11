@@ -26,15 +26,6 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
     this.getActivities();
   }
 
-  private getActivities() {
-    const subscription = this.pagination$.pipe(
-      debounceTime(400),
-      switchMap((pageIndex) => this.activityService.getActivitiesWithPagination2(pageIndex)),
-    )
-      .subscribe(activities => this.activities = activities);
-    this.subscriptions.add(subscription);
-  }
-
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
@@ -59,5 +50,14 @@ export class MyActivitiesComponent implements OnInit, OnDestroy {
     } else {
       return minutes + ':' + (seconds - minutes * secondsInOneMinute).toFixed(0);
     }
+  }
+
+  private getActivities() {
+    const subscription = this.pagination$.pipe(
+      debounceTime(400),
+      switchMap((pageIndex) => this.activityService.getActivitiesWithPagination2(pageIndex)),
+    )
+      .subscribe(activities => this.activities = activities);
+    this.subscriptions.add(subscription);
   }
 }

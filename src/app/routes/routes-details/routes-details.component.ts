@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RoutesService} from '../../routes.service';
-import {ElevationGradeModel, RouteCoordinatesModel} from '../../shared/models/route-coordinates.model';
+import {ElevationGrade, RouteCoordinates} from '../../shared/models/route-coordinates.model';
 import {ActivatedRoute} from '@angular/router';
-import {RouteModel, Segment} from '../../shared/models/route.model';
+import {RouteData, Segment} from '../../shared/models/route.model';
 import * as L from 'leaflet';
 import {ChartDataSets, ChartType} from 'chart.js';
 import {BaseChartDirective, Label} from 'ng2-charts';
@@ -16,60 +16,23 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 export class RoutesDetailsComponent implements OnInit {
   lineChartData: ChartDataSets[] = [];
   lineChartLabels: Label[] = [];
-  public lineChartType: ChartType = 'line';
-  public lineChartPlugins = [pluginAnnotations];
-
-  @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
-  coordinates: RouteCoordinatesModel;
-  elevationGrade: ElevationGradeModel[] = [];
-  routeModel: RouteModel;
+  lineChartType: ChartType = 'line';
+  lineChartPlugins = [pluginAnnotations];
+  coordinates: RouteCoordinates;
+  elevationGrade: ElevationGrade[] = [];
+  routeData: RouteData;
   segments: Segment;
   map: L.Map;
 
+  @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
   constructor(private routesService: RoutesService,
-              private route: ActivatedRoute) {
-  }
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.showMap();
     this.getRoute();
     this.getRoutesCoordinates();
     this.getElevationGrade();
-  }
-
-  getRoutesCoordinates() {
-    const id = this.route.snapshot.paramMap.get('id') as string;
-    this.routesService.getRoutesCoordinates(id).subscribe(coordinates => {
-      this.coordinates = coordinates[0];
-      this.drawActivityOnMap();
-    });
-  }
-
-  showMap() {
-    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
-    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
-        ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      id: 'mapbox/streets-v11',
-      updateWhenZooming: false,
-      crossOrigin: true,
-      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMmZsYTFiNTZnMDJycWphbGhveDAyMiJ9.mGU2Q44LI8-UTtIOybToHA`
-    }).addTo(this.map);
-  }
-
-  drawActivityOnMap() {
-    const config = {
-      color: 'red',
-      fillColor: '#f03',
-      fillOpacity: 0.5,
-    };
-    L.polyline(this.coordinates.data, config).addTo(this.map);
-    this.map.setView(this.coordinates.data[0], 11);
-  }
-
-  getRoute() {
-    const id = this.route.snapshot.paramMap.get('id') as string;
-    this.routesService.getRoute(id).subscribe(route => this.routeModel = route);
   }
 
   getFormattedTime(seconds: number) {
@@ -88,11 +51,46 @@ export class RoutesDetailsComponent implements OnInit {
     return (distance / 1000).toFixed(1);
   }
 
-  prepareLineChartLabels() {
+  private getRoutesCoordinates() {
+    const id = this.route.snapshot.paramMap.get('id') as string;
+    this.routesService.getRoutesCoordinates(id).subscribe(coordinates => {
+      this.coordinates = coordinates[0];
+      this.drawActivityOnMap();
+    });
+  }
+
+  private showMap() {
+    this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
+    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
+        ' contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox/streets-v11',
+      updateWhenZooming: false,
+      crossOrigin: true,
+      accessToken: `pk.eyJ1IjoibWljaGFsZ2QiLCJhIjoiY2tqMmZsYTFiNTZnMDJycWphbGhveDAyMiJ9.mGU2Q44LI8-UTtIOybToHA`
+    }).addTo(this.map);
+  }
+
+  private drawActivityOnMap() {
+    const config = {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+    };
+    L.polyline(this.coordinates.data, config).addTo(this.map);
+    this.map.setView(this.coordinates.data[0], 11);
+  }
+
+  private getRoute() {
+    const id = this.route.snapshot.paramMap.get('id') as string;
+    this.routesService.getRoute(id).subscribe(route => this.routeData = route);
+  }
+
+  private prepareLineChartLabels() {
     this.lineChartLabels = this.elevationGrade[1].data.map(v => `${(v / 1000).toFixed(1)} km`);
   }
 
-  prepareDistanceChartData() {
+  private prepareDistanceChartData() {
     this.lineChartData = [
       {
         data: this.elevationGrade[2].data, label: 'Elevation Grade',
@@ -104,7 +102,7 @@ export class RoutesDetailsComponent implements OnInit {
     ];
   }
 
-  getElevationGrade() {
+  private getElevationGrade() {
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.routesService.getElevationGrade(id).subscribe(elevationGrade => {
       this.elevationGrade = elevationGrade;

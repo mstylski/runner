@@ -73,7 +73,7 @@ export interface YtdSwimTotals {
   elevation_gain: number;
 }
 
-export interface AthleteStatsModel {
+export interface AthleteStats {
   biggest_ride_distance: number;
   biggest_climb_elevation_gain: number;
   recent_ride_totals: RecentRideTotals;

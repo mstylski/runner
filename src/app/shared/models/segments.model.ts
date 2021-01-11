@@ -10,7 +10,7 @@ export interface AthleteSegmentStats {
   effort_count: number;
 }
 
-export interface SegmentsModel {
+export interface Segments {
   id: number;
   resource_state: number;
   name: string;

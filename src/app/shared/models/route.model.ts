@@ -57,7 +57,7 @@ export interface Segment {
   starred: boolean;
 }
 
-export interface RouteModel {
+export interface RouteData {
   athlete: Athlete;
   description: string;
   distance: number;

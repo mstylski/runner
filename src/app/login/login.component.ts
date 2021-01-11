@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {environment} from '../../environments/environment';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,6 +8,4 @@ import {environment} from '../../environments/environment';
 })
 export class LoginComponent {
   stravaRedirectUrl = environment.stravaRedirectUrl;
-
-  constructor() {}
 }

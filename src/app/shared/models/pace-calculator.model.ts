@@ -1,4 +1,4 @@
-export interface PaceCalculatorModel {
+export interface PaceCalculator {
   hour: number;
   minute: number;
   sec: number;

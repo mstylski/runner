@@ -10,7 +10,7 @@ export interface Map {
   summary_polyline?: string;
 }
 
-export interface Activity {
+export interface ActivityData {
   id?: number;
   resource_state?: number;
 }
@@ -40,7 +40,7 @@ export interface SegmentEffort {
   id?: number;
   resource_state?: number;
   name?: string;
-  activity?: Activity;
+  activity?: ActivityData;
   elapsed_time: number;
   moving_time: number;
   start_date: Date;
@@ -106,7 +106,7 @@ export interface HighlightedKudoser {
   show_name: boolean;
 }
 
-export interface ActivityModel {
+export interface Activity {
   id: number;
   resource_state: number;
   external_id: string;

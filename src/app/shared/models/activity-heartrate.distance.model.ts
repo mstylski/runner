@@ -1,4 +1,4 @@
-export interface ActivityHeartrateModel {
+export interface ActivityHeartrate {
   type: string;
   data: number[];
   series_type: string;

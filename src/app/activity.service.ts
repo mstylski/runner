@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
 import {Activities} from './shared/models/list-activities.model';
-import {ActivityModel} from './shared/models/activity.model';
+import {Activity} from './shared/models/activity.model';
 import {HttpClient} from '@angular/common/http';
 import {ActivityCoordinateResponse} from './shared/models/activity-coordinates.model';
-import {ActivityHeartrateModel} from './shared/models/activity-heartrate.distance.model';
+import {ActivityHeartrate} from './shared/models/activity-heartrate.distance.model';
 
 @Injectable({providedIn: 'root'})
 export class ActivityService {
@@ -38,11 +38,11 @@ export class ActivityService {
     return this.http.get<Activities[]>(`${environment.apiUrl}athlete/activities`, {params});
   }
 
-  getActivity(id: number): Observable<ActivityModel> {
+  getActivity(id: number): Observable<Activity> {
     const params = {
       scope: 'activity:read_all'
     };
-    return this.http.get<ActivityModel>(`${environment.apiUrl}activities/${id}`, {params});
+    return this.http.get<Activity>(`${environment.apiUrl}activities/${id}`, {params});
   }
 
   getActivityCoordinates(id: number): Observable<ActivityCoordinateResponse> {
@@ -52,10 +52,10 @@ export class ActivityService {
     return this.http.get<ActivityCoordinateResponse>(`${environment.apiUrl}activities/${id}/streams/latlng`, {params});
   }
 
-  getActivityHeartrateDistance(id: number): Observable<ActivityHeartrateModel[]> {
+  getActivityHeartrateDistance(id: number): Observable<ActivityHeartrate[]> {
     const params = {
       scope: 'activity:read_all'
     };
-    return this.http.get<ActivityHeartrateModel[]>(`${environment.apiUrl}activities/${id}/streams/heartrate`, {params});
+    return this.http.get<ActivityHeartrate[]>(`${environment.apiUrl}activities/${id}/streams/heartrate`, {params});
   }
 }

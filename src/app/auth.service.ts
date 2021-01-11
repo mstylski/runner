@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
-import {AthleteModel} from './shared/models/athlete.model';
+import {Athlete} from './shared/models/athlete.model';
 import {isAfter} from 'date-fns';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
   expiredAt: number;
-  athlete: AthleteModel;
+  athlete: Athlete;
   accessToken = '';
   refreshToken = '';
 
@@ -58,7 +58,7 @@ export class AuthService {
     return this.athlete || JSON.parse(window.localStorage.getItem('loggedAthlete') as string);
   }
 
-  setAthlete(athlete: AthleteModel) {
+  setAthlete(athlete: Athlete) {
     this.athlete = athlete;
     window.localStorage.setItem('loggedAthlete', JSON.stringify(this.athlete));
   }

@@ -1,6 +1,6 @@
 export type LatLang = [number, number];
 
-export interface ActivityCoordinatesModel {
+export interface ActivityCoordinates {
   type: string;
   data: LatLang[];
   series_type: string;
@@ -8,5 +8,5 @@ export interface ActivityCoordinatesModel {
   resolution: string;
 }
 
-export type ActivityCoordinateResponse = [ActivityCoordinatesModel, ActivityCoordinatesModel];
+export type ActivityCoordinateResponse = [ActivityCoordinates, ActivityCoordinates];
 

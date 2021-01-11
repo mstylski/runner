@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RoutesService} from '../routes.service';
-import {RoutesModel} from '../shared/models/routes.model';
+import {Routes} from '../shared/models/routes.model';
 
 @Component({
   selector: 'app-routes',
@@ -8,7 +8,7 @@ import {RoutesModel} from '../shared/models/routes.model';
   styleUrls: ['./routes.component.scss']
 })
 export class RoutesComponent implements OnInit {
-  runningRoutes: RoutesModel[] = [];
+  runningRoutes: Routes[] = [];
 
   constructor(private routesService: RoutesService) {}
 
@@ -20,7 +20,7 @@ export class RoutesComponent implements OnInit {
     return (distance / 1000).toFixed(1);
   }
 
-  getRoutes() {
+  private getRoutes() {
     this.routesService.getRoutes().subscribe(route => this.runningRoutes = route);
   }
 }

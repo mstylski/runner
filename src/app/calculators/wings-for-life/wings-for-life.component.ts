@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {kilometers, minutes, pace} from './wings-for-life-data';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {WingsForLifeModel} from '../../shared/models/wings-for-life.model';
+import {WingsForLife} from '../../shared/models/wings-for-life.model';
 import {MatSliderChange} from '@angular/material/slider';
-
 
 @Component({
   selector: 'app-wings-for-life',
@@ -12,7 +11,7 @@ import {MatSliderChange} from '@angular/material/slider';
 })
 export class WingsForLifeComponent implements OnInit {
 
-  wingsForLifeModel: WingsForLifeModel;
+  wingsForLife: WingsForLife;
   modelForm: FormGroup;
   minutes = minutes;
   kilometers = kilometers;
@@ -24,13 +23,24 @@ export class WingsForLifeComponent implements OnInit {
     this.buildForm();
   }
 
+  updateForm(input: MatSliderChange) {
+    this.modelForm.patchValue({minutes: input.value, kilometers: input.value, pace: input.value});
+  }
+
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'km';
+    }
+    return value;
+  }
+
   private buildForm(): void {
     const defaultValues = {
       minutes: this.minutes[0].value,
       kilometers: this.kilometers[0].value,
       pace: this.pace[0].value,
     };
-    const wings = this.wingsForLifeModel || defaultValues;
+    const wings = this.wingsForLife || defaultValues;
     this.modelForm = this.formBuilder.group({
       minutes: [wings.minutes],
       kilometers: [wings.kilometers],
@@ -48,17 +58,6 @@ export class WingsForLifeComponent implements OnInit {
       this.modelForm.get('kilometers')?.patchValue(value, {emitEvent: false});
       this.modelForm.get('minutes')?.patchValue(value, {emitEvent: false});
     });
-  }
-
-  updateForm(input: MatSliderChange) {
-    this.modelForm.patchValue({minutes: input.value, kilometers: input.value, pace: input.value});
-  }
-
-  formatLabel(value: number) {
-    if (value >= 1000) {
-      return Math.round(value / 1000) + 'km';
-    }
-    return value;
   }
 }
 

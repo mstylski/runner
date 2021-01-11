@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {RoutesModel} from './shared/models/routes.model';
+import {Routes} from './shared/models/routes.model';
 import {ElevationGradeResponse, RouteCoordinatesResponse} from './shared/models/route-coordinates.model';
-import {RouteModel} from './shared/models/route.model';
+import {RouteData} from './shared/models/route.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +13,18 @@ export class RoutesService {
 
   constructor(private http: HttpClient) {}
 
-  getRoutes(): Observable<RoutesModel[]> {
+  getRoutes(): Observable<Routes[]> {
     const params = {
       scope: 'read_all'
     };
-    return this.http.get<RoutesModel[]>(`${environment.apiUrl}athletes/73590982/routes`, {params});
+    return this.http.get<Routes[]>(`${environment.apiUrl}athletes/73590982/routes`, {params});
   }
 
-  getRoute(id: string): Observable<RouteModel> {
+  getRoute(id: string): Observable<RouteData> {
     const params = {
       scope: 'read_all'
     };
-    return this.http.get<RouteModel>(`${environment.apiUrl}routes/${id}`, {params});
+    return this.http.get<RouteData>(`${environment.apiUrl}routes/${id}`, {params});
   }
 
   getRoutesCoordinates(id: string): Observable<RouteCoordinatesResponse> {

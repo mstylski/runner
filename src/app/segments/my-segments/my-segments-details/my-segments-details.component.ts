@@ -1,10 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SegmentsService} from '../../../segments.service';
-import {SegmentModel} from '../../../shared/models/segment.model';
+import {Segment} from '../../../shared/models/segment.model';
 import {ActivatedRoute} from '@angular/router';
 import * as L from 'leaflet';
-import {Altitude, Distance, SegmentAltitudeModel} from '../../../shared/models/segment-altitude.model';
-import {MapService} from '../../../shared/map.service';
+import {SegmentAltitude} from '../../../shared/models/segment-altitude.model';
 import {ChartDataSets, ChartType} from 'chart.js';
 import {BaseChartDirective, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
@@ -16,20 +15,17 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 })
 export class MySegmentsDetailsComponent implements OnInit {
   map: L.Map;
-  segment: SegmentModel;
+  segment: Segment;
   coordinates: any;
-  altitudeData: SegmentAltitudeModel
+  altitudeData: SegmentAltitude;
   lineChartData: ChartDataSets[] = [];
   lineChartLabels: Label[] = [];
-  public lineChartType: ChartType = 'line';
-  public lineChartPlugins = [pluginAnnotations];
+  lineChartType: ChartType = 'line';
+  lineChartPlugins = [pluginAnnotations];
 
   @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
-
-
   constructor(private segmentsService: SegmentsService,
-              private route: ActivatedRoute) {
-  }
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.showMap();
@@ -39,7 +35,7 @@ export class MySegmentsDetailsComponent implements OnInit {
     this.getSegment();
   }
 
-  showMap() {
+  private showMap() {
     this.map = L.map('mapid').setView([54.086978, 18.608519], 12);
     L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
@@ -51,7 +47,7 @@ export class MySegmentsDetailsComponent implements OnInit {
     }).addTo(this.map);
   }
 
-  getSegmentsCoordinates() {
+  private getSegmentsCoordinates() {
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.segmentsService.getSegmentsCoordinates(id).subscribe(data => {
       this.coordinates = data;
@@ -59,7 +55,7 @@ export class MySegmentsDetailsComponent implements OnInit {
     });
   }
 
-  drawActivityOnMap() {
+  private drawActivityOnMap() {
     const config = {
       color: 'red',
       fillColor: '#ff0033',
@@ -70,21 +66,21 @@ export class MySegmentsDetailsComponent implements OnInit {
     this.map.setView(this.coordinates.latlng.data[0], 12);
   }
 
-  getSegment() {
+  private getSegment() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.segmentsService.getSegment(id).subscribe(segments => this.segment = segments);
   }
 
-  getSegmentsAltitude() {
+  private getSegmentsAltitude() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.segmentsService.getSegmentsAltitude(id).subscribe(segments => this.altitudeData = segments);
   }
 
-  prepareLineChartLabels() {
+  private prepareLineChartLabels() {
     this.lineChartLabels = this.altitudeData.distance.data.map(v => `${(v / 1000).toFixed(1)} km`);
   }
 
-  prepareDistanceChartData() {
+  private prepareDistanceChartData() {
     this.lineChartData = [
       {
         data: this.altitudeData.altitude.data, label: 'Elevation Grade',
@@ -96,7 +92,7 @@ export class MySegmentsDetailsComponent implements OnInit {
     ];
   }
 
-  getAltitude() {
+  private getAltitude() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.segmentsService.getSegmentsAltitude(id).subscribe(data => {
       this.altitudeData = data;

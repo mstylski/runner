@@ -1,4 +1,4 @@
-export interface AthleteModel {
+export interface Athlete {
   id: number;
   username: string;
   resource_state: number;

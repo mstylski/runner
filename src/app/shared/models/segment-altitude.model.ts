@@ -12,7 +12,7 @@ export interface Altitude {
   resolution: string;
 }
 
-export interface SegmentAltitudeModel {
+export interface SegmentAltitude {
   altitude: Altitude;
   distance: Distance;
 }

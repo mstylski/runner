@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {AthleteService} from '../athlete.service';
-import {AthleteModel} from '../shared/models/athlete.model';
-import {AthleteStatsModel} from '../shared/models/athlete-stats.model';
+import {Athlete} from '../shared/models/athlete.model';
+import {AthleteStats} from '../shared/models/athlete-stats.model';
 import {ActivityService} from '../activity.service';
 import {Activities} from '../shared/models/list-activities.model';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
-import {ActivityModel} from '../shared/models/activity.model';
+import {Activity} from '../shared/models/activity.model';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -17,10 +17,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class AthleteComponent implements OnInit, OnDestroy {
   listOfActivities: Activities[] = [];
-  activitiesId: ActivityModel;
+  activitiesId: Activity;
+  athlete: Athlete;
+  stats: AthleteStats;
   currentPageIndex = 1;
-  athlete: AthleteModel;
-  stats: AthleteStatsModel;
   private readonly subscriptions = new Subscription();
   private readonly pagination$ = new BehaviorSubject<number>(this.currentPageIndex);
 
@@ -69,16 +69,6 @@ export class AthleteComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getActivities() {
-    const subscription = this.pagination$.pipe(
-      debounceTime(400),
-      switchMap((pageIndex) => this.activityService.getActivitiesWithPagination(pageIndex)),
-    )
-      .subscribe(activities => this.listOfActivities = activities);
-
-    this.subscriptions.add(subscription);
-  }
-
   getFormattedTime(seconds: number) {
     const secondsInOneMinute = 60;
     const minutesInHours = 60;
@@ -101,5 +91,15 @@ export class AthleteComponent implements OnInit, OnDestroy {
 
   navigate(id: number) {
     this.router.navigate([`dashboard/my-activities/${id}`]);
+  }
+
+  private getActivities() {
+    const subscription = this.pagination$.pipe(
+      debounceTime(400),
+      switchMap((pageIndex) => this.activityService.getActivitiesWithPagination(pageIndex)),
+    )
+      .subscribe(activities => this.listOfActivities = activities);
+
+    this.subscriptions.add(subscription);
   }
 }

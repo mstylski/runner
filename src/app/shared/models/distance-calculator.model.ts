@@ -1,4 +1,4 @@
-export interface DistanceCalculatorModel {
+export interface DistanceCalculator {
   hour: number;
   minute: number;
   sec: number;
