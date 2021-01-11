@@ -10,5 +10,5 @@ Feel free to check it out!
 stack: Angular 9 | Angular Material | Bootstrap 4 | Html 5 | SCSS | npm
 RxJS | TypeScript | REST API/JWT
 
-login: strava2020test@gmail.com
+login: strava2020test@gmail.com <br>
 password: strava2020
