@@ -141,7 +141,7 @@ export class DetailActivityComponent implements OnInit {
   private prepareDistanceChartData() {
     this.lineChartData = [
       {
-        data: this.heartrateDistance[1].data, label: 'Elevation Grade',
+        data: this.heartrateDistance[1].data, label: 'Heartrate',
         borderColor: 'rgb(214,8,8)',
         borderWidth: 1.2,
         showLine: true,
