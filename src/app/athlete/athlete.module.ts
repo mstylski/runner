@@ -12,6 +12,7 @@ import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {MatSliderModule} from '@angular/material/slider';
 import {NgxSliderModule} from '@angular-slider/ngx-slider';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {NgxSliderModule} from '@angular-slider/ngx-slider';
     CommonModule,
     BrowserModule,
     MatSliderModule,
-    NgxSliderModule
+    NgxSliderModule,
+    TranslateModule
   ]
 })
 export class AthleteModule {

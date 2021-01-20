@@ -4,7 +4,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ActivityService} from './activity.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './auth-interceptor';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from './core/core.module';
@@ -22,6 +22,8 @@ import {RoutesDetailsComponent} from './routes/routes-details/routes-details.com
 import {MySegmentsDetailsComponent} from './segments/my-segments/my-segments-details/my-segments-details.component';
 import {IvyGalleryModule} from 'angular-gallery';
 import {LoginComponent} from './login/login.component';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,13 @@ import {LoginComponent} from './login/login.component';
     FormsModule,
     ReactiveFormsModule,
     AthleteModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -64,4 +73,8 @@ import {LoginComponent} from './login/login.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }

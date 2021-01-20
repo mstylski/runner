@@ -7,6 +7,7 @@ import * as L from 'leaflet';
 import {ChartDataSets, ChartType} from 'chart.js';
 import {BaseChartDirective, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-routes-details',
@@ -26,7 +27,8 @@ export class RoutesDetailsComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
   constructor(private routesService: RoutesService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.showMap();
@@ -93,7 +95,7 @@ export class RoutesDetailsComponent implements OnInit {
   private prepareDistanceChartData() {
     this.lineChartData = [
       {
-        data: this.elevationGrade[2].data, label: 'Elevation Grade',
+        data: this.elevationGrade[2].data, label: `${this.translate.instant('ELEVATION-GRADE')}`,
         borderColor: 'rgb(214,8,8)',
         borderWidth: 1.2,
         showLine: true,

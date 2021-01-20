@@ -96,3 +96,16 @@
 .training-dropdown {
   margin-left: 100px;
 }
+
+.translate-button {
+  color: $white;
+  background-color: $strava-orange;
+  min-width: 10px;
+  height: 35px;
+}
+
+.translation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

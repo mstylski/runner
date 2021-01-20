@@ -1,23 +1,23 @@
-<h2>Wings for Life Calculator</h2>
+<h2>{{ 'WINGS-FOR-LIFE-CALCULATOR' | translate }}</h2>
 <div class="wings"></div>
 <div class="wings-container">
   <mat-card>
     <mat-card-content>
       <form [formGroup]="modelForm" *ngIf="modelForm">
         <h3>
-          You need
+          {{ 'YOU-NEED' | translate }}
           <mat-form-field class="ml-1 select-minutes">
             <mat-select formControlName="minutes">
               <mat-option *ngFor="let option of minutes" [value]="option.value">{{option.label}}</mat-option>
             </mat-select>
           </mat-form-field>
-          to run
+          {{ 'TO-RUN' | translate }}
           <mat-form-field class="ml-1 select-km">
             <mat-select formControlName="kilometers">
               <mat-option *ngFor="let option of kilometers" [value]="option.value">{{option.label}}</mat-option>
             </mat-select>
           </mat-form-field>
-          until the Catcher Car catches you. You have to run at a pace
+          {{ 'CATCHES-CAR' | translate }}
           <mat-form-field class="ml-1 select">
             <mat-select formControlName="pace">
               <mat-option *ngFor="let option of pace" [value]="option.value">{{option.label}}</mat-option>

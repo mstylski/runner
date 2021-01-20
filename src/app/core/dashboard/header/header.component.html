@@ -7,44 +7,48 @@
     </div>
     <div class="training-dropdown">
       <ul class="dropdown">
-        <li><a>Training</a>
+        <li><a>{{ 'TRAINING' | translate }}</a>
           <ul>
-            <li routerLink="/dashboard/training-calendar"><a>Training Calendar</a></li>
-            <li routerLink="/dashboard/my-activities"><a>My Activities</a></li>
+            <li routerLink="/dashboard/training-calendar"><a>{{ 'TRAINING-CALENDAR' | translate }}</a></li>
+            <li routerLink="/dashboard/my-activities"><a>{{ 'MY-ACTIVITIES' | translate }}</a></li>
           </ul>
         </li>
       </ul>
     </div>
     <div>
       <ul class="dropdown">
-        <li><a>Segments</a>
+        <li><a>{{ 'SEGMENTS' | translate }}</a>
           <ul>
-            <li routerLink="/dashboard/my-segments"><a>My Segments</a></li>
+            <li routerLink="/dashboard/my-segments"><a>{{ 'MY-SEGMENTS' | translate }}</a></li>
           </ul>
         </li>
       </ul>
     </div>
     <div>
       <ul class="dropdown">
-        <li><a>Routes</a>
+        <li><a>{{ 'ROUTES' | translate }}</a>
           <ul>
-            <li routerLink="/dashboard/routes"><a>My Routes</a></li>
+            <li routerLink="/dashboard/routes"><a>{{ 'MY-ROUTES' | translate }}</a></li>
           </ul>
         </li>
       </ul>
     </div>
     <div>
       <ul class="dropdown">
-        <li><a>Calculators</a>
+        <li><a>{{ 'CALCULATORS' | translate }}</a>
           <ul>
-            <li routerLink="/dashboard/wings-for-life"><a>Wings For Life Calculator</a></li>
-            <li routerLink="/dashboard/distance-calculator"><a>Distance Calculator</a></li>
-            <li routerLink="/dashboard/pace-calculator"><a>Pace Calculator</a></li>
+            <li routerLink="/dashboard/wings-for-life"><a>{{ 'WINGS-FOR-LIFE-CALCULATOR' | translate }}</a></li>
+            <li routerLink="/dashboard/distance-calculator"><a>{{ 'DISTANCE-CALCULATOR' | translate }}</a></li>
+            <li routerLink="/dashboard/pace-calculator"><a>{{ 'PACE-CALCULATOR' | translate }}</a></li>
           </ul>
         </li>
       </ul>
     </div>
   </div>
+<div class="translation">
+  <span><button class="translate-button" mat-raised-button (click)="useLanguage('pl')">PL</button></span>
+  <span class="ml-2"><button class="translate-button" mat-raised-button (click)="useLanguage('en')">EN</button></span>
+</div>
   <div class="strava-logo">
     <img src="./assets/images/stravalogo.png" alt="stravalogo">
   </div>

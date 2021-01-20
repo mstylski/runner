@@ -1,45 +1,45 @@
-<h2>Distance Calculator</h2>
+<h2>{{ 'DISTANCE-CALCULATOR' | translate }}</h2>
 <div class="distance">
-  <h3>You will learn how far you can run at a set pace in a given time.</h3>
+  <h3 class="description">{{ 'DISTANCE-DESCRIPTION' | translate }}.</h3>
   <form [formGroup]="modelForm" *ngIf="modelForm">
     <mat-card class="distance-calculator">
       <mat-card-content>
-        <h3>Planned time of run:</h3>
+        <h3>{{ 'PLANNED-TIME-OF-RUN' | translate }}:</h3>
         <span>
     <mat-form-field>
-    <mat-label>hour</mat-label>
+    <mat-label>{{ 'HOURS' | translate }}</mat-label>
     <input matInput formControlName="hour">
   </mat-form-field>
 </span>
         <span class="ml-1">
     <mat-form-field>
-    <mat-label>minute</mat-label>
+    <mat-label>{{ 'MINUTES' | translate }}</mat-label>
     <input matInput formControlName="minute">
   </mat-form-field>
 </span>
         <span class="ml-1">
     <mat-form-field>
-    <mat-label>sec</mat-label>
+    <mat-label>{{ 'SECS' | translate }}</mat-label>
     <input matInput formControlName="sec">
   </mat-form-field>
 </span>
-        <h3>Planned Pace of run:</h3>
+        <h3>{{ 'PLANNED-PACE' | translate }}:</h3>
         <span>
         <mat-form-field>
-    <mat-label>minutes</mat-label>
+    <mat-label>{{ 'MINUTES' | translate }}</mat-label>
     <input matInput formControlName="paceMinutes">
   </mat-form-field>
         <mat-form-field class="ml-1">
-    <mat-label>seconds</mat-label>
+    <mat-label>{{ 'SECS' | translate }}</mat-label>
     <input matInput formControlName="paceSeconds">
   </mat-form-field>
     </span>
       </mat-card-content>
-      <button mat-raised-button class="mr-2" (click)="getDistance()">Submit</button>
+      <button mat-raised-button class="mr-2" (click)="getDistance()">{{ 'CHECK' | translate }}</button>
       <button mat-raised-button color="default" (click)="modelForm.reset()">Reset</button>
       <strong>
         <div class="mt-1 distance-result">
-          You will run <br>{{distanceKM}} <br>or <br>{{distanceMiles}}
+          {{ 'YOU-WILL-RUN' | translate }} <br>{{distanceKM}} <br>{{ 'OR' | translate }} <br>{{distanceMiles}}
         </div>
       </strong>
     </mat-card>

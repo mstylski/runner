@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DistanceCalculator} from '../../shared/models/distance-calculator.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-distance-calculator',
@@ -13,7 +14,8 @@ export class DistanceCalculatorComponent implements OnInit {
   modelForm: FormGroup;
   distance: DistanceCalculator;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,
+              private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -29,8 +31,8 @@ export class DistanceCalculatorComponent implements OnInit {
     const metersRestFractionMiles = distanceWithRestMiles % 1 * 1000;
     const distanceBaseKM = Math.floor(distanceWithRestKM);
     const metersRestFractionKM = distanceWithRestKM % 1 * 1000;
-    this.distanceKM = `${distanceBaseKM} KM : ${metersRestFractionKM.toFixed(0)} METERS`;
-    this.distanceMiles = `${distanceBaseMiles} MILES : ${metersRestFractionMiles.toFixed(0)} METERS`;
+    this.distanceKM = `${distanceBaseKM} KM : ${metersRestFractionKM.toFixed(0)} ${this.translate.instant('METERS')}`;
+    this.distanceMiles = `${distanceBaseMiles} ${this.translate.instant('MILES')} : ${metersRestFractionMiles.toFixed(0)} ${this.translate.instant('METERS')}`;
   }
 
   private buildForm(): void {

@@ -1,4 +1,4 @@
-<h2 class="calendar">Training Calendar</h2>
+<h2 class="calendar">{{ 'TRAINING-CALENDAR' | translate }}</h2>
 <div class="row text-center">
   <div class="col-md-4">
     <div class="btn-group">
@@ -8,13 +8,13 @@
         [view]="view"
         [(viewDate)]="viewDate"
         (viewDateChange)="closeOpenMonthViewDay()">
-        Previous
+        {{ 'PREVIOUS' | translate }}
       </div>
       <div
         class="btn btn-outline-secondary"
         mwlCalendarToday
         [(viewDate)]="viewDate">
-        Today
+        {{ 'TODAY' | translate }}
       </div>
       <div
         class="btn btn-primary"
@@ -22,7 +22,7 @@
         [view]="view"
         [(viewDate)]="viewDate"
         (viewDateChange)="closeOpenMonthViewDay()">
-        Next
+        {{ 'NEXT' | translate }}
       </div>
     </div>
   </div>
@@ -35,19 +35,19 @@
         class="btn btn-primary"
         (click)="setView(CalendarView.Month)"
         [class.active]="view === CalendarView.Month">
-        Month
+        {{ 'MONTH' | translate }}
       </div>
       <div
         class="btn btn-primary"
         (click)="setView(CalendarView.Week)"
         [class.active]="view === CalendarView.Week">
-        Week
+        {{ 'WEEK' | translate }}
       </div>
       <div
         class="btn btn-primary"
         (click)="setView(CalendarView.Day)"
         [class.active]="view === CalendarView.Day">
-        Day
+        {{ 'DAY' | translate }}
       </div>
     </div>
   </div>

@@ -29,7 +29,7 @@
                 <div>
                   <span>{{ getDistance(activity.distance) }}km</span>
                   <span>
-                 <br><small class="text-uppercase">Distance</small>
+                 <br><small class="text-uppercase">{{ 'DISTANCE' | translate }}</small>
             </span>
                 </div>
               </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div>
                   <span>{{ getFormattedTime(activity.moving_time) }}</span>
-                  <span><small class="text-uppercase"><br>Moving Time</small></span>
+                  <span><small class="text-uppercase"><br>{{ 'MOVING-TIME' | translate }}</small></span>
                 </div>
               </div>
             </div>
@@ -51,7 +51,7 @@
                   <span class="material-icons">watch</span>
                 </div>
                 <span>{{getAvgTime(activity.distance, activity.moving_time)}}
-                  <small class="text-uppercase"><br>Pace</small></span>
+                  <small class="text-uppercase"><br>{{ 'PACE' | translate }}</small></span>
                 <span></span>
               </div>
             </div>
@@ -66,7 +66,7 @@
                 </div>
                 <div>
                   <span>{{activity.calories}} kcal</span>
-                  <span><small class="text-uppercase"><br>Calories</small></span>
+                  <span><small class="text-uppercase"><br>{{ 'CALORIES' | translate }}</small></span>
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@
                 <div class="mt-2 mr-2 speed"><span class="material-icons">speed</span></div>
                 <div>
                   <span>{{getSpeed(activity.average_speed)}}</span>
-                  <span><small class="text-uppercase"><br>Avg Speed</small></span>
+                  <span><small class="text-uppercase"><br>{{ 'AVG-SPEED' | translate }}</small></span>
                 </div>
               </div>
             </div>
@@ -84,7 +84,7 @@
                 <div class="mt-2 mr-2 heart"><span class="material-icons">speed</span></div>
                 <div>
                   <span>{{getSpeed(activity.max_speed)}}</span>
-                  <span><small class="text-uppercase"><br>Max Speed</small></span>
+                  <span><small class="text-uppercase"><br>{{ 'MAX-SPEED' | translate }}</small></span>
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@
                 <div class="mt-2 mr-2 heart"><span class="material-icons">favorite_border</span></div>
                 <div>
                   <span>{{getHeartrate(activity.average_heartrate)}}</span>
-                  <span><div><small class="text-uppercase">Avg Heartrate</small></div></span>
+                  <span><div><small class="text-uppercase">{{ 'AVG-HEARTRATE' | translate }}</small></div></span>
                 </div>
               </div>
             </div>
@@ -106,7 +106,7 @@
                 <div class="mt-2 mr-2 heart"><span class="material-icons">favorite</span></div>
                 <div>
                   <span>{{getHeartrate(activity.max_heartrate)}}</span>
-                  <span><div><small class="text-uppercase">Max Heartrate</small></div></span>
+                  <span><div><small class="text-uppercase">{{ 'MAX-HEARTRATE' | translate }}</small></div></span>
                 </div>
               </div>
             </div>
@@ -114,7 +114,7 @@
               <div class="d-flex">
                 <div class="mt-2 mr-2"><span class="material-icons elevation">trending_up</span></div>
                 <div><span>{{activity.total_elevation_gain}}m</span>
-                  <span><div><small class="text-uppercase">Elevation Gain</small></div></span></div>
+                  <span><div><small>{{ 'ELEVATION-HIGH2' | translate }}</small></div></span></div>
               </div>
             </div>
           </div>
@@ -132,9 +132,9 @@
               <thead>
               <tr>
                 <th scope="col">KM</th>
-                <th scope="col">Pace</th>
-                <th scope="col">Elevation</th>
-                <th scope="col">HR</th>
+                <th scope="col">{{ 'PACE' | translate }}</th>
+                <th scope="col">{{ 'ELEVATION' | translate }}</th>
+                <th scope="col">{{ 'HEARTRATE' | translate }}</th>
               </tr>
               </thead>
               <tbody *ngIf="activity">

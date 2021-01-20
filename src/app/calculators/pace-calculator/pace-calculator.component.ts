@@ -18,7 +18,8 @@ export class PaceCalculatorComponent implements OnInit {
   minute: number;
   seconds: number;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.buildForm();

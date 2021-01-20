@@ -12,7 +12,7 @@ import {Segments} from '../../shared/models/segments.model';
 export class MySegmentsComponent implements OnInit, OnDestroy {
   currentPageIndex = 1;
   readonly columns: string[] = ['name', 'city', 'country', 'distance', 'elevation_high',
-    'elevation_low', 'elevation_difference', 'state' ];
+    'elevation_low', 'elevation_difference', 'state', 'details' ];
   segments: Segments[] = [];
   private readonly subscriptions = new Subscription();
   private readonly pagination$ = new BehaviorSubject<number>(this.currentPageIndex);

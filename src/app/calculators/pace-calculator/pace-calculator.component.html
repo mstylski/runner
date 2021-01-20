@@ -1,56 +1,56 @@
-<h2>Pace Calculator</h2>
+<h2>{{ 'PACE-CALCULATOR' | translate }}</h2>
 <div class="pace">
   <h3>
-    With the help of the RUN PACE calculator, you can determine the pace you need to keep to achieve  <br>
-    the planned result over a given distance.</h3>
+    {{ 'PACE-DESCRIPTION-1' | translate }} <br>
+    {{ 'PACE-DESCRIPTION-2' | translate }}.</h3>
   <form [formGroup]="modelForm" *ngIf="modelForm">
     <mat-card class="pace-calculator">
       <mat-card-header></mat-card-header>
       <mat-card-content>
-        <h3>Planned result:</h3>
+        <h3>{{ 'PLANNED-RESULT' | translate }}:</h3>
         <span>
     <mat-form-field>
-    <mat-label>hour</mat-label>
+    <mat-label>{{ 'HOURS' | translate }}</mat-label>
     <input matInput formControlName="hour">
   </mat-form-field>
 </span>
         <span class="ml-1">
     <mat-form-field>
-    <mat-label>minute</mat-label>
+    <mat-label>{{ 'MINUTES' | translate }}</mat-label>
     <input matInput formControlName="minute">
   </mat-form-field>
 </span>
         <span class="ml-1">
     <mat-form-field>
-    <mat-label>sec</mat-label>
+    <mat-label>{{ 'SECS' | translate }}</mat-label>
     <input matInput formControlName="sec">
   </mat-form-field>
 </span>
-        <h3>Put distance or choose one:</h3>
+        <h3>{{ 'PUT-DISTANCE' | translate }}:</h3>
         <span>
         <mat-form-field>
-    <mat-label>distance</mat-label>
+    <mat-label>{{ 'DISTANCE-2' | translate }}</mat-label>
     <input matInput formControlName="distance">
   </mat-form-field>
         <mat-form-field class="ml-1">
-    <mat-label>km/miles</mat-label>
+    <mat-label>{{ 'KM-MILES' | translate }}</mat-label>
     <mat-select name="r_distance_unit" id="r-distance-unit" formControlName="distanceUnit">
       <mat-option *ngFor="let option of milesKilometersOptions" [value]="option.value">{{option.label}}</mat-option>
     </mat-select>
   </mat-form-field>
         <mat-form-field class="ml-1">
-    <mat-label>pick event</mat-label>
+    <mat-label>{{ 'PICK-EVENT' | translate }}</mat-label>
     <mat-select id="event-select" formControlName="distanceType">
       <mat-option *ngFor="let option of distanceOptions" [value]="option.value">{{option.label}}</mat-option>
     </mat-select>
   </mat-form-field>
     </span>
       </mat-card-content>
-      <button mat-raised-button class="mr-2" (click)="getPace()">Submit</button>
+      <button mat-raised-button class="mr-2" (click)="getPace()">{{ 'CHECK' | translate }}</button>
       <button mat-raised-button color="default" (click)="modelForm.reset()">Reset</button>
       <strong>
         <div class="mt-1 pace-description">
-          To reach your goal, you need to ran at pace {{pace}}/km
+          {{ 'TO-REACH-YOUR-GOAL' | translate }} {{pace}}/km
         </div>
       </strong>
     </mat-card>
